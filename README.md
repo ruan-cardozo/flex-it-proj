@@ -14,7 +14,8 @@ O **FlexIt** é um website voltado para o controle de uma vida saudável, oferec
 - **Banco de Dados**: PostgreSQL
 - **Serviços Adicionais**:
   - Docker
-  - GitHub Actions (CI/CD)
+  - SonarQube
+  - Jenkins (CI/CD)
   - TDD com Jest
 
 ## Arquitetura
@@ -31,9 +32,53 @@ Como trabalharemos com sprints, cada sprint terá suas tarefas distribuídas ent
 ## Cronograma
 O projeto será desenvolvido em sprints, cada uma focada em uma das funcionalidades principais. O cronograma está alinhado com as datas de entrega das três avaliações (N1, N2 e N3) do curso.
 
-- **Sprint 1 - Dietas**: 15/08/2024 - 26/09/2024
+- **Sprint 1 - Gerenciamento de Dietas/Cadastro de usuários**: 15/08/2024 - 26/09/2024
 - **Sprint 2 - Controle de Treinos**: [Data de Início] - [Data de Término]
-- **Sprint 3 - Linha do Tempo de Evolução**: [Data de Início] - [Data de Término]
+- **Sprint 3 - Linha do Tempo de Evolução(Métricas pessoais)**: [Data de Início] - [Data de Término]
+
+### Futuro caso há tempo/evoluções
+
+- **Agenda de Atividades**
+- **Dashboard Personalizados**
+
+## Requisitos do projeto
+
+Aqui estão alguns requisitos funcionais e não funcionais para o projeto **FlexIt**:
+
+### Requisitos Funcionais
+
+1. **Cadastro de Usuários:**
+   - O sistema deve permitir que usuários se cadastrem fornecendo nome, email, senha, e informações básicas como idade, peso, e altura.
+   - Deve permitir o login e recuperação de senha.
+
+2. **Gerenciamento de Dietas:**
+   - O usuário deve ser capaz de criar e gerenciar planos de dieta personalizados, com a opção de adicionar e editar refeições diárias.
+   - O sistema deve permitir a visualização do progresso nutricional, como calorias e macronutrientes consumidos.
+
+3. **Controle de Treinos:**
+   - O usuário deve poder criar, editar, e acompanhar planos de treino, incluindo exercícios, séries, repetições e descanso.
+   - O sistema deve permitir registrar o desempenho em cada treino e mostrar o progresso ao longo do tempo.
+
+4. **Acompanhamento de Métricas Pessoais:**
+   - O sistema deve permitir que os usuários registrem e acompanhem métricas pessoais como peso, altura, IMC, e medidas corporais.
+   - Deve oferecer gráficos e relatórios para visualização do progresso dessas métricas.
+
+5. **Agenda de Atividades (Opcional):**
+   - O sistema deve ter uma agenda onde o usuário possa planejar seus treinos e refeições, recebendo lembretes e notificações.
+
+6. **Dashboard Personalizado (Opcional):**
+   - O usuário deve ter acesso a um dashboard com uma visão geral do seu progresso, incluindo indicadores de desempenho e alertas personalizados.
+
+### Requisitos Não Funcionais
+
+1. **Usabilidade:**
+   - A interface deve ser intuitiva, fácil de navegar, com um design responsivo que se adapte a diferentes dispositivos, incluindo smartphones e tablets.
+
+2. **Segurança:**
+   - Deve haver criptografia de dados sensíveis, como senhas, e o sistema deve implementar autenticação segura com tokens.
+
+Esses requisitos oferecem uma base sólida para o desenvolvimento do **FlexIt**, cobrindo as principais funcionalidades necessárias e garantindo a qualidade do sistema.
 
 ## Como Executar o Projeto
+
 Preencher mais adiante
