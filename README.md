@@ -6,7 +6,7 @@ O **FlexIt** é um website voltado para o controle de uma vida saudável, oferec
 ## Funcionalidades
 - **Dietas**: Ferramenta para criação e acompanhamento de dietas personalizadas.
 - **Controle de treinos**: Gestão e monitoramento de treinos, com a possibilidade de criar e seguir planos de exercícios.
-- **Linha do tempo de evolução**: Histórico visual da evolução dos dados pessoais, como peso e altura.
+- **Métricas**: Métricas pessoais, como peso e altura...
 
 ## Tecnologias Utilizadas
 - **Frontend**: React e Vite
@@ -23,9 +23,9 @@ Optamos por uma arquitetura **monolítica** para o projeto FlexIt, que combina o
 
 ## Equipe
 A equipe de trabalho é composta por:
-- **Ruan Cardozo**: Responsável pelo desenvolvimento do backend e do frontend.
-- **Guilherme Elias**: Responsável pelo desenvolvimento do backend e banco de dados.
-- **Guilherme Machado**: Responsável pelo desenvolvimento do frontend e banco de dados.
+- **Ruan Cardozo**: Responsável pelo desenvolvimento do backend,frontend e banco de dados do módulo **Treinos**.
+- **Guilherme Elias**: Responsável pelo desenvolvimento do backend, frontend e banco de dados do módulo de **Métricas**.
+- **Guilherme Machado**: Responsável pelo desenvolvimento do frontend, backend e banco de dados do móudlo de **Dietas**.
 
 Como trabalharemos com sprints, cada sprint terá suas tarefas distribuídas entre os colaboradores conforme suas responsabilidades. A distribuição será feita de forma a garantir a colaboração eficiente e a entrega de cada funcionalidade dentro do prazo estabelecido.
 
