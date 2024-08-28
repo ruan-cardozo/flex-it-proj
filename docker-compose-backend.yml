@@ -1,0 +1,20 @@
+services:
+  backend:
+    container_name: flex-it-proj-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dev
+    environment:
+      - NODE_ENV=development
+      - PORT=8030
+    ports:
+      - "8030:8030"
+    volumes:
+      - ./backend:/app
+      - ./backend/node_modules:/app/node_modules
+    networks:
+      - flex-it-dev
+
+networks:
+  flex-it-dev:
+    external: true

@@ -82,5 +82,9 @@ yarn-error.log
 /benchmarks/memory
 build/config\.gypi
 
+# sonar
+/backend/.scannerwork
+/frontend/.scannerwork
+
 .npmrc
 pnpm-lock.yaml

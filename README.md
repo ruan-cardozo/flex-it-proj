@@ -81,4 +81,51 @@ Esses requisitos oferecem uma base sólida para o desenvolvimento do **FlexIt**,
 
 ## Como Executar o Projeto
 
-Preencher mais adiante
+Para executar o projeto você precisa do docker instalado em sua máquina e um ambiente de desenvolvimento linux.
+
+Para executar o projeto **FlexIt**, siga as instruções abaixo:
+
+1. Clone o repositório para sua máquina local;
+   ```bash
+   git clone <url>
+   ```
+2. Acesse a pasta do projeto;
+   ```bash
+    cd flex-it-proj
+    ```
+
+3. Crie a rede no docker;
+    ```bash
+     docker network create flex-it-dev
+     ```
+
+4. Execute o comando abaixo para subir o banco de dados na pasta **database**;
+    ```bash
+    docker compose -f docker-compose-database.yml up --build
+    ```
+
+5. Execute o comando abaixo para subir o backend na pasta **backend**;
+    ```bash
+    docker compose -f docker-compose-backend.yml up --build
+    ```
+
+6. Execute o comando abaixo para subir o frontend na pasta **frontend**;
+    ```bash
+    docker compose -f docker-compose-frontend.yml up --build
+    ```
+
+7. Acesse o frontend em http://localhost:5173 e o backend em http://localhost:8030;
+
+8. Para parar os containers execute o comando abaixo;
+    ```bash
+    docker compose -f docker-compose-frontend.yml down
+    docker compose -f docker-compose-backend.yml down
+    docker compose -f docker-compose-database.yml down
+    ```
+
+9. Para remover a rede execute o comando abaixo;
+    ```bash
+    docker network rm flex-it-dev
+    ```
+
+Com essas instruções, você poderá executar o projeto **FlexIt** em sua máquina local e começar a explorar suas funcionalidades.

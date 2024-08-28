@@ -1,0 +1,20 @@
+services:
+  frontend:
+    container_name: flex-it-proj-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-dev
+    environment:
+        - NODE_ENV=development
+        - PORT=5173
+    ports:
+      - "5173:5173"
+    volumes:
+        - ./frontend:/app
+        - ./frontend/node_modules:/app/node_modules
+    networks:
+        - flex-it-dev
+
+networks:
+  flex-it-dev:
+      external: true
