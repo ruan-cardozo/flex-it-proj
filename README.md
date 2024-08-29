@@ -29,12 +29,26 @@ A equipe de trabalho é composta por:
 
 Como trabalharemos com sprints, cada sprint terá suas tarefas distribuídas entre os colaboradores conforme suas responsabilidades. A distribuição será feita de forma a garantir a colaboração eficiente e a entrega de cada funcionalidade dentro do prazo estabelecido.
 
-## Cronograma
-O projeto será desenvolvido em sprints, cada uma focada em uma das funcionalidades principais. O cronograma está alinhado com as datas de entrega das três avaliações (N1, N2 e N3) do curso.
+## Plano de Sprints para o Projeto FlexIt
 
-- **Sprint 1 - Gerenciamento de Dietas/Cadastro de usuários**: 15/08/2024 - 26/09/2024
-- **Sprint 2 - Controle de Treinos**: [Data de Início] - [Data de Término]
-- **Sprint 3 - Linha do Tempo de Evolução(Métricas pessoais)**: [Data de Início] - [Data de Término]
+Cada sprint terá como objetivo entregar valor através do desenvolvimento dos principais módulos do sistema. A equipe está dividida com foco nas funcionalidades de Treinos, Cadastro de Usuários, Métricas e Dietas, conforme detalhado abaixo:
+
+- **Sprint 1 (15/08/2024 - 26/09/2024)**
+  - **Ruan Cardozo:** Desenvolvimento dos módulos de Treinos e Cadastro de Usuários.
+  - **Guilherme Elias:** Implementação das Métricas de desempenho e acompanhamento.
+  - **Guilherme Machado:** Desenvolvimento do módulo de Dietas, incluindo a criação de planos alimentares personalizados.
+
+- **Sprint 2 ([Data de Início] - [Data de Término])**
+  - **Ruan Cardozo:** Continuação e refinamento dos módulos de Treinos e Cadastro de Usuários.
+  - **Guilherme Elias:** Expansão das funcionalidades de Métricas, adicionando novos indicadores e visualizações.
+  - **Guilherme Machado:** Aperfeiçoamento do módulo de Dietas, com novas funcionalidades para melhor personalização e acompanhamento nutricional.
+
+- **Sprint 3 ([Data de Início] - [Data de Término])**
+  - **Ruan Cardozo:** Finalização dos módulos de Treinos e Cadastro de Usuários, garantindo usabilidade e integração com o restante do sistema.
+  - **Guilherme Elias:** Otimização e finalização das Métricas, com foco em performance e precisão dos dados.
+  - **Guilherme Machado:** Conclusão do módulo de Dietas, com integração completa ao sistema e suporte a atualizações de planos alimentares.
+
+Cada sprint será focado em entregas incrementais que agregam valor ao sistema, alinhando-se com os objetivos do projeto de fornecer uma solução completa e eficiente para a gestão de treinos, dietas e métricas de saúde.
 
 ### Futuro caso há tempo/evoluções
 
