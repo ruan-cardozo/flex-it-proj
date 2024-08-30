@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -60,7 +60,7 @@ export class UserService {
 
     if (databaseUser) {
 
-      throw new Error('Já existe um usuário com este e-mail');
+      throw new BadRequestException('Já existe um usuário com este e-mail');
     }
   }
 
