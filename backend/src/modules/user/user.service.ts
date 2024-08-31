@@ -1,7 +1,7 @@
-import { BadGatewayException, BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Repository } from 'typeorm';
+import { FindManyOptions, FindOptions, FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { SchemaService } from 'src/common/schema/schema.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,9 +31,16 @@ export class UserService {
     return await this.userRepository.save(databaseUser);
   }
 
-  public findAll() {
+  public findAll(options?: FindManyOptions<User>) {
 
-    return this.userRepository.find();
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+    
+    if (options) {
+      
+        queryBuilder.where(options.where);  
+    }
+
+    return queryBuilder.getManyAndCount();
   }
 
   public findOne(id: number) {
@@ -42,6 +49,7 @@ export class UserService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
+
     return `This action updates a #${id} user`;
   }
 
