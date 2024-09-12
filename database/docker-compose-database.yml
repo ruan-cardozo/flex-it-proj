@@ -1,6 +1,9 @@
 services:
   db:
     image: postgres
+    container_name: flex-it-database
+    ports:
+      - "5432:5432"
     restart: always
     # set shared memory limit when using docker-compose
     shm_size: 128mb
