@@ -1,12 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindManyOptions, FindOptions } from 'typeorm';
 
-@Controller('users')
+@Controller('/v1/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get()
+  public findAll() {
+
+    return this.userService.findAll();
+  }
+
+  @Get(':id')
+  public findOne(@Param('id') id: number) {
+
+    return this.userService.findOne(id);
+  }
 
   @Post()
   public create(@Body() createUserDto: CreateUserDto) {
@@ -14,24 +25,15 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
-  findAll(@Param() options?: FindManyOptions) {
-    return this.userService.findAll(options);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.userService.findOne(id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  @Put(':id')
+  public update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   public remove(@Param('id') id: number) {
+
     return this.userService.remove(id);
   }
 }

@@ -1,79 +1,91 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindManyOptions, FindOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { SchemaService } from 'src/common/schema/schema.service';
+import { SchemaService } from '../../common/schema/schema.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { hashPassword } from 'src/common/helpers/hash-password.helper';
+import { hashPassword } from '../../common/helpers/hash-password.helper';
 
 @Injectable()
 export class UserService {
 
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    private readonly schemaService:  SchemaService
+	@InjectRepository(User)
+	private readonly userRepository: Repository<User>,
+	private readonly schemaService: SchemaService,
   ) {}
 
-  public async create(createUserDto: CreateUserDto) {
+  public async create(createUserDto: CreateUserDto): Promise<User> {
 
-    const databaseUser = this.userRepository.create(createUserDto);
+	const createdUser = this.userRepository.create(createUserDto);
 
-    const passwordEncrypt = hashPassword(databaseUser.password);
+	const passwordEncrypt = hashPassword(createdUser.password);
 
-    databaseUser.password = passwordEncrypt;
+	createdUser.password = passwordEncrypt;
 
-    this.validateUser(createUserDto);
+	this.validateUser(createdUser.email);
 
-    this.createUserShema(createUserDto);
+	this.createUserShema(createdUser.user_name);
 
-    return await this.userRepository.save(databaseUser);
+	return this.userRepository.save(createdUser);
   }
 
-  public findAll(options?: FindManyOptions<User>) {
+  public findAll() {
 
-    const queryBuilder = this.userRepository.createQueryBuilder('user');
-    
-    if (options) {
-      
-        queryBuilder.where(options.where);  
-    }
-
-    return queryBuilder.getManyAndCount();
+	return this.userRepository.findAndCount();
   }
 
   public findOne(id: number) {
-
-    return this.userRepository.findOne({where: { id }});
+	return this.userRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  public update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
 
-    return `This action updates a #${id} user`;
+	const user = this.checkIfUserExists(id);
+
+	this.validateUser(updateUserDto.email);
+
+	if (user) {
+
+		return this.userRepository.save(updateUserDto);
+	}
   }
 
   public async remove(id: number) {
+	const databaseUser = await this.userRepository.findOne({ where: { id } });
 
-    const databaseUser = await this.userRepository.findOne({where: { id }});
+	await this.schemaService.dropSchema(databaseUser.user_name);
 
-    await this.schemaService.dropSchema(databaseUser.user_name);
-
-    return await this.userRepository.delete(databaseUser.id);
+	return this.userRepository.delete(databaseUser.id);
   }
 
-  private async validateUser(user: CreateUserDto) {
+  private async validateUser(userEmail: string) {
 
-    const databaseUser = await this.userRepository.findOne({ where: { email: user.email }});
+	const databaseUser = await this.userRepository.findOne({
+	  where: { email: userEmail },
+	});
 
-    if (databaseUser) {
+	if (databaseUser) {
 
-      throw new BadRequestException('Já existe um usuário com este e-mail');
-    }
+	  throw new BadRequestException('Já existe um usuário com este e-mail');
+	}
   }
 
-  private async createUserShema(user: CreateUserDto) {
+  private checkIfUserExists(id: number): boolean {
 
-    return  this.schemaService.createSchema(user.user_name);
+	const databaseUser = this.userRepository.findOneOrFail({ where: {id: id } });
+
+	if (!databaseUser) {
+
+		throw new Error("Usuário não foi encontrado na base de dados");
+	}
+
+	return true;
+  }
+
+  private async createUserShema(userName: string) {
+
+	return this.schemaService.createSchema(userName);
   }
 }
