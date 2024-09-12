@@ -1,18 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SchemaService } from '../schema.service';
+import { DataSource } from 'typeorm';
 
 describe('SchemaService', () => {
-  let service: SchemaService;
+  let schemaService: SchemaService;
+  let dataSource: DataSource;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SchemaService],
+      providers: [SchemaService, {
+        provide: DataSource,
+        useValue: {
+          query: jest.fn(),
+        },
+      }],
     }).compile();
 
-    service = module.get<SchemaService>(SchemaService);
+    schemaService = module.get<SchemaService>(SchemaService);
+    dataSource = module.get<DataSource>(DataSource);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(schemaService).toBeDefined();
+    expect(dataSource).toBeDefined();
   });
 });
