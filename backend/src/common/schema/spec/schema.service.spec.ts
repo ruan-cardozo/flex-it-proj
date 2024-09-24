@@ -8,12 +8,15 @@ describe('SchemaService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SchemaService, {
-        provide: DataSource,
-        useValue: {
-          query: jest.fn(),
+      providers: [
+        SchemaService,
+        {
+          provide: DataSource,
+          useValue: {
+            query: jest.fn(),
+          },
         },
-      }],
+      ],
     }).compile();
 
     schemaService = module.get<SchemaService>(SchemaService);

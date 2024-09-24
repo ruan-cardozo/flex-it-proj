@@ -6,9 +6,10 @@ import { SchemaModule } from './common/schema/schema.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(AppDataSource.options), 
-    UserModule, 
-    SchemaModule],
+    TypeOrmModule.forRoot(AppDataSource.options),
+    UserModule,
+    SchemaModule,
+  ],
   controllers: [],
   providers: [],
 })

@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SchemaController } from '../schema.controller';
 import { SchemaService } from '../schema.service';
-import { DataSource } from 'typeorm';
 
 describe('SchemaController', () => {
   let schemaController: SchemaController;
@@ -17,7 +16,7 @@ describe('SchemaController', () => {
             createSchema: jest.fn(),
             dropSchema: jest.fn(),
           },
-        }
+        },
       ],
     }).compile();
 
