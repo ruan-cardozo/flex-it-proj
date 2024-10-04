@@ -1,0 +1,42 @@
+.button-1 {
+    display: flex;
+    align-items: center;
+    justify-content: flex;
+    text-align: left;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    width: 100%;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms, background-color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    background-color: transparent;
+    color: white;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #ffffff;
+  color: black;
+}
+
+.button-icon {
+    margin-right: 16px; /* Aumenta o espaçamento entre o ícone e o texto */
+    width: 24px; /* Aumenta a largura do ícone */
+    height: 24px; /* Aumenta a altura do ícone */
+    vertical-align: middle; /* Mantém o ícone alinhado ao centro verticalmente */
+    float: left; /* Alinha o ícone à esquerda */
+}
