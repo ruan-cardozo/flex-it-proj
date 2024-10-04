@@ -5,6 +5,13 @@ services:
       context: ./backend
       dockerfile: Dockerfile-dev
     environment:
+      - API_PREFIX=/api
+      - DB_TYPE=postgres
+      - DB_HOST=172.18.0.2
+      - DB_NAME=flex-it-database
+      - DB_USER=node 
+      - DB_PASS=node
+      - DB_PORT=5432
       - NODE_ENV=development
       - PORT=8030
     ports:

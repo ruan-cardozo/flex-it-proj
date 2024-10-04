@@ -34,7 +34,7 @@ Como trabalharemos com sprints, cada sprint terá suas tarefas distribuídas ent
 Cada sprint terá como objetivo entregar valor através do desenvolvimento dos principais módulos do sistema. A equipe está dividida com foco nas funcionalidades de Treinos, Cadastro de Usuários, Métricas e Dietas, conforme detalhado abaixo:
 
 - **Sprint 1 (15/08/2024 - 26/09/2024)**
-  - **Ruan Cardozo:** Desenvolvimento dos módulos de Treinos e Cadastro de Usuários.
+  - **Ruan Cardozo:** Desenvolvimento dos módulos de Treinos e Cadastro de Usuários/Autenticação.
   - **Guilherme Elias:** Implementação das Métricas de desempenho e acompanhamento.
   - **Guilherme Machado:** Desenvolvimento do módulo de Dietas, incluindo a criação de planos alimentares personalizados.
 
