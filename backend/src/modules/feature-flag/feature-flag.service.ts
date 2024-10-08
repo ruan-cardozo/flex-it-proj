@@ -16,6 +16,6 @@ export class ConfigCatService {
 
 	public async getFeatureStatus(flagKey: string): Promise<boolean> {
 
-		return await this.configCatClient.getValueAsync(flagKey, false);
+		return this.configCatClient.getValueAsync(flagKey, false);
 	}
 }
