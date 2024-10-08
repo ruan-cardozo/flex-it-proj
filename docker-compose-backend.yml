@@ -7,7 +7,7 @@ services:
     environment:
       - API_PREFIX=/api
       - DB_TYPE=postgres
-      - DB_HOST=172.18.0.2
+      - DB_HOST=flex-it-database
       - DB_NAME=flex-it-database
       - DB_USER=node 
       - DB_PASS=node

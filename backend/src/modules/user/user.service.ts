@@ -9,75 +9,88 @@ import { hashPassword } from '../../common/helpers/hash-password.helper';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    private readonly schemaService: SchemaService,
-  ) {}
 
-  public async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = this.userRepository.create(createUserDto);
+	constructor(
+		@InjectRepository(User)
+		private readonly userRepository: Repository<User>,
+		private readonly schemaService: SchemaService) { }
 
-    const passwordEncrypt = hashPassword(createdUser.password);
+	public async create(createUserDto: CreateUserDto): Promise<User> {
 
-    createdUser.password = passwordEncrypt;
+		const createdUser = this.userRepository.create(createUserDto);
 
-    this.validateUser(createdUser.email);
+		const passwordEncrypt = hashPassword(createdUser.password);
 
-    this.createUserShema(createdUser.user_name);
+		createdUser.password = passwordEncrypt;
 
-    return this.userRepository.save(createdUser);
-  }
+		this.validateUser(createdUser.email);
 
-  public findAll() {
-    return this.userRepository.findAndCount();
-  }
+		this.createUserShema(createdUser.user_name);
 
-  public findOne(id: number) {
-    return this.userRepository.findOne({ where: { id } });
-  }
+		return this.userRepository.save(createdUser);
+	}
 
-  public update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = this.checkIfUserExists(id);
+	public findAll() {
 
-    this.validateUser(updateUserDto.email);
+		return this.userRepository.findAndCount();
+	}
 
-    if (user) {
-      return this.userRepository.save(updateUserDto);
-    }
-  }
+	public findOne(id: number) {
 
-  public async remove(id: number) {
-    const databaseUser = await this.userRepository.findOne({ where: { id } });
+		return this.userRepository.findOne({ where: { id } });
+	}
 
-    await this.schemaService.dropSchema(databaseUser.user_name);
+	public update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
 
-    return this.userRepository.delete(databaseUser.id);
-  }
+		const user = this.checkIfUserExists(id);
 
-  private async validateUser(userEmail: string) {
-    const databaseUser = await this.userRepository.findOne({
-      where: { email: userEmail },
-    });
+		this.validateUser(updateUserDto.email);
 
-    if (databaseUser) {
-      throw new BadRequestException('Já existe um usuário com este e-mail');
-    }
-  }
+		if (user) {
 
-  private checkIfUserExists(id: number): boolean {
-    const databaseUser = this.userRepository.findOneOrFail({
-      where: { id: id },
-    });
+			return this.userRepository.save(updateUserDto);
+		}
+	}
 
-    if (!databaseUser) {
-      throw new Error('Usuário não foi encontrado na base de dados');
-    }
+	public async remove(id: number) {
 
-    return true;
-  }
+		const databaseUser = await this.userRepository.findOne({
+			where: { id },
+		});
 
-  private async createUserShema(userName: string) {
-    return this.schemaService.createSchema(userName);
-  }
+		await this.schemaService.dropSchema(databaseUser.user_name);
+
+		return this.userRepository.delete(databaseUser.id);
+	}
+
+	private async validateUser(userEmail: string) {
+
+		const databaseUser = await this.userRepository.findOne({
+			where: { email: userEmail },
+		});
+
+		if (databaseUser) {
+
+			throw new BadRequestException('Já existe um usuário com este e-mail');
+		}
+	}
+
+	private checkIfUserExists(id: number): boolean {
+
+		const databaseUser = this.userRepository.findOneOrFail({
+			where: { id: id },
+		});
+
+		if (!databaseUser) {
+
+			throw new Error('Usuário não foi encontrado na base de dados');
+		}
+
+		return true;
+	}
+
+	private async createUserShema(userName: string) {
+
+		return this.schemaService.createSchema(userName);
+	}
 }
