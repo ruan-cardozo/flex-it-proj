@@ -1,0 +1,144 @@
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    color: white;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.form-control {
+    font-family: "Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    font-weight: 500;
+    font-size: .8vw;
+    color: #fff;
+    background-color: white;
+    box-shadow: 0 0 .4vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+    border-radius: 0.4vw;
+    border: none;
+    outline: none;
+    padding: 0.4vw;
+    width: 300px;
+    height: 30px;
+    transition: .4s;
+    font-size: 16px;
+    color: black;
+}
+
+.form-control::placeholder {
+    font-size: 16px;
+    color: black;
+    opacity: 50%;
+}
+
+.form-control:hover {
+    box-shadow: 0 0 0 .15vw rgba(135, 207, 235, 0.186);
+}
+  
+.form-control:focus {
+    box-shadow: 0 0 0 .15vw black;
+}
+
+.box {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;   
+    width: 500px;
+    min-width: 500px;
+    max-width: 500px;
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #efefef;
+    border-radius: 12px;
+}
+
+
+.row {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    margin-right: -100px;
+    margin-top: 10%;
+}
+
+.btn-form { 
+  align-self: center;
+  width: 200px;
+  margin: 10px;
+  padding: 15px 30px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+  border: 0px;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px black;
+  background-image: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(0,61,255,1)  51%, rgba(0,212,255,1)  100%);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-form:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-form:active {
+  transform: scale(0.95);
+}
+
+.btn-register {
+    width: 210px;
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px black;
+    background-image: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(0,61,255,1)  51%, rgba(0,212,255,1)  100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    align-self: center;
+    text-align: center;
+}
+
+.btn-register:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+  
+.btn-register:active {
+    transform: scale(0.95);
+}
+
+.label-input{
+    color: #163936;
+    font-size: 22px;
+}
+
+.label-h1 {
+    color: #163936;
+    font-size: 42px;
+}
