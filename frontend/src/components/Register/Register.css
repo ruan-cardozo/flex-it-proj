@@ -1,0 +1,124 @@
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    color: white;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.form-control {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    font-weight: 500;
+    font-size: .8vw;
+    color: #fff;
+    background-color: white;
+    box-shadow: 0 0 .4vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+    border-radius: 0.4vw;
+    border: none;
+    outline: none;
+    padding: 0.4vw;
+    width: 300px;
+    height: 30px;
+    transition: .4s;
+    font-size: 16px;
+    color: black;
+}
+
+.form-control::placeholder {
+    font-size: 16px;
+    color: black;
+    opacity: 50%;
+}
+
+.form-control:hover {
+    box-shadow: 0 0 0 .15vw rgba(135, 207, 235, 0.186);
+}
+  
+.form-control:focus {
+    box-shadow: 0 0 0 .15vw black;
+}
+
+.box{
+    align-content: center;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;   
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.row {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-form { 
+  align-self: center;
+  width: 200px;
+  margin: 10px;
+  padding: 15px 30px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+  border: 0px;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px black;
+  background-image: linear-gradient(45deg, rgba(2,0,36,1) 0%, #163936  51%, rgba(0,212,255,1)  100%);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-form:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-form:active {
+  transform: scale(0.95);
+}
+
+.btn-login {
+    width: 200px;
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px black;
+    background-image: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(0,61,255,1)  51%, rgba(0,212,255,1)  100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    align-self: center;
+    text-align: center;
+}
+
+.btn-login:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+  
+.btn-login:active {
+    transform: scale(0.95);
+}

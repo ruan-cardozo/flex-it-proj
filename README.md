@@ -93,6 +93,32 @@ Aqui estão alguns requisitos funcionais e não funcionais para o projeto **Flex
 
 Esses requisitos oferecem uma base sólida para o desenvolvimento do **FlexIt**, cobrindo as principais funcionalidades necessárias e garantindo a qualidade do sistema.
 
+## Arquitetura
+
+- Camada de Apresentação (Frontend)
+  - Tecnologia: React
+  - Descrição: Esta camada é responsável pela interface do usuário (UI) e pela interação com o usuário. O frontend é construído em React, uma biblioteca JavaScript para a construção de interfaces de usuário. A aplicação React consome a API RESTful fornecida pelo backend NestJS para obter e enviar dados.
+- Funcionalidades:
+  - Exibição de dados dinâmicos vindos do backend.
+  - Formulários para criação, leitura, atualização e exclusão (CRUD) de dados.
+  - Roteamento no lado do cliente para navegação entre diferentes partes da aplicação.
+- Camada de Aplicação (Backend)
+  - Tecnologia: NestJS
+  - Descrição: Esta camada implementa a lógica de negócios da aplicação e serve como intermediário entre o frontend e o banco de dados. O backend é construído em NestJS, um framework Node.js que segue uma arquitetura modular e orientada a objetos.
+- Funcionalidades:
+  - Controladores: Definem as rotas HTTP e mapeiam essas rotas para funções específicas que processam as requisições do cliente.
+  - Serviços: Contêm a lógica de negócios, como validação de dados, processamento de pedidos, e interação com repositórios.
+  - Repositórios: Gerenciam o acesso ao banco de dados, utilizando um ORM (por exemplo, TypeORM) para realizar operações CRUD.
+  - Autenticação e Autorização: Implementação de mecanismos de segurança, como JWT (JSON Web Token) para controle de acesso.
+
+- Camada de Persistência (Banco de Dados)
+  - Tecnologia: PostgreSQL
+  - Descrição: Esta camada é responsável pelo armazenamento e gerenciamento de dados persistentes. O PostgreSQL é um banco de dados relacional que armazena os dados da aplicação em tabelas.
+- Funcionalidades:
+  - ORM (TypeORM): Utilizado pelo NestJS para mapear as tabelas do banco de dados em entidades de objetos dentro do código. Isso facilita a interação com o banco de dados de forma orientada a objetos.
+  - Migrações: Gerencia mudanças na estrutura do banco de dados, permitindo atualizações consistentes ao longo do ciclo de vida da aplicação.
+  - Consultas e Operações CRUD: Executadas pelos repositórios para criar, ler, atualizar e excluir dados no banco de dados.
+
 ## Como Executar o Projeto
 
 Para executar o projeto você precisa do docker instalado em sua máquina e um ambiente de desenvolvimento linux.

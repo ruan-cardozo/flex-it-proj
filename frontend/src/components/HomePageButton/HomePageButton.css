@@ -1,0 +1,42 @@
+.btn-home { 
+    align-self: center;
+    width: 200px;
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px black;
+    background-image: linear-gradient(45deg, rgba(2,0,36,1) 0%, #163936 51%, rgba(0,212,255,1)  100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .btn-home:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .btn-home:active {
+    transform: scale(0.95);
+  }
+  
+
+  .btn-home {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: auto;
+    float: left;
+    margin-left: 30px;
+  }
