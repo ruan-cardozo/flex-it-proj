@@ -3,49 +3,20 @@
     left: 0;
     top: 0;
     height: 100%;
-    background-color: #163936;
+    background-color: #0f6cbd;
     width: 250px;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    z-index: 1000;
 }
 
 .left-side-column-header {
     padding: 10px;
-    color: #ffffff;
+    color: #FFFFFF;
 }
 
 .left-side-column-content {
     padding: 10px;
     flex-grow: 1;
 }
-
-.training-button {
-    border-radius: 8px;
-    border-style: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 500;
-    height: 40px;
-    width: 100%;
-    line-height: 20px;
-    list-style: none;
-    margin: 0;
-    outline: none;
-    padding: 10px 16px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    transition: color 100ms, background-color 100ms;
-    vertical-align: baseline;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    background-color: transparent; /* Define como transparente */
-  }
-  
-  .training-button:hover,
-  .training-button:focus {
-    background-color: #ffffff; /* Cor de fundo ao passar o mouse ou focar */
-  }

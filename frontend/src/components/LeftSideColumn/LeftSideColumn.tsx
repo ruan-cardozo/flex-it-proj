@@ -1,18 +1,27 @@
-
-import Button from '../Button/Button';
+import { useNavigate } from 'react-router-dom';
+import { CustomButton } from '../Button/CustomButton';
+import Header from '../Header/Header';
 import './LeftSideColumn.css';
-import Icon from '../../assets/dumbbell.svg';
+import {
+    bundleIcon,
+    DumbbellFilled,
+    DumbbellRegular
+  } from "@fluentui/react-icons";
+  
+const DumbbellIcon = bundleIcon(DumbbellFilled, DumbbellRegular);
 
 function LeftSideColumn() {
+
+    const navigate = useNavigate();
 
     return (
         <div className="left-side-column">
             <div className="left-side-column-header">
-                <h1>FlexIT</h1>
+            <Header style={{marginLeft: '10px'}} title='FlexIT'/>
             </div>
-            <div className="left-side-column-content">
-                <Button onClick={() => console.log('clicked')} text='Treinos' icon={Icon}/>
-            </div>
+            <CustomButton onClick={() => {
+                navigate(window.location.pathname = '/client/training');
+            }} icon={<DumbbellIcon/>} about='Treinos'/>
         </div>
     );
 }

@@ -1,0 +1,10 @@
+.calendar-container {
+    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
+    max-width: 1200px; /* Aumenta a largura máxima do contêiner */
+    padding: 20px; /* Adiciona um pouco de padding */
+  }
+  
+  .calendar {
+    width: 100%; /* Faz o calendário ocupar toda a largura do contêiner */
+    height: 600px; /* Define uma altura maior para o calendário */
+  }

@@ -1,11 +1,16 @@
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import LeftSideColumn from './components/LeftSideColumn/LeftSideColumn'
+import HomePage from './pages/HomePage/HomePage'
+import TrainingPage from './pages/TrainingPage/TrainingPage'
 
 function App() {
 
   return (
     <>
-      <LeftSideColumn />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/client/training" element={<TrainingPage />} />
+      </Routes>
     </>
   )
 }

@@ -1,0 +1,23 @@
+
+.training-page {
+    margin-left: 250px;
+    padding: 10px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); 
+    gap: 20px;
+    /* margin: 0 auto;  */
+    max-width: 1200px;
+    margin-top: 30px;
+}
+
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+  }
