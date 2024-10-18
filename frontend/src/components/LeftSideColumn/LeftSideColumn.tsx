@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { CustomButton } from '../Button/CustomButton';
+import { CustomButton } from '../CustomButton/CustomButton';
 import Header from '../Header/Header';
 import './LeftSideColumn.css';
 import {

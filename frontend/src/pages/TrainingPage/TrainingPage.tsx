@@ -99,6 +99,10 @@ const useStylesTraining = makeStyles({
   },
   customInput: {
     marginLeft: "10px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "2px",
+    maxWidth: "200px",
   }
 });
 

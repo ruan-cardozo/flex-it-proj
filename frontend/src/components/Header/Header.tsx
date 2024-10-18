@@ -1,13 +1,11 @@
-import { CSSProperties } from "react";
-
 interface HeaderProps {
     title: string;
-    style?: CSSProperties;
+    className: string;
 }
 
-function Header({title, style}: HeaderProps) {
+function Header({title, className}: HeaderProps) {
     return (
-        <h1 style={style}>{title}</h1>
+        <h1 className={className} >{title}</h1>
     );
 }
 
