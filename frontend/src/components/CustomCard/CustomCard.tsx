@@ -16,6 +16,7 @@ interface CustomCardProps {
     cardTitle: string;
     cardParagraph: string;
     onClick?: () => void;
+    className?: string;
 }
 
 interface CardExampleProps extends CardProps {
@@ -103,11 +104,10 @@ const CardExample = ({ dialogTrigger,onClick, cardParagraph, className, ...props
   );
 };
 
-export const CustomCard = ({ onClick, cardTitle, about, cardParagraph, }: CustomCardProps) => {
-  const styles = useStyles();
+export const CustomCard = ({ onClick, cardTitle, about, cardParagraph, className}: CustomCardProps) => {
 
   return (
-    <div className={styles.main}>
+    <div className={className}>
       <section>
         <Header
           description={about || ""}

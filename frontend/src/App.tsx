@@ -15,7 +15,7 @@ function App() {
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/' element={<RegisterPage />} />
 				<Route path='/metricas' element={<Metrics />} /> 
-				<Route path='/training' element={<TrainingPage />} />
+				<Route path='/treinos' element={<TrainingPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

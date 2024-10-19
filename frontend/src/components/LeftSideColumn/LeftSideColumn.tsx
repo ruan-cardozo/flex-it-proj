@@ -20,7 +20,7 @@ function LeftSideColumn() {
             <Header style={{marginLeft: '10px'}} title='FlexIT'/>
             </div>
             <CustomButton onClick={() => {
-                navigate(window.location.pathname = '/client/training');
+                navigate(window.location.pathname = '/training');
             }} icon={<DumbbellIcon/>} about='Treinos'/>
         </div>
     );

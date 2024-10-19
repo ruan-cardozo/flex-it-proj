@@ -15,6 +15,8 @@ const useStylesCustomInput = makeStyles({
         height: '50px',
         fontSize: '16px',
         fontWeight: 'bold',
+        marginTop: '12px',
+        marginBottom: '20px',
        },
        box: {
         display: 'flex',
@@ -25,9 +27,9 @@ const useStylesCustomInput = makeStyles({
         width: '600px',
         padding: '20px',
         backgroundColor: '#0f6cbd',
-        marginLeft: '850px',
+        marginLeft: '1300px',
         marginTop: '-300px',
-        height: '400px',
+        height: '450px',
         borderRadius: '20px',
        }, 
        title: {
@@ -36,6 +38,7 @@ const useStylesCustomInput = makeStyles({
         marginTop: '400px',
         textAlign: 'center',
         alignItems: 'center',
+        marginLeft: '350px',
        },
         button: {
          backgroundColor: '#0f6cbd',
