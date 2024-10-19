@@ -5,6 +5,7 @@ import TrainingPage from './pages/TrainingPage/TrainingPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import Metrics from './pages/MetricasPage/Metrics'
+import DietPage from './pages/DietPage/DietPage'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 				<Route path='/' element={<RegisterPage />} />
 				<Route path='/metricas' element={<Metrics />} /> 
 				<Route path='/treinos' element={<TrainingPage />} />
+				<Route path='/dieta' element={<DietPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

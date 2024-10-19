@@ -1,0 +1,66 @@
+/* Barra lateral */
+.sidebar {
+    width: 250px;
+    background-color: #0f6cbd;
+    color: #ffffff;
+    padding: 20px;
+    height: 100vh;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar nav ul li {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .sidebar nav ul li:hover {
+    color: #163936;
+  }
+  
+  /* Conteúdo principal */
+  .diet-app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+  }
+  
+  
+  .diet-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .diet-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .diet-card {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #163936;
+  }
+  
+  .diet-card h3 {
+    color: #163936;
+  }
+  
+  .diet-card p {
+    color: #000000;
+  }
+  
