@@ -1,7 +1,7 @@
 import React from 'react';
-import './DietScreen.css';
+import './DietPage.css';
 
-const DietScreen: React.FC = () => {
+const DietPage: React.FC = () => {
   return (
     <div className="diet-app">
       <div className="sidebar">
@@ -40,4 +40,4 @@ const DietScreen: React.FC = () => {
   );
 };
 
-export default DietScreen;
+export default DietPage;
