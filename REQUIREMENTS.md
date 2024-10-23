@@ -11,7 +11,7 @@
 
 ## Dieta
 
-- Metas (carbo, gordura, proteína, kcal, fibra e água -calcular meta de água pelo peso corporal-) *gráfcios
+- Metas (carbo, gordura, proteína, kcal, fibra e água -calcular meta de água pelo peso corporal-) *gráficos
 - Refeições (café da manhã, almoço e janta + refeições extras)
 - Cadastrar refeição/alimentos e tabela nutritiva do item -editável- plus: pré cadatras alimentos
 ### Melhorias futuras

@@ -1,0 +1,64 @@
+/* src/components/Metricas/Metrics.css */
+.metrics-container {
+    padding: 20px;
+    background-color: #2f4f4f; /* Cor de fundo semelhante ao exemplo fornecido */
+    border-radius: 8px;
+    color: #ffffff; /* Cor de texto branco para contraste */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .metrics-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .metric-card {
+    background-color: #3b6066;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .metric-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .metric-card p {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .metrics-chart {
+    margin-bottom: 20px;
+  }
+  
+  .metrics-history {
+    background-color: #3b6066;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .metrics-history h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .metrics-history ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .metrics-history li {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
