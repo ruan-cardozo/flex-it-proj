@@ -33,7 +33,7 @@ function DialogTrainingContent() {
       "Treino funcional",
       "Treino HIIT",
       "Treino de hipertrofia",
-      "Treino de resustência muscular",
+      "Treino de resistência muscular",
       "Treino terapêutico"
   ];
   const dropdownOptions2 = [
@@ -45,11 +45,6 @@ function DialogTrainingContent() {
       "6x por semana",
       "7x por semana"
   ];
-  const dropdownOptions3 = [
-      "Iniciante",
-      "Intermediário",
-      "Avançado"
-  ];
 
   return (
       <div className={style.dialogContentGrid}>
@@ -57,7 +52,7 @@ function DialogTrainingContent() {
           {/* <CustomTextArea about="Descrição do treino"/> */}
           <CustomDropdown className={style.customDropdown} dropdownOptions={dropdownOptions}  about="Selecione o objetivo do treino"/>
           <CustomDropdown className={style.customDropdown} dropdownOptions={dropdownOptions2}  about="Frequência Semanal"/>
-          <CustomDropdown className={style.customDropdown} dropdownOptions={dropdownOptions3}  about="Dificuldade"/>
+            ç
       </div>
   );
 }
@@ -129,7 +124,7 @@ function CustomGridArea() {
                formTitle="Criar exercícios"
                isOpen={isExerciseModalOpen}
                onClose={handleCloseExerciseCardClick}
-           />
+           />Corrida
         </div>   
     );
 }

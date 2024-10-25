@@ -6,7 +6,7 @@ const LoginPage = () => {
     <>
       <Login />
     </>
-    
+  
   );
 };
 

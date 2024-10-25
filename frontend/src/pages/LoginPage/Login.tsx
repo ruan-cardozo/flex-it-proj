@@ -27,7 +27,7 @@ const useStylesCustomInput = makeStyles({
         width: '600px',
         padding: '20px',
         backgroundColor: '#0f6cbd',
-        marginLeft: '1300px',
+        marginLeft: '1050px',
         marginTop: '-300px',
         height: '450px',
         borderRadius: '20px',
@@ -35,10 +35,10 @@ const useStylesCustomInput = makeStyles({
        title: {
         display: 'flex',
         fontSize: '80px',
-        marginTop: '400px',
+        marginTop: '300px',
         textAlign: 'center',
         alignItems: 'center',
-        marginLeft: '350px',
+        marginLeft: '200px',
        },
         button: {
          backgroundColor: '#0f6cbd',
@@ -62,16 +62,15 @@ function Login() {
 	return (
         <div className={style.row}>
             <div>
-            <h1 className={style.title}>Bem vindo ao <br /><br /><br /><br /><br /> FlexIT</h1>
+                <h1 className={style.title}>Bem vindo ao <br /><br /><br /><br /><br /> FlexIT</h1>
+            </div>
+            <div className={style.box}>
+                <h1 className={style.titleBox}>Login</h1>
+                <CustomInput about="Email" placeholder='Digite seu email...' className={style.customInput} />
+                <CustomInput type='password' about="Senha" placeholder='Digite sua senha...' className={style.customInput} />
+                <Button className={style.button} appearance="secondary" onClick={() => 'teste'} icon={<ArrowEnterRegular />}>Login</Button>
+            </div>
         </div>
-        <div className={style.box}>
-            <h1 className={style.titleBox}>Login</h1>
-            <CustomInput about="Email" placeholder='Digite seu email...' className={style.customInput} />
-            <CustomInput type='password' about="Senha" placeholder='Digite sua senha...' className={style.customInput} />
-            <Button className={style.button} appearance="secondary" onClick={() => 'teste'} icon={<ArrowEnterRegular />}>Login</Button>
-        </div>
-        </div>
-        
     );
 }
 
