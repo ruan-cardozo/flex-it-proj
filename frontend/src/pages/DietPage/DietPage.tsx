@@ -1,21 +1,11 @@
 import React from 'react';
-import './DietScreen.css';
+import './DietPage.css';
+import LeftSideColumn from '../../components/LeftSideColumn/LeftSideColumn';
 
-const DietScreen: React.FC = () => {
+const DietPage: React.FC = () => {
   return (
     <div className="diet-app">
-      <div className="sidebar">
-        <h2>FlexIt</h2>
-        <nav>
-          <ul>
-            <li>Dietas</li>
-            <li>Treinos</li>
-            <li>Histórico</li>
-            <li>Métricas</li>
-            <li>Configurações</li>
-          </ul>
-        </nav>
-      </div>
+      <LeftSideColumn />
       <div className="diet-content">
         <h1>Gerenciamento de Dieta</h1>
         <div className="diet-cards">
@@ -40,4 +30,4 @@ const DietScreen: React.FC = () => {
   );
 };
 
-export default DietScreen;
+export default DietPage;
