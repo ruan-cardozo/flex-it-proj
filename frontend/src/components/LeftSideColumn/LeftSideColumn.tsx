@@ -3,9 +3,12 @@ import { CustomButton } from '../CustomButton/CustomButton';
 import Header from '../Header/Header';
 import './LeftSideColumn.css';
 import {
+    AccessibilityRegular,
     bundleIcon,
     DumbbellFilled,
-    DumbbellRegular
+    DumbbellRegular,
+    FoodAppleRegular,
+    HomeRegular
   } from "@fluentui/react-icons";
   
 const DumbbellIcon = bundleIcon(DumbbellFilled, DumbbellRegular);
@@ -20,8 +23,20 @@ function LeftSideColumn() {
             <Header style={{marginLeft: '10px'}} title='FlexIT'/>
             </div>
             <CustomButton onClick={() => {
+                navigate(window.location.pathname = '/home');
+            }} icon={<HomeRegular />} about='Início'/>
+            <br />
+            <CustomButton onClick={() => {
                 navigate(window.location.pathname = '/treinos');
             }} icon={<DumbbellIcon/>} about='Treinos'/>
+            <br />
+            <CustomButton onClick={() => {
+                navigate(window.location.pathname = '/dietas');
+            }} icon={<FoodAppleRegular />} about='Dietas'/>
+            <br />
+            <CustomButton onClick={() => {
+                navigate(window.location.pathname = '/metricas');
+            }} icon={<AccessibilityRegular />} about='Métricas'/>
         </div>
     );
 }
