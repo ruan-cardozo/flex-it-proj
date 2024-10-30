@@ -20,9 +20,9 @@ interface CustomFormProps {
 
 const useStyles = makeStyles({
   dialogSurface: {
-    width: "80vw", // 80% da largura da viewport
+    width: "60vw", // 80% da largura da viewport
     maxWidth: "800px", // Largura máxima de 800px
-    height: "80vh", // 80% da altura da viewport
+    height: "60vh", // 80% da altura da viewport
     maxHeight: "600px", // Altura máxima de 600px
     padding: "20px",
     borderRadius: "8px",
