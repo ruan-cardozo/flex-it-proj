@@ -17,7 +17,7 @@ function CustomInput(props: InputProps) {
   const style = useStyles();
 
   return (
-    <div className={style.root}>
+    <div className={props.className}>
       <Label className={props.className} htmlFor={inputId} size={props.size} disabled={props.disabled}>
         {props.about}
       </Label>
