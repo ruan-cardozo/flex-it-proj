@@ -9,6 +9,8 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import './Metrics.css';
+import LeftSideColumn from '../../components/LeftSideColumn/LeftSideColumn';
+import { TabList } from '@fluentui/react-components'; // calma fdp eu vou usar isso ainda
 
 const data = [
   { date: '2024-10-01', weight: 70 },
@@ -19,6 +21,13 @@ const data = [
 
 const Metrics = () => {
   return (
+    <div style={{ display: 'flex' }}>
+   <div style={{ width: '250px' }}> {/* Largura fixa para a coluna lateral */}
+                <LeftSideColumn />
+            </div>
+    <div style={{ display: 'flex' }}>
+              <TabList />
+    </div> 
     <div className="metrics-container">
       <h1>Métricas Corporais</h1>
       
@@ -60,6 +69,7 @@ const Metrics = () => {
           ))}
         </ul>
       </div>
+    </div>
     </div>
   );
 };
