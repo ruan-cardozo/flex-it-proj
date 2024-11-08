@@ -1,6 +1,7 @@
 import { Button, makeStyles } from '@fluentui/react-components';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { ArrowEnterRegular } from "@fluentui/react-icons";
+import { useNavigate } from 'react-router-dom';
 
 const useStylesCustomInput = makeStyles({
     row: {
@@ -45,7 +46,7 @@ const useStylesCustomInput = makeStyles({
          color: 'white',
          padding: '10px',
          borderRadius: '20px',
-         marginTop: '45px',
+         marginTop: '35px',
          marginLeft: '20px',
          width: '200px',
         },
@@ -58,6 +59,7 @@ const useStylesCustomInput = makeStyles({
 function Login() {
 
     const style = useStylesCustomInput();
+    const navigate = useNavigate();
 
 	return (
         <div className={style.row}>
@@ -69,6 +71,7 @@ function Login() {
                 <CustomInput about="Email" placeholder='Digite seu email...' className={style.customInput} />
                 <CustomInput type='password' about="Senha" placeholder='Digite sua senha...' className={style.customInput} />
                 <Button className={style.button} appearance="secondary" onClick={() => 'teste'} icon={<ArrowEnterRegular />}>Login</Button>
+                <Button className={style.button} appearance="secondary" onClick={() => navigate('/')} icon={<ArrowEnterRegular />}>Ir para registrar-se</Button>
             </div>
         </div>
     );
