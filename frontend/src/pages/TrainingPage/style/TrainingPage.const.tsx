@@ -37,16 +37,19 @@ export const useStylesTraining = makeStyles({
      width: "100%"
    },
    customInput: {
-     marginLeft: "10px",
-     display: "flex",
+     marginLeft: "5px",
      flexDirection: "column",
+     gridTemplateRows: "repeat(1fr)",
+     justifyItems: "start",
      gap: "2px",
-     width: "100%"
-
+     width: "100%",
+     maxWidth: "400px",
+     display: "grid",
    },
    dateInput: {
-      marginLeft: "10px",
-      width: "100%"
+      marginLeft: "5px",
+      width: "100%",
+      maxWidth: "400px",
    }
 });
 
@@ -59,16 +62,19 @@ export const useStylesExercise = makeStyles({
      width: "100%"
    },
    customInput: {
-     marginLeft: "10px",
-     display: "flex",
+     marginLeft: "5px",
      flexDirection: "column",
+     gridTemplateRows: "repeat(1fr)",
+     justifyItems: "start",
      gap: "2px",
-     width: "100%"
-
+     width: "100%",
+     maxWidth: "400px",
+     display: "grid",
    },
    dateInput: {
       marginLeft: "10px",
-      width: "100%"
+      width: "100%",
+      maxWidth: "400px",
    },
    customSpinButton: {
       marginLeft: "10px",
