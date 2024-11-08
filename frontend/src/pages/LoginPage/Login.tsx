@@ -7,6 +7,8 @@ const useStylesCustomInput = makeStyles({
     row: {
         maxWidth: '100%',
         maxHeight: '100%',
+        marginTop: '400px',
+        marginLeft: '120px',
     },
     customInput: {
         boxShadow: '0 0 8px rgba(0,0,0,0.24) 0 14px 28px rgba(0,0,0,0.28)',

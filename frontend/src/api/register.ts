@@ -15,8 +15,7 @@ export const register = async (userData: CreateUserDto) => {
 
     const response = await axios.post(url, userData);
 
-    console.log(response)
-    return response.data;
+    return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
         console.error('Erro na requisição:', error.response?.data);

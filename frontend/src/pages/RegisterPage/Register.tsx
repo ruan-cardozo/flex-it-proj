@@ -9,6 +9,9 @@ const useStylesCustomInput = makeStyles({
     row: {
         maxWidth: '100%',
         maxHeight: '100%',
+        marginLeft: '120px',
+        marginTop: '400px',
+
     },
     customInput: {
         boxShadow: '0 0 8px rgba(0,0,0,0.24) 0 14px 28px rgba(0,0,0,0.28)',
@@ -66,12 +69,16 @@ function Register() {
     const handleRegister = async () => {
         try {
           const userData = { name, email, password };
-            console.log(userData);
           const data = await register(userData);
+        
+          if (data.status === 201) {
+            alert('Usuário registrado com sucesso!');
 
-          console.log(data);
+            setName('');
+            setEmail('');
+            setPassword('');
+          }
 
-          console.log('Registro bem-sucedido:', data);
         } catch (error) {
           if (error instanceof Error) {
             console.error(error);
@@ -90,9 +97,25 @@ function Register() {
         </div>
         <div className={style.box}>
             <h1 className={style.titleBox}>Registre-se</h1>
-            <CustomInput about="Email" placeholder='Digite seu email...' className={style.customInput} onChange={(e) => setEmail(e.target.value)} />
-            <CustomInput about="Nome" placeholder='Digite seu nome...' className={style.customInput} onChange={(e) => setName(e.target.value)} />
-            <CustomInput type='password' about="Senha" placeholder='Digite sua senha...' className={style.customInput} onChange={(e) => setPassword(e.target.value)} />
+            <CustomInput 
+                about="Email" 
+                placeholder='Digite seu email...' 
+                className={style.customInput}
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} />
+            <CustomInput 
+                about="Nome" 
+                placeholder='Digite seu nome...' 
+                className={style.customInput} 
+                value={name}
+                onChange={(e) => setName(e.target.value)} />
+            <CustomInput 
+                type='password' 
+                about="Senha" 
+                placeholder='Digite sua senha...' 
+                className={style.customInput}
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} />
             <Button className={style.button} appearance="secondary" onClick={handleRegister} icon={<ArrowEnterRegular />}>Registrar-se</Button>
             <Button className={style.button} appearance="secondary" onClick={() => navigate('/login')} icon={<ArrowEnterRegular />}>Ir para o login</Button>
         </div>
