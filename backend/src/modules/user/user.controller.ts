@@ -12,6 +12,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FeatureFlagGuard } from '../feature-flag-guard/feature-flag.guard';
+import { IsPublic } from 'src/common/decorators/is-public.decorator';
 
 @Controller('/v1/users')
 export class UserController {
@@ -30,6 +31,7 @@ export class UserController {
 	}
 
 	@Post()
+	@IsPublic()
 	@UseGuards(FeatureFlagGuard)
 	public create(@Body() createUserDto: CreateUserDto) {
 

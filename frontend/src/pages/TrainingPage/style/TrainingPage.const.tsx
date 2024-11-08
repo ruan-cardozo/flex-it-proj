@@ -30,30 +30,48 @@ export const useStylesCustomCard = makeStyles({
 
 export const useStylesTraining = makeStyles({
    dialogContentGrid: {
-     display: "flex",
-     flexWrap: "wrap",
+    flexDirection: 'column',
      },
    customDropdown: {
      marginLeft: "10px",
+     width: "100%"
    },
    customInput: {
      marginLeft: "10px",
      display: "flex",
      flexDirection: "column",
      gap: "2px",
-     maxWidth: "200px",
+     width: "100%"
+
+   },
+   dateInput: {
+      marginLeft: "10px",
+      width: "100%"
    }
 });
 
 export const useStylesExercise = makeStyles({
-    dialogContentGrid: {
-      display: "flex",
-      flexWrap: "wrap",
-      },
-    customDropdown: {
+  dialogContentGrid: {
+    flexDirection: 'column',
+     },
+   customDropdown: {
+     marginLeft: "10px",
+     width: "100%"
+   },
+   customInput: {
+     marginLeft: "10px",
+     display: "flex",
+     flexDirection: "column",
+     gap: "2px",
+     width: "100%"
+
+   },
+   dateInput: {
       marginLeft: "10px",
-    },
-    customInput: {
+      width: "100%"
+   },
+   customSpinButton: {
       marginLeft: "10px",
-    }
+      width: "100%"
+   }
 });
