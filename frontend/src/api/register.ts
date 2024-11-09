@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { API_URL } from '../config/config';
 
-interface CreateUserDto {
+interface User {
   user_name?: string;
   name: string;
   email: string;
   password: string;
 }
 
-export const register = async (userData: CreateUserDto) => {
+export const register = async (userData: User) => {
   try { 
 
     const url = `${API_URL}users`;
