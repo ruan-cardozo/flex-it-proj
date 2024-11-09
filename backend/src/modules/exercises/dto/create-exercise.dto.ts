@@ -6,14 +6,14 @@ export class CreateExerciseDto {
     @IsString()
     name: string;
 
+    @IsEnum(MuscleGroup)
+    muscle_group: MuscleGroup;
+
     @IsNumber()
     series?: number;
     
     @IsNumber()
     repetitions?: number;
-
-    @IsEnum(MuscleGroup)
-    muscle_group: MuscleGroup;
 
     @IsNumber()
     exercise_weight?: number;
