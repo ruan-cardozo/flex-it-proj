@@ -9,7 +9,7 @@ import {
   Button,
   makeStyles,
 } from "@fluentui/react-components";
-import { SaveFilled, ArrowExitFilled } from "@fluentui/react-icons";
+import { DismissFilled } from "@fluentui/react-icons";
 
 interface CustomFormProps {
   formTitle: string;
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
   }
 });
 
-const DialogForm: React.FC<CustomFormProps> = ({ formTitle, dialogContent, isOpen, onClose }) => {
+const DialogForm: React.FC<CustomFormProps> = ({ formTitle, dialogContent, isOpen, onClose}) => {
 
   const styles = useStyles();
 
@@ -59,8 +59,7 @@ const DialogForm: React.FC<CustomFormProps> = ({ formTitle, dialogContent, isOpe
             {dialogContent}
           </DialogContent>
           <DialogActions className={styles.dialogActions}>
-            <Button appearance="secondary" onClick={onClose} icon={<ArrowExitFilled />}>Fechar</Button>
-            <Button appearance="primary" icon={<SaveFilled/>}>Salvar</Button>
+            <Button appearance="secondary" onClick={onClose} icon={<DismissFilled />}>Fechar</Button>
           </DialogActions>
         </DialogBody>
       </DialogSurface>

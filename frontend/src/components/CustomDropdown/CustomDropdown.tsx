@@ -18,9 +18,11 @@ const useStyles = makeStyles({
 
 interface CustomDropdownProps extends Partial<DropdownProps> {
     dropdownOptions: Array<string>;
+    value: string;
+    onChange?: (event: any, option?: string) => void;
 }
 
-function CustomDropdown({dropdownOptions, ...props}: CustomDropdownProps)  {
+function CustomDropdown({dropdownOptions, value, onChange, ...props}: CustomDropdownProps) {
   const dropdownId = useId("dropdown-default");
 
   const styles = useStyles();
@@ -30,16 +32,21 @@ function CustomDropdown({dropdownOptions, ...props}: CustomDropdownProps)  {
       <Dropdown
         aria-labelledby={dropdownId}
         placeholder={props.placeholder}
+        value={value} // Certifique-se de passar o valor selecionado aqui
+        onOptionSelect={(event, data) => onChange && onChange(data.optionValue)} // Atualizando o estado ao selecionar uma opção
         {...props}
       >
-        {dropdownOptions.map((option) => (
-          <Option key={option}>
-            {option}
-          </Option>
-        ))}
+        {dropdownOptions.map((option) => {
+          return (
+            <Option key={option} value={option}>
+              {option}
+            </Option>
+          );
+        })}
       </Dropdown>
     </div>
   );
 };
+
 
 export default CustomDropdown;

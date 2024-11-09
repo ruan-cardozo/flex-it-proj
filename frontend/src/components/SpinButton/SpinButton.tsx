@@ -21,62 +21,58 @@ const useLayoutStyles = makeStyles({
     },
   },
 });
-interface CustomSpinButtonProps extends SpinButtonProps {
-    applyFormatter?: boolean;
+
+interface CustomSpinButtonProps extends Omit<SpinButtonProps, 'value' | 'onChange' | 'displayValue'> {
+  value: number;
+  onChange: (value: number) => void;
+  applyFormatter?: boolean;
+  about?: string;
 }
-type FormatterFn = (value: number) => string;
-type ParserFn = (formattedValue: string) => number;
 
-function CustomSpinButton({ applyFormatter, ...props }: CustomSpinButtonProps) {
+const CustomSpinButton: React.FC<CustomSpinButtonProps> = ({
+  value,
+  onChange,
+  applyFormatter = false,
+  about,
+  ...props
+}) => {
+  const formatter = (val: number) => (applyFormatter ? `${val}kg` : `${val}`);
 
-
-  const formatter: FormatterFn = (value) => {
-    return applyFormatter ? `${value}kg` : `${value}`;
-  };
-
-  const parser: ParserFn = (formattedValue) => {
-    if (formattedValue === null) {
-      return NaN;
+  const parser = (formattedValue: string) => {
+    let parsedValue = formattedValue;
+    if (applyFormatter) {
+      parsedValue = parsedValue.replace("kg", "");
     }
-
-    return parseFloat(formattedValue.replace("$", ""));
+    return parseFloat(parsedValue);
   };
 
-  const onSpinButtonChange: SpinButtonProps["onChange"] = (_ev, data) => {
+  const handleSpinButtonChange: SpinButtonProps["onChange"] = (_ev, data) => {
+    let newValue: number = value;
+
     if (data.value !== undefined && data.value !== null) {
-      setSpinButtonValue(data.value);
-      setSpinButtonDisplayValue(formatter(data.value));
-    } else if (data.displayValue !== undefined) {
-      const newValue = parser(data.displayValue);
-      if (!Number.isNaN(newValue)) {
-        setSpinButtonValue(newValue);
-        setSpinButtonDisplayValue(formatter(newValue));
-      } else {
-        // Display a "special" value when user types something
-        // that's not parsable as a number.
-        setSpinButtonValue(null);
-        setSpinButtonDisplayValue("(null)");
+      newValue = data.value;
+    } else if (data.displayValue !== undefined && data.displayValue !== null) {
+      const parsed = parser(data.displayValue);
+      if (!Number.isNaN(parsed)) {
+        newValue = parsed;
       }
     }
+
+    onChange(newValue);
   };
 
   const layoutStyles = useLayoutStyles();
   const id = useId();
-  const [spinButtonValue, setSpinButtonValue] = React.useState<number | null>(
-    1
-  );
-  const [spinButtonDisplayValue, setSpinButtonDisplayValue] = React.useState(
-    formatter(1)
-  );
 
   return (
     <div className={layoutStyles.base}>
-      <Label htmlFor={id}>{props.about}</Label>
+      {about && <Label htmlFor={id}>{about}</Label>}
       <SpinButton
-        value={spinButtonValue}
-        displayValue={spinButtonDisplayValue}
-        onChange={onSpinButtonChange}
+        {...props}
         id={id}
+        value={value}
+        displayValue={formatter(value)}
+        onChange={handleSpinButtonChange}
       />
     </div>
   );
