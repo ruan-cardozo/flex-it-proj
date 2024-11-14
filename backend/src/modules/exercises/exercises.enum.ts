@@ -1,13 +1,16 @@
 export enum MuscleGroup {
-    Chest = "Chest",
-    Back = "Back",
-    Legs = "Legs",
-    Shoulders = "Shoulders",
-    Biceps = "Biceps",
-    Triceps = "Triceps",
-    Abdominals = "Abdominals",
-    Calves = "Calves",
-    Forearms = "Forearms"
+    Peito = "Peito",
+    Pernas = "Pernas",
+    Costas = "Costas",
+    Ombros = "Ombros",
+    Biceps = "Bíceps",
+    Triceps = "Tríceps",
+    Abdomen = "Abdômen",
+    Gluteos = "Glúteos",
+    Panturrilha = "Panturrilha",
+    Trapezio = "Trapézio",
+    Antebraco = "Antebraço",
+    Quadriceps = "Quadríceps"
 }
 
 export enum RestTime {

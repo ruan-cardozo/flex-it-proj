@@ -1,20 +1,20 @@
 export enum TrainingObjective {
-    CardiovascularTraining = "Cardiovascular Training",
-    DefinitionTraining = "Definition Training",
-    StrengthTraining = "Strength Training",
-    FunctionalTraining = "Functional Training",
-    HIITTraining = "HIIT Training",
-    HypertrophyTraining = "Hypertrophy Training",
-    MuscularEnduranceTraining = "Muscular Endurance Training",
-    TherapeuticTraining = "Therapeutic Training"
+    Cardiovascular = "Treino cardiovascular",
+    Definition = "Treino de definição",
+    Strength = "Treino de força",
+    Functional = "Treino funcional",
+    HIIT = "Treino HIIT",
+    Hypertrophy = "Treino de hipertrofia",
+    MuscularEndurance = "Treino de resistência muscular",
+    Therapeutic = "Treino terapêutico"
 }
 
 export enum WeeklyFrequency {
-    OncePerWeek = "Once Per Week",
-    TwicePerWeek = "Twice Per Week",
-    ThreeTimesPerWeek = "Three Times Per Week",
-    FourTimesPerWeek = "Four Times Per Week",
-    FiveTimesPerWeek = "Five Times Per Week",
-    SixTimesPerWeek = "Six Times Per Week",
-    SevenTimesPerWeek = "Seven Times Per Week"
+    OncePerWeek = "1x por semana",
+    TwicePerWeek = "2x por semana",
+    ThricePerWeek = "3x por semana",
+    FourTimesPerWeek = "4x por semana",
+    FiveTimesPerWeek = "5x por semana",
+    SixTimesPerWeek = "6x por semana",
+    SevenTimesPerWeek = "7x por semana"
 }

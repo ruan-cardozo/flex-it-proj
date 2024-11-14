@@ -9,7 +9,7 @@ import {
   Button,
   makeStyles,
 } from "@fluentui/react-components";
-import { SaveFilled, ArrowExitFilled } from "@fluentui/react-icons";
+import { DismissFilled } from "@fluentui/react-icons";
 
 interface CustomFormProps {
   formTitle: string;
@@ -21,7 +21,7 @@ interface CustomFormProps {
 const useStyles = makeStyles({
   dialogSurface: {
     width: "60vw", // 80% da largura da viewport
-    maxWidth: "800px", // Largura máxima de 800px
+    maxWidth: "900px", // Largura máxima de 800px
     height: "60vh", // 80% da altura da viewport
     maxHeight: "600px", // Altura máxima de 600px
     padding: "20px",
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
   }
 });
 
-const DialogForm: React.FC<CustomFormProps> = ({ formTitle, dialogContent, isOpen, onClose }) => {
+const DialogForm: React.FC<CustomFormProps> = ({ formTitle, dialogContent, isOpen, onClose}) => {
 
   const styles = useStyles();
 
@@ -59,8 +59,7 @@ const DialogForm: React.FC<CustomFormProps> = ({ formTitle, dialogContent, isOpe
             {dialogContent}
           </DialogContent>
           <DialogActions className={styles.dialogActions}>
-            <Button appearance="secondary" onClick={onClose} icon={<ArrowExitFilled />}>Fechar</Button>
-            <Button appearance="primary" icon={<SaveFilled/>}>Salvar</Button>
+            <Button appearance="secondary" onClick={onClose} icon={<DismissFilled />}>Fechar</Button>
           </DialogActions>
         </DialogBody>
       </DialogSurface>

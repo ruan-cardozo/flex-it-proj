@@ -30,8 +30,11 @@ export const useStylesCustomCard = makeStyles({
 
 export const useStylesTraining = makeStyles({
    dialogContentGrid: {
-    flexDirection: 'column',
-     },
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '20px',
+    flexDirection: 'column'
+    },
    customDropdown: {
      marginLeft: "10px",
      width: "100%"
@@ -50,6 +53,24 @@ export const useStylesTraining = makeStyles({
       marginLeft: "5px",
       width: "100%",
       maxWidth: "400px",
+   },
+   exerciseList: {
+    borderLeft: "1px solid black",
+    paddingLeft: "20px",
+   },
+   saveExerciseButton: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "2px",
+    width: "150px",
+    maxWidth: "200px",
+    borderRadius: "10px"
+   },
+   addExerciseSaveButton: {
+    marginTop: "12px",
+    width: "150px",
+    maxWidth: "200px",
+    borderRadius: "10px",
    }
 });
 
