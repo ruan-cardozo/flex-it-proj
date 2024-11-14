@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
+import { isTokenExpired } from '../../utils/is-token-expired';
+import getAuthToken from '../../utils/get-auth-token';
 
 const UnauthorizedPage: React.FC = () => {
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = getAuthToken();
+        if (!token || isTokenExpired(token)) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     const handleLoginRedirect = () => {
         navigate('/login');
