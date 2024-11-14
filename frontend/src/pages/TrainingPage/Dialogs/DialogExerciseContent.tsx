@@ -28,7 +28,7 @@ const DialogExerciseContent: React.FC = () => {
     ];
 
     const handleInputChange = (field: string, value: any) => {
-        console.log(field, value);
+
         setExercise(prevState => ({
             ...prevState,
             [field]: value

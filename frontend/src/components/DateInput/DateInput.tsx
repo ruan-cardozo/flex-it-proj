@@ -1,16 +1,22 @@
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import type { DatePickerProps } from "@fluentui/react-datepicker-compat";
 
-export function DateInput(props: Partial<DatePickerProps>) {
+interface DateInputProps extends Partial<DatePickerProps> {
+  about: string;
+  className?: string;
+}
+
+export function DateInput(props: DateInputProps) {
+  const { about, className, ...datePickerProps } = props;
 
   return (
-    <div className={props.className} >
-        <label className={props.className}>{props.about}</label>
-        <DatePicker
-            className={props.className}
-            placeholder="Selecione a data..."
-            {...props}
-        />
+    <div className={className}>
+      <label className={className}>{about}</label>
+      <DatePicker
+        className={className}
+        placeholder="Selecione a data..."
+        {...datePickerProps}
+      />
     </div>
   );
-};
+}
