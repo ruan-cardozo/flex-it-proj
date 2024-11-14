@@ -32,9 +32,9 @@ export enum RestTime {
     SixMinutes = "6min"
 }
 
-interface Exercise {
-    name: string;
-    muscle_group: MuscleGroup | string;
+export interface Exercise {
+    name?: string;
+    muscle_group?: MuscleGroup | string;
     series?: number;
     repetitions?: number;
     exercise_weight?: number;
@@ -65,6 +65,33 @@ export const getExercises = async () => {
         return response.data;
     } catch (error) {
         console.error('Error getting exercises:', error);
+        throw error;
+    }
+}
+
+export const editExercise = async (id: number, exercise: Exercise) => {
+   
+    const url = `${API_URL}exercises/${id}`;
+
+    try {
+        const response = await axiosInstance.put(url, exercise);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error getting exercise:', error);
+        throw error;
+    }
+}
+
+export const deleteExercise = async (id: number) => {
+    const url = `${API_URL}exercises/${id}`;
+
+    try {
+        const response = await axiosInstance.delete(url);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting exercise:', error);
         throw error;
     }
 }
