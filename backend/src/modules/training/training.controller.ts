@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes } from '@nestjs/common';
 import { TrainingService } from './training.service';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
+import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { trainingSchema } from './training.validation';
 
 @Controller('/v1/training')
 export class TrainingController {
@@ -10,6 +12,7 @@ export class TrainingController {
   ) { }
 
   @Post()
+  @UsePipes(new JoiValidationPipe(trainingSchema))
   create(@Body() createTrainingDto: CreateTrainingDto) {
     return this.trainingService.create(createTrainingDto);
   }

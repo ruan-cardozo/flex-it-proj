@@ -21,7 +21,7 @@ export class Training extends BaseEntity {
     @Column()
     weekly_frequency: WeeklyFrequency;
 
-    @Column()
+    @Column({ nullable: true })
     necessary_equipment: string;
 
     @OneToMany(() => TrainingExercise, trainingExercise => trainingExercise.training, { cascade: true })

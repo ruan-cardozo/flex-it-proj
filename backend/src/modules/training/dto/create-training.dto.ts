@@ -1,4 +1,4 @@
-import { IsArray, IsDateString, IsEnum, IsString } from "class-validator";
+import { IsArray, IsDateString, IsEnum, IsNumber, IsString } from "class-validator";
 import { TrainingObjective, WeeklyFrequency } from "../training.enum";
 
 export class CreateTrainingDto {
@@ -23,4 +23,7 @@ export class CreateTrainingDto {
 
     @IsArray()
     exercise_ids: number[];
+
+    @IsNumber()
+    created_by: number;
 }
