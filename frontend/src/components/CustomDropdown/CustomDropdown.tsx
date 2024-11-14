@@ -32,8 +32,8 @@ function CustomDropdown({dropdownOptions, value, onChange, ...props}: CustomDrop
       <Dropdown
         aria-labelledby={dropdownId}
         placeholder={props.placeholder}
-        value={value} // Certifique-se de passar o valor selecionado aqui
-        onOptionSelect={(event, data) => onChange && onChange(data.optionValue)} // Atualizando o estado ao selecionar uma opção
+        value={value}
+        onOptionSelect={(event, data) => onChange && onChange(data.optionValue)}
         {...props}
       >
         {dropdownOptions.map((option) => {

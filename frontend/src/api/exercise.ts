@@ -55,3 +55,16 @@ export const createExercise = async (exercise: Exercise) => {
         throw error;
     }
 };
+
+export const getExercises = async () => {
+    const url = `${API_URL}exercises`;
+
+    try {
+        const response = await axiosInstance.get(url);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error getting exercises:', error);
+        throw error;
+    }
+}

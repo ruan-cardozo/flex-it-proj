@@ -7,6 +7,7 @@ import DialogForm from "../../components/DialogForm/DialogForm";
 import { useStylesCustomCard } from "./style/TrainingPage.const";
 import DialogTrainingContent from "./Dialogs/DialogTrainingContent";
 import DialogExerciseContent from "./Dialogs/DialogExerciseContent";
+import { useNavigate } from "react-router-dom";
 
 interface CustomGridAreaProps {
     onExerciseCardClick: () => void; 
@@ -62,6 +63,7 @@ export default function TrainingPage() {
 
 function CustomGridArea({ onExerciseCardClick, onTrainingCardClick }: CustomGridAreaProps) {
     const customCardStyle = useStylesCustomCard();
+    const navigate = useNavigate();
 
     return (
         <div className="card-grid">
@@ -79,7 +81,7 @@ function CustomGridArea({ onExerciseCardClick, onTrainingCardClick }: CustomGrid
             />
             <CustomCard
                 className={customCardStyle.main}
-                onClick={() => console.log('Visualizar exercícios')}
+                onClick={() => navigate('/treinos/exercicios')}
                 cardTitle="Visualizar exercícios"
                 cardParagraph="Clique aqui para visualizar seus exercícios e realizar edições"
             />
