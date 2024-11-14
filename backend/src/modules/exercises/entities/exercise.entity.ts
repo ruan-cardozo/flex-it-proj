@@ -10,21 +10,21 @@ export class Exercise extends BaseEntity {
     name: string;
 
     @Column()
-    series?: number;
-
-    @Column()
-    repetitions?: number;
-
-    @Column()
     muscle_group: MuscleGroup;
 
-    @Column()
+    @Column({ nullable: true })
+    series?: number;
+
+    @Column({ nullable: true })
+    repetitions?: number;
+
+    @Column({ nullable: true })
     exercise_weight?: number;
 
-    @Column()
+    @Column({ nullable: true })
     rest_time?: RestTime;
 
-    @Column()
+    @Column({ nullable: true })
     observation?: string;
 
     @OneToMany(() => TrainingExercise, trainingExercise => trainingExercise.exercise, { cascade: true })

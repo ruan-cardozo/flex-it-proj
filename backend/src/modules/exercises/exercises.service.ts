@@ -1,41 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
+import { REQUEST } from '@nestjs/core';
 
-@Injectable()
+@Injectable({scope: Scope.REQUEST})
 export class ExercisesService {
   constructor(
     @InjectRepository(Exercise)
-    private readonly exerciseRepository: Repository<Exercise>
+    private readonly exerciseRepository: Repository<Exercise>,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   public async create(createExerciseDto: CreateExerciseDto): Promise<Exercise> {
+
+    createExerciseDto.created_by = this.request['userId'];
+
     const exercise = this.exerciseRepository.create(createExerciseDto);
+
     await this.exerciseRepository.save(exercise);
 
     return exercise;
   }
 
   public async findAll(): Promise<Exercise[]> {
-    return this.exerciseRepository.find({ relations: ['trainingExercises', 'trainingExercises.training'] });
+    return this.exerciseRepository.find({ relations: ['trainingExercises', 'trainingExercises.training'], where: { created_by: this.request['userId'] } });
   }
 
   public async findOne(id: number): Promise<Exercise> {
     return this.exerciseRepository.findOne({
-      where: { id },
+      where: { id, created_by: this.request['userId'] },
       relations: ['trainingExercises', 'trainingExercises.training'],
     });
   }
 
   public async update(id: number, updateExerciseDto: UpdateExerciseDto): Promise<Exercise> {
-    await this.exerciseRepository.update(id, updateExerciseDto);
-    return this.exerciseRepository.findOne({ where: { id } });
+    await this.exerciseRepository.update({ id, created_by: this.request['userId'] }, updateExerciseDto);
+    return this.exerciseRepository.findOne({ where: { id, created_by: this.request['userId'] } });
   }
 
   public async remove(id: number): Promise<void> {
-    await this.exerciseRepository.delete(id);
+    await this.exerciseRepository.delete({ id, created_by: this.request['userId'] });
   }
 }

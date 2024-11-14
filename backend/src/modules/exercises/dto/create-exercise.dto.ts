@@ -23,4 +23,7 @@ export class CreateExerciseDto {
 
     @IsString()
     observation?: string;
+
+    @IsNumber()
+    created_by?: number;
 }
