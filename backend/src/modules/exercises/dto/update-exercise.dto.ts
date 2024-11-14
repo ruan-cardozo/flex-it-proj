@@ -15,7 +15,7 @@ export class UpdateExerciseDto extends PartialType(CreateExerciseDto) {
     repetitions?: number;
 
     @IsEnum(MuscleGroup)
-    muscle_group: MuscleGroup;
+    muscle_group?: MuscleGroup;
 
     @IsNumber()
     exercise_weight?: number;
