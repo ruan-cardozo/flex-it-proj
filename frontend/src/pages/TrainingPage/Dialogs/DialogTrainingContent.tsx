@@ -6,7 +6,7 @@ import { DateInput } from '../../../components/DateInput/DateInput';
 import CustomSpinButton from '../../../components/SpinButton/SpinButton';
 import { Button } from '@fluentui/react-components';
 import { DeleteFilled } from '@fluentui/react-icons';
-import { createTraining, addExerciseToTraining } from '../../../api/training';
+import { createTraining } from '../../../api/training';
 import { editExercise, getExercises } from '../../../api/exercise';
 import { TrainingObjective, Frequency } from '../../../api/training';
 
@@ -179,23 +179,27 @@ const DialogTrainingContent: React.FC = () => {
                     )}
                 </div>
                 <div className={style.exerciseList}>
+                    {trainingId && (
+                    <>
                     <h2>Exercícios Selecionados:</h2>
-                    <ul>
-                        {selectedExercises.map((exercise, index) => (
-                            <li key={index}>
-                                <Button icon={<DeleteFilled />} onClick={() => handleRemoveExercise(index)} style={{ minWidth: '25px', height: '25px', padding: '0', marginRight : '10px' }} />
-                                {exercise.name} - Peso: {exercise.weight}kg, Série: {exercise.series}, Repetições: {exercise.repetitions}
-                            </li>
-                        ))}
-                        <div style={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
-                            <Button 
-                                style={{ width: '100%', height: '30px', padding: '0' }}
-                                className={style.addExerciseSaveButton} 
-                                onClick={handleCreateTraining}>
-                                Adicionar exercícios ao treino
-                            </Button>
-                        </div>
-                    </ul>
+                        <ul>
+                            {selectedExercises.map((exercise, index) => (
+                                <li key={index}>
+                                    <Button icon={<DeleteFilled />} onClick={() => handleRemoveExercise(index)} style={{ minWidth: '25px', height: '25px', padding: '0', marginRight : '10px' }} />
+                                    {exercise.name} - Peso: {exercise.weight}kg, Série: {exercise.series}, Repetições: {exercise.repetitions}
+                                </li>
+                            ))}
+                            <div style={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
+                                <Button 
+                                    style={{ width: '100%', height: '30px', padding: '0' }}
+                                    className={style.addExerciseSaveButton} 
+                                    onClick={handleCreateTraining}>
+                                    Adicionar exercícios ao treino
+                                </Button>
+                            </div>
+                        </ul>
+                    </>
+                    )}
                 </div>  
             </div>
         </>
