@@ -1,126 +1,102 @@
 import {
-  FolderRegular,
   EditRegular,
-  OpenRegular,
-  DocumentRegular,
-  DocumentPdfRegular,
-  VideoRegular,
+  DocumentBorderPrintRegular,
   DeleteRegular,
 } from "@fluentui/react-icons";
 import {
-  Avatar,
   DataGridBody,
   DataGridRow,
   DataGrid,
   DataGridHeader,
   DataGridHeaderCell,
   DataGridCell,
-  TableCellLayout,
   TableColumnDefinition,
-  createTableColumn,
   Button,
   DataGridCellFocusMode,
 } from "@fluentui/react-components";
 
-type ValueCell = {
-  label: string;
-  icon: JSX.Element;
-};
-
-type CategoriaCell = {
-  label: string;
-  status: string;
-};
-
-type Item = {
-  Nome: ValueCell;
-  Categoria: CategoriaCell;
-};
+// Define o tipo genérico do item
+type Item = Record<string, any>;
 
 interface CustomDataGridProps {
-  items: Item[];
+  items: Item[]; // Dados a serem exibidos
+  columns: TableColumnDefinition<Item>[]; // Definições de colunas
+  onOpenItem?: (item: Item) => void; // Callback para "Abrir"
+  onEditItem?: (item: Item) => void; // Callback para "Editar"
+  onDeleteItem?: (item: Item) => void; // Callback para "Remover"
 }
 
-const items: Item[] = [
-  {
-    Nome: { label: "Meeting notes", icon: <DocumentRegular /> },
-    Categoria: { label: "Max Mustermann", status: "available" },
-  },
-  {
-    Nome: { label: "Thursday presentation", icon: <FolderRegular /> },
-    Categoria: { label: "Erika Mustermann", status: "busy" },
-  },
-  {
-    Nome: { label: "Training recording", icon: <VideoRegular /> },
-    Categoria: { label: "John Doe", status: "away" },
-  },
-  {
-    Nome: { label: "Purchase order", icon: <DocumentPdfRegular /> },
-    Categoria: { label: "Jane Doe", status: "offline" },
-  },
-];
-
-const columns: TableColumnDefinition<Item>[] = [
-  createTableColumn<Item>({
-    columnId: "Nome",
-    compare: (a, b) => a.Nome.label.localeCompare(b.Nome.label),
-    renderHeaderCell: () => "Nome",
-    renderCell: (item) => (
-      <TableCellLayout media={item.Nome.icon}>{item.Nome.label}</TableCellLayout>
-    ),
-  }),
-  createTableColumn<Item>({
-    columnId: "Categoria",
-    compare: (a, b) => a.Categoria.label.localeCompare(b.Categoria.label),
-    renderHeaderCell: () => "Categoria",
-    renderCell: (item) => (
-      <TableCellLayout
-        media={
-          <Avatar
-            aria-label={item.Categoria.label}
-            name={item.Categoria.label}
-          />
-        }
-      >
-        {item.Categoria.label}
-      </TableCellLayout>
-    ),
-  }),
-  createTableColumn<Item>({
-    columnId: "Visualizar exercício",
-    renderHeaderCell: () => "Visualizar exercício",
-    renderCell: () => <Button icon={<OpenRegular />}>Abrir</Button>,
-  }),
-  createTableColumn<Item>({
-    columnId: "Ações",
-    renderHeaderCell: () => "Ações",
-    renderCell: () => (
-      <>
-        <Button aria-label="Editar" icon={<EditRegular />} />
-        <Button aria-label="Remover" icon={<DeleteRegular />} />
-      </>
-    ),
-  }),
-];
-
+// Função para definir o modo de foco da célula
 const getCellFocusMode = (columnId: string): DataGridCellFocusMode => {
   switch (columnId) {
-    case "singleAction":
-      return "none";
-    case "actions":
-      return "group";
+    case "Ações":
+      return "group"; // Foco em grupo para a coluna de ações
     default:
-      return "cell";
+      return "cell";  // Foco padrão para outras colunas
   }
 };
 
-function CustomDataGrid() {
+// Função que adiciona a coluna de ações no final das colunas
+const addActionsColumn = (
+  columns: TableColumnDefinition<Item>[],
+  onOpenItem?: (item: Item) => void,
+  onEditItem?: (item: Item) => void,
+  onDeleteItem?: (item: Item) => void
+): TableColumnDefinition<Item>[] => {
+  return [
+    ...columns,
+    {
+      columnId: 'Ações',
+      compare: () => 0, // Comparação neutra para a coluna de ações
+      renderHeaderCell: () => 'Ações', // Cabeçalho da coluna
+      renderCell: (item: Item) => (
+        <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
+          {onOpenItem && (
+            <Button
+              icon={<DocumentBorderPrintRegular />}
+              onClick={() => onOpenItem(item)}
+              size="small"
+              appearance="transparent"
+              title="Imprimir exercício" />
+          )}
+          {onEditItem && (
+            <Button
+              icon={<EditRegular />}
+              onClick={() => onEditItem(item)}
+              size="small"
+              appearance="transparent"
+              title="Editar" />
+          )}
+          {onDeleteItem && (
+            <Button
+              icon={<DeleteRegular />}
+              onClick={() => onDeleteItem(item)}
+              size="small"
+              appearance="transparent"
+              title="Excluir" />
+          )}
+        </div>
+      )
+    },
+  ];
+};
+
+const CustomDataGrid: React.FC<CustomDataGridProps> = ({
+  items,
+  columns,
+  onOpenItem,
+  onEditItem,
+  onDeleteItem,
+}) => {
+  // Adiciona a coluna de ações
+  const updatedColumns = addActionsColumn(columns, onOpenItem, onEditItem, onDeleteItem);
+
   return (
     <DataGrid
       items={items}
-      columns={columns}
+      columns={updatedColumns}
       sortable
-      getRowId={(item) => item.Nome.label}
+      getRowId={(item) => item.id} // Supondo que os itens têm uma propriedade `id`
       style={{ minWidth: "550px" }}
     >
       <DataGridHeader>
@@ -143,6 +119,6 @@ function CustomDataGrid() {
       </DataGridBody>
     </DataGrid>
   );
-}
+};
 
 export default CustomDataGrid;
