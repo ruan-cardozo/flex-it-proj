@@ -51,14 +51,30 @@ export const createTraining = async (trainingData: Training) => {
     }
 }
 
-export const addExerciseToTraining = async (trainingExerciseData: TrainingExercise) => {
+export const editTraining = async (trainingData: Training, trainingId: number) => {
     try {
 
-        const url = `${API_URL}training/exercise`;
+        const url = `${API_URL}training/${trainingId}`;
 
-        const response = await axiosInstance.post(url, trainingExerciseData);
+        console.log(trainingData);
+
+        const response = await axiosInstance.put(url, trainingData);
 
         return response;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const getTrainings = async () => {
+    try {
+
+        const url = `${API_URL}training`;
+
+        const response = await axiosInstance.get(url);
+
+        return response.data;
 
     } catch (error) {
         console.error(error);
