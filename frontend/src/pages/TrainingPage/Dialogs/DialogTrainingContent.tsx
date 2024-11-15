@@ -6,7 +6,7 @@ import { DateInput } from '../../../components/DateInput/DateInput';
 import CustomSpinButton from '../../../components/SpinButton/SpinButton';
 import { Button } from '@fluentui/react-components';
 import { DeleteFilled } from '@fluentui/react-icons';
-import { createTraining } from '../../../api/training';
+import { createTraining, editTraining } from '../../../api/training';
 import { editExercise, getExercises } from '../../../api/exercise';
 import { TrainingObjective, Frequency } from '../../../api/training';
 
@@ -53,7 +53,8 @@ const DialogTrainingContent: React.FC = () => {
     const handleCreateTraining = async () => {
         console.log({ trainingName, trainingObjective, trainingFrequency, startDate, endDate, equipment });
             if (trainingName && trainingObjective && trainingFrequency && startDate && endDate && equipment) {
-    
+                
+
                 const trainingData = {
                     name: trainingName,
                     training_objective: trainingObjective as TrainingObjective,
@@ -61,7 +62,6 @@ const DialogTrainingContent: React.FC = () => {
                     start_date: startDate,
                     end_date: endDate,
                     necessary_equipment: equipment,
-                    exercise_ids: selectedExercises.map(exercise => exercise.id)
                 };
 
                 console.log(trainingData);
@@ -78,11 +78,51 @@ const DialogTrainingContent: React.FC = () => {
             } else {
                 alert('Preencha todos os campos do treino.');
             }
-        };
+    };
 
+    const handleEditTraining = async () => {
+
+        if (trainingName && trainingObjective && trainingFrequency && startDate && endDate && equipment) {
+                
+            const trainingData = {
+                name: trainingName,
+                training_objective: trainingObjective as TrainingObjective,
+                weekly_frequency: trainingFrequency as Frequency,
+                start_date: startDate,
+                end_date: endDate,
+                necessary_equipment: equipment,
+                exercise_ids: selectedExercises.map(exercise => exercise.id)
+            };
+            console.log(selectedExercises);
+
+            console.log(trainingData.exercise_ids);
+
+            console.log(trainingData);
+
+            try {
+                const response = await editTraining(trainingData, trainingId as number);
+                if (response && response.data) {
+                    setTrainingId(response.data.id);
+                    alert('Treino editado com sucesso!');
+                }
+            } catch (error) {
+                console.error('Erro ao criar treino:', error);
+            }
+        } else {
+            alert('Preencha todos os campos do treino.');
+        }
+    }
+
+
+    //implementar no handle add exercise o id do exercicio para mapear em um array e mandar para o backend
     const handleAddExercise = async () => {
         if (trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0) {
-            const newExercise = { name: selectedExercise, weight, series, repetitions };
+
+            const exerciseId = exerciseOptions.find(exercise => exercise.name === selectedExercise)?.id;
+
+            console.log(exerciseId);
+
+            const newExercise = { id: exerciseId, name: selectedExercise, weight, series, repetitions };
             setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
 
             const exerciseData = {
@@ -193,7 +233,7 @@ const DialogTrainingContent: React.FC = () => {
                                 <Button 
                                     style={{ width: '100%', height: '30px', padding: '0' }}
                                     className={style.addExerciseSaveButton} 
-                                    onClick={handleCreateTraining}>
+                                    onClick={handleEditTraining}>
                                     Adicionar exercícios ao treino
                                 </Button>
                             </div>

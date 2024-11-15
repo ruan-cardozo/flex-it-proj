@@ -87,7 +87,7 @@ function CustomGridArea({ onExerciseCardClick, onTrainingCardClick }: CustomGrid
             />
             <CustomCard
                 className={customCardStyle.main}
-                onClick={() => console.log('Visualizar treinos')}
+                onClick={() => navigate('/treinos/visualizar')}
                 cardTitle="Visualizar treinos"
                 cardParagraph="Clique aqui para visualizar seus treinos, fazer edições rápidas e imprimir suas rotinas personalizadas!"
             />
