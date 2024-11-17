@@ -10,6 +10,7 @@ import {
     FoodAppleRegular,
     HomeRegular
   } from "@fluentui/react-icons";
+import UserComponent from '../UserComponent/UserComponent';
   
 const DumbbellIcon = bundleIcon(DumbbellFilled, DumbbellRegular);
 
@@ -37,6 +38,13 @@ function LeftSideColumn() {
             <CustomButton onClick={() => {
                 navigate(window.location.pathname = '/metricas');
             }} icon={<AccessibilityRegular />} about='Métricas'/>
+            <div style={{ 
+                marginTop: 'auto', 
+                marginBottom: '12px',
+                marginLeft: '15px'
+                }}>
+                <UserComponent color='white' />
+            </div>
         </div>
     );
 }
