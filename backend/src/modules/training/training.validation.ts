@@ -8,4 +8,5 @@ export const trainingSchema = Joi.object({
     end_date: requiredDate('data de término'),
     weekly_frequency: requiredString('frequência semanal'),
     necessary_equipment: requiredString('equipamento necessário'),
+    exercise_ids: Joi.array().items(Joi.number().optional()).optional(),
 }) as Joi.ObjectSchema;

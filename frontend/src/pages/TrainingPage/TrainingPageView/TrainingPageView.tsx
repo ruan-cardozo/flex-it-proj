@@ -4,31 +4,39 @@ import { createTableColumn, TableColumnDefinition } from "@fluentui/react-compon
 import LeftSideColumn from "../../../components/LeftSideColumn/LeftSideColumn";
 import Header from "../../../components/Header/Header";
 import CustomDataGrid from "../../../components/CustomDataGrid/CustomDataGrid";
+import { Exercise } from "../../../api/exercise";
+import DialogTrainingContent from "../Dialogs/DialogTrainingContent";
+import DialogForm from "../../../components/DialogForm/DialogForm";
 
 type Training = {
+    id: number,
     name: string,
     training_objective: TrainingObjective,
     weekly_frequency: Frequency,
     start_date: Date,
     end_date: Date,
     necessary_equipment: string,
-    exercise_ids?: Array<number>
+    trainingExercises?: Array<Exercise>
 }
 
 async function getUserTraining() {
     const trainings = await getTrainings();
     return trainings.map((training: Training) => ({
+        id: training.id,
         name: training.name,
         training_objective: training.training_objective,
         weekly_frequency: training.weekly_frequency,
         start_date: training.start_date,
         end_date: training.end_date,
-        necessary_equipment: training.necessary_equipment
+        necessary_equipment: training.necessary_equipment,
+        trainingExercises: training.trainingExercises
     }));
 }
 
 export default function TraingingPageView() {
     const [items, setItems] = useState<Training[]>([]);
+    const [selectedTraining, setSelectedTraining] = useState<Training | undefined>(undefined);
+    const [isTrainingModalOpen, setTrainingIsModalOpen] = useState(false);
 
     useEffect(() => {
         async function fetchTraining() {
@@ -83,17 +91,23 @@ export default function TraingingPageView() {
     ];
 
     // Handlers para ações
-    const handleOpen = (item: Training) => {
+    const handlePrint = (item: Training) => {
         console.log('Abrir exercício:', item);
     };
 
     const handleEdit = (item: Training) => {
-        console.log('Editar exercício:', item);
+        setTrainingIsModalOpen(true);
+        setSelectedTraining(item);
     };
 
     const handleDelete = (item: Training) => {
         console.log('Deletar exercício:', item);
     };
+
+    function handleCloseTrainingCardClick(): void {
+        setTrainingIsModalOpen(false);
+        setSelectedTraining(undefined);
+    }
 
     return (
         <>
@@ -104,11 +118,17 @@ export default function TraingingPageView() {
                 <CustomDataGrid 
                     items={items}
                     columns={columns}
-                    onOpenItem={handleOpen}
+                    onOpenItem={handlePrint}
                     onEditItem={handleEdit}
                     onDeleteItem={handleDelete}
                 />
             </div>
+            <DialogForm
+                dialogContent={<DialogTrainingContent training={selectedTraining} />}
+                formTitle="Criar treino"
+                isOpen={isTrainingModalOpen}
+                onClose={handleCloseTrainingCardClick}
+            />
         </>
     );
 }

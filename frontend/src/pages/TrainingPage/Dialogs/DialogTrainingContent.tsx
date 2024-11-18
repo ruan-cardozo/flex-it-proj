@@ -6,11 +6,15 @@ import { DateInput } from '../../../components/DateInput/DateInput';
 import CustomSpinButton from '../../../components/SpinButton/SpinButton';
 import { Button } from '@fluentui/react-components';
 import { DeleteFilled } from '@fluentui/react-icons';
-import { createTraining, editTraining } from '../../../api/training';
+import { createTraining, editTraining, Training } from '../../../api/training';
 import { editExercise, getExercises } from '../../../api/exercise';
 import { TrainingObjective, Frequency } from '../../../api/training';
 
-const DialogTrainingContent: React.FC = () => {
+interface DialogTrainingContentProps {
+    training?: Training;
+}
+
+const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training }) => {
     const style = useStylesTraining();
     const dropdownOptions = [
         "Treino cardiovascular", "Treino de definição", "Treino de força", "Treino funcional", "Treino HIIT", "Treino de hipertrofia", "Treino de resistência muscular", "Treino terapêutico"
@@ -19,14 +23,14 @@ const DialogTrainingContent: React.FC = () => {
         "1x por semana", "2x por semana", "3x por semana", "4x por semana", "5x por semana", "6x por semana", "7x por semana"
     ];
 
-    const [trainingId, setTrainingId] = useState<number | null>(null);
-    const [trainingName, setTrainingName] = useState<string>('');
-    const [trainingObjective, setTrainingObjective] = useState<string>('');
-    const [trainingFrequency, setTrainingFrequency] = useState<string>('');
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
-    const [equipment, setEquipment] = useState<string>('');
-    const [selectedExercises, setSelectedExercises] = useState<{ id: number, name: string, weight: number, series: number, repetitions: number }[]>([]);
+    const [trainingId, setTrainingId] = useState<number | null>(training?.id || null);
+    const [trainingName, setTrainingName] = useState<string>(training?.name || '');
+    const [trainingObjective, setTrainingObjective] = useState<string>(training?.training_objective || '');
+    const [trainingFrequency, setTrainingFrequency] = useState<string>(training?.weekly_frequency || '');
+    const [startDate, setStartDate] = useState<Date | null>(training?.start_date ? new Date(training.start_date) : null);
+    const [endDate, setEndDate] = useState<Date | null>(training?.end_date ? new Date(training.end_date) : null);
+    const [equipment, setEquipment] = useState<string>(training?.necessary_equipment || '');
+    const [selectedExercises, setSelectedExercises] = useState<{ id: number, name: string, weight: number, series: number, repetitions: number }[]>(training?.trainingExercises || []);
     const [selectedExercise, setSelectedExercise] = useState<string>('');
     const [weight, setWeight] = useState<number>(0);
     const [series, setSeries] = useState<number>(0);
@@ -50,40 +54,8 @@ const DialogTrainingContent: React.FC = () => {
         }
     };
 
-    const handleCreateTraining = async () => {
-        console.log({ trainingName, trainingObjective, trainingFrequency, startDate, endDate, equipment });
-            if (trainingName && trainingObjective && trainingFrequency && startDate && endDate && equipment) {
-                
-
-                const trainingData = {
-                    name: trainingName,
-                    training_objective: trainingObjective as TrainingObjective,
-                    weekly_frequency: trainingFrequency as Frequency,
-                    start_date: startDate,
-                    end_date: endDate,
-                    necessary_equipment: equipment,
-                };
-
-                console.log(trainingData);
-    
-                try {
-                    const response = await createTraining(trainingData);
-                    if (response && response.data) {
-                        setTrainingId(response.data.id);
-                        alert('Treino criado com sucesso!');
-                    }
-                } catch (error) {
-                    console.error('Erro ao criar treino:', error);
-                }
-            } else {
-                alert('Preencha todos os campos do treino.');
-            }
-    };
-
-    const handleEditTraining = async () => {
-
+    const handleSaveTraining = async () => {
         if (trainingName && trainingObjective && trainingFrequency && startDate && endDate && equipment) {
-                
             const trainingData = {
                 name: trainingName,
                 training_objective: trainingObjective as TrainingObjective,
@@ -93,34 +65,36 @@ const DialogTrainingContent: React.FC = () => {
                 necessary_equipment: equipment,
                 exercise_ids: selectedExercises.map(exercise => exercise.id)
             };
-            console.log(selectedExercises);
-
-            console.log(trainingData.exercise_ids);
-
-            console.log(trainingData);
 
             try {
-                const response = await editTraining(trainingData, trainingId as number);
-                if (response && response.data) {
-                    setTrainingId(response.data.id);
-                    alert('Treino editado com sucesso!');
+                if (trainingId) {
+                    const response = await editTraining(trainingData, trainingId);
+                    if (response && response.data) {
+                        setTrainingId(response.data.id);
+                        alert('Treino editado com sucesso!');
+                    }
+                } else {
+                    const response = await createTraining(trainingData);
+                    if (response && response.data) {
+                        setTrainingId(response.data.id);
+                        alert('Treino criado com sucesso!');
+                    }
                 }
             } catch (error) {
-                console.error('Erro ao criar treino:', error);
+                console.error('Erro ao salvar treino:', error);
             }
         } else {
             alert('Preencha todos os campos do treino.');
         }
-    }
+    };
 
-
-    //implementar no handle add exercise o id do exercicio para mapear em um array e mandar para o backend
     const handleAddExercise = async () => {
+
+        console.log(trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0);
+        
         if (trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0) {
-
+            
             const exerciseId = exerciseOptions.find(exercise => exercise.name === selectedExercise)?.id;
-
-            console.log(exerciseId);
 
             const newExercise = { id: exerciseId, name: selectedExercise, weight, series, repetitions };
             setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
@@ -133,6 +107,9 @@ const DialogTrainingContent: React.FC = () => {
 
             try {
                 const selectedExerciseObj = exerciseOptions.find(exercise => exercise.name === selectedExercise);
+
+                console.log(selectedExerciseObj);
+
                 if (selectedExerciseObj) {
                     const response = await editExercise(Number(selectedExerciseObj.id), exerciseData);
 
@@ -157,7 +134,6 @@ const DialogTrainingContent: React.FC = () => {
 
     const handleRemoveExercise = (index: number) => {
         setSelectedExercises(prevExercises => prevExercises.filter((_, i) => i !== index));
-
     };
 
     return (
@@ -197,7 +173,9 @@ const DialogTrainingContent: React.FC = () => {
                         value={equipment} 
                         onChange={(e) => setEquipment(e.target.value)} />
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                        <Button className={style.addExerciseSaveButton} onClick={handleCreateTraining}>Criar Treino</Button>
+                        <Button className={style.addExerciseSaveButton} onClick={handleSaveTraining}>
+                            {trainingId ? 'Salvar Treino' : 'Criar Treino'}
+                        </Button>
                     </div>
                     {trainingId && (
                         <>
@@ -223,17 +201,35 @@ const DialogTrainingContent: React.FC = () => {
                     <>
                     <h2>Exercícios Selecionados:</h2>
                         <ul>
-                            {selectedExercises.map((exercise, index) => (
-                                <li key={index}>
-                                    <Button icon={<DeleteFilled />} onClick={() => handleRemoveExercise(index)} style={{ minWidth: '25px', height: '25px', padding: '0', marginRight : '10px' }} />
-                                    {exercise.name} - Peso: {exercise.weight}kg, Série: {exercise.series}, Repetições: {exercise.repetitions}
-                                </li>
-                            ))}
-                            <div style={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
-                                <Button 
+                            {training && training.trainingExercises ? (
+                                training?.trainingExercises?.map((exercise, index) => (
+                                    <li key={index}>
+                                        <Button
+                                            icon={<DeleteFilled />}
+                                            onClick={() => handleRemoveExercise(index)}
+                                            style={{ minWidth: '25px', height: '25px', padding: '0', marginRight: '10px' }}
+                                        />
+                                        {exercise.exercise.name} - Peso: {exercise.exercise.exercise_weight}kg, Série: {exercise.exercise.series}, Repetições: {exercise.exercise.repetitions}
+                                    </li>
+                                ))
+                            ) : (
+                                selectedExercises.map((exercise, index) => (
+                                    <li key={index}>
+                                        <Button
+                                            icon={<DeleteFilled />}
+                                            onClick={() => handleRemoveExercise(index)}
+                                            style={{ minWidth: '25px', height: '25px', padding: '0', marginRight: '10px' }}
+                                        />
+                                        {exercise.name} - Peso: {exercise.weight}kg, Série: {exercise.series}, Repetições: {exercise.repetitions}
+                                    </li>
+                                ))
+                            )}
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                                <Button
                                     style={{ width: '100%', height: '30px', padding: '0' }}
-                                    className={style.addExerciseSaveButton} 
-                                    onClick={handleEditTraining}>
+                                    className={style.addExerciseSaveButton}
+                                    onClick={handleSaveTraining}
+                                >
                                     Adicionar exercícios ao treino
                                 </Button>
                             </div>
