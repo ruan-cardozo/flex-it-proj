@@ -82,11 +82,20 @@ export default function TraingingPageView() {
             renderHeaderCell: () => 'Frequência semanal',
             renderCell: (item) => item.weekly_frequency || 'N/A',
         }),
+        // createTableColumn<Training>({
+        //     columnId: 'necessary_equipment',
+        //     compare: (a, b) => (a.necessary_equipment || "").localeCompare(b.necessary_equipment || ""),
+        //     renderHeaderCell: () => 'Equipamentos',
+        //     renderCell: (item) => item.necessary_equipment || 'N/A',
+        // }),
         createTableColumn<Training>({
-            columnId: 'necessary_equipment',
+            columnId: 'exercises',
             compare: (a, b) => (a.necessary_equipment || "").localeCompare(b.necessary_equipment || ""),
-            renderHeaderCell: () => 'Equipamentos',
-            renderCell: (item) => item.necessary_equipment || 'N/A',
+            renderHeaderCell: () => 'Exercícios',
+            renderCell: (item) => item.trainingExercises?.map(exercise => {
+                console.log(exercise);
+                return `${exercise.exercise.name } | `;
+            }) || 'N/A',
         })
     ];
 
