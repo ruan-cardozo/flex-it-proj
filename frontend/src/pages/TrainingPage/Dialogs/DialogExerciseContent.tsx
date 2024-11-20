@@ -8,7 +8,7 @@ import { Button } from "@fluentui/react-components";
 import { SaveFilled } from "@fluentui/react-icons";
 
 
-const DialogExerciseContent: React.FC = () => {
+const DialogExerciseContent: React.FC = ({}) => {
     const style = useStylesExercise();
     const [exercise, setExercise] = useState({
         name: '',
@@ -24,7 +24,7 @@ const DialogExerciseContent: React.FC = () => {
         "Peito", "Pernas", "Costas", "Ombros", "Bíceps", "Tríceps", "Abdômen", "Glúteos", "Panturrilha", "Trapézio", "Antebraço", "Quadríceps"
     ];
     const dropdownOptionsRest = [
-        "30 s", "1min", "1min 30s", "2min", "2min 30s", "3min", "3min 30s", "4min", "4min 30s", "5min", "5min 30s", "6min"
+        "30s", "1min", "1min 30s", "2min", "2min 30s", "3min", "3min 30s", "4min", "4min 30s", "5min", "5min 30s", "6min"
     ];
 
     const handleInputChange = (field: string, value: any) => {

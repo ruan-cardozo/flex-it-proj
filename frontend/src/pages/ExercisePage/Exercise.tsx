@@ -3,7 +3,9 @@ import { getExercises, MuscleGroup, RestTime } from "../../api/exercise";
 import CustomDataGrid from "../../components/CustomDataGrid/CustomDataGrid";
 import Header from "../../components/Header/Header";
 import LeftSideColumn from "../../components/LeftSideColumn/LeftSideColumn";
-import { createTableColumn, TableColumnDefinition } from "@fluentui/react-components";
+import { createTableColumn, selectClassNames, TableColumnDefinition } from "@fluentui/react-components";
+import DialogForm from '../../components/DialogForm/DialogForm';
+import DialogExerciseContent from '../TrainingPage/Dialogs/DialogExerciseContent';
 
 // Definição do tipo "Exercise"
 type Exercise = {
@@ -28,6 +30,8 @@ async function getUserExercises() {
 
 export default function Exercise() {
     const [items, setItems] = useState<Exercise[]>([]);
+    const [selectedExercise, setSelectedExercise] = useState<Exercise | undefined>(undefined);
+    const [isTrainingModalOpen, setTrainingIsModalOpen] = useState(false);
 
     useEffect(() => {
         async function fetchExercises() {
@@ -65,12 +69,16 @@ export default function Exercise() {
     };
 
     const handleEdit = (item: Exercise) => {
-        console.log('Editar exercício:', item);
+        setTrainingIsModalOpen(true);
     };
 
     const handleDelete = (item: Exercise) => {
         console.log('Deletar exercício:', item);
     };
+
+    const handleCloseTrainingCardClick = () => {
+        setTrainingIsModalOpen(false);
+    }
 
     return (
         <>
@@ -85,6 +93,12 @@ export default function Exercise() {
                     onEditItem={handleEdit}
                     onDeleteItem={handleDelete}
                 />
+                <DialogForm
+                    dialogContent={<DialogExerciseContent exercise={selectedExercise} />}
+                    formTitle="Editar exercício"
+                    isOpen={isTrainingModalOpen}
+                    onClose={handleCloseTrainingCardClick}
+            />
             </div>
         </>
     );
