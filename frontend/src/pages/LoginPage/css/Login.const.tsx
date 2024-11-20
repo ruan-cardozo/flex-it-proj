@@ -5,7 +5,14 @@ export const useLoginStyles = makeStyles({
         maxWidth: '100%',
         maxHeight: '100%',
         marginTop: '400px',
-        marginLeft: '120px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
+    },
+    titleDiv: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     customInput: {
         boxShadow: '0 0 8px rgba(0,0,0,0.24) 0 14px 28px rgba(0,0,0,0.28)',
@@ -27,7 +34,6 @@ export const useLoginStyles = makeStyles({
         width: '600px',
         padding: '20px',
         backgroundColor: '#0f6cbd',
-        marginLeft: '1050px',
         marginTop: '-300px',
         height: '450px',
         borderRadius: '20px',
@@ -35,10 +41,9 @@ export const useLoginStyles = makeStyles({
        title: {
         display: 'flex',
         fontSize: '80px',
-        marginTop: '300px',
+        marginTop: '5%',
         textAlign: 'center',
         alignItems: 'center',
-        marginLeft: '200px',
        },
         button: {
          backgroundColor: '#0f6cbd',

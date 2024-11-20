@@ -30,10 +30,11 @@ function Login() {
     };
 
     return (
+        <>
+        <div className={style.titleDiv}>
+        <h1 className={style.title}>Bem vindo ao FlexIT</h1>
+        </div>
         <div className={style.row}>
-            <div>
-                <h1 className={style.title}>Bem vindo ao <br /><br /><br /><br /><br /> FlexIT</h1>
-            </div>
             <div className={style.box}>
                 <h1 className={style.titleBox}>Login</h1>
                 <CustomInput
@@ -68,7 +69,8 @@ function Login() {
                     Ir para registrar-se
                 </Button>
             </div>
-        </div>
+        </div>    
+        </>
     );
 }
 
