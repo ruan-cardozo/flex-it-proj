@@ -32,7 +32,7 @@ function Login() {
     return (
         <>
         <div className={style.titleDiv}>
-        <h1 className={style.title}>Bem vindo ao FlexIT</h1>
+         <h1 className={style.title}>Bem vindo ao FlexIT</h1>
         </div>
         <div className={style.row}>
             <div className={style.box}>

@@ -43,7 +43,7 @@ export const useLoginStyles = makeStyles({
         fontSize: '80px',
         marginTop: '5%',
         textAlign: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
        },
         button: {
          backgroundColor: '#0f6cbd',
