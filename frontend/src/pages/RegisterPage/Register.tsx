@@ -4,6 +4,8 @@ import { ArrowEnterRegular } from "@fluentui/react-icons";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { register } from '../../api/register';
+import { useToast } from '../../context/ToastContext';
+import { AxiosError } from 'axios';
 
 const useStylesCustomInput = makeStyles({
     row: {
@@ -69,6 +71,7 @@ function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { showToast } = useToast();
 
     const handleRegister = async () => {
         try {
@@ -76,7 +79,8 @@ function Register() {
           const data = await register(userData);
         
           if (data && data.status === 201) {
-            alert('Usuário registrado com sucesso!');
+
+            showToast('Usuário cadastrado com sucesso!', 'success');
 
             setName('');
             setEmail('');
@@ -85,7 +89,8 @@ function Register() {
 
         } catch (error) {
           if (error instanceof Error) {
-            console.error(error);
+            const axiosError = error as AxiosError;
+            showToast((axiosError.response?.data as { message: string }).message, 'error');
           } else {
             console.error('An unknown error occurred');
           }
