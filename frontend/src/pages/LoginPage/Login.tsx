@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Button } from '@fluentui/react-components';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { ArrowEnterRegular } from "@fluentui/react-icons";
 import { useNavigate } from 'react-router-dom';
 import { useLoginStyles } from './css/Login.const';
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../context/AuthContext';
+import { Button } from '@fluentui/react-components';
+import { useToast } from '../../context/ToastContext';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -12,17 +13,20 @@ function Login() {
     const { login } = useAuth();
     const style = useLoginStyles();
     const navigate = useNavigate();
+    const { showToast } = useToast(); 
 
     const handleLogin = async () => {
         try {
             await login(email, password);
+
+            showToast('Login realizado com sucesso.', 'success');
+
             setEmail('');
             setPassword('');
             navigate('/home');
         } catch (error) {
             
             if (error instanceof Error) {
-                alert(error.message);
             } else {
                 alert('An unknown error occurred');
             }
@@ -30,10 +34,11 @@ function Login() {
     };
 
     return (
+        <>
+        <div className={style.titleDiv}>
+         <h1 className={style.title}>Bem vindo ao FlexIT</h1>
+        </div>
         <div className={style.row}>
-            <div>
-                <h1 className={style.title}>Bem vindo ao <br /><br /><br /><br /><br /> FlexIT</h1>
-            </div>
             <div className={style.box}>
                 <h1 className={style.titleBox}>Login</h1>
                 <CustomInput
@@ -68,7 +73,8 @@ function Login() {
                     Ir para registrar-se
                 </Button>
             </div>
-        </div>
+        </div>    
+        </>
     );
 }
 

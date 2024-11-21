@@ -4,14 +4,17 @@ import { ArrowEnterRegular } from "@fluentui/react-icons";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { register } from '../../api/register';
+import { useToast } from '../../context/ToastContext';
+import { AxiosError } from 'axios';
 
 const useStylesCustomInput = makeStyles({
     row: {
         maxWidth: '100%',
         maxHeight: '100%',
-        marginLeft: '120px',
         marginTop: '400px',
-
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex'
     },
     customInput: {
         boxShadow: '0 0 8px rgba(0,0,0,0.24) 0 14px 28px rgba(0,0,0,0.28)',
@@ -34,17 +37,15 @@ const useStylesCustomInput = makeStyles({
         padding: '20px',
         backgroundColor: '#0f6cbd',
         marginTop: '-300px',
-        marginLeft: '1050px',
         height: '500px',
         borderRadius: '20px',
        }, 
        title: {
         display: 'flex',
         fontSize: '80px',
-        marginTop: '300px',
+        marginTop: '5%',
         textAlign: 'center',
         alignItems: 'center',
-        marginLeft: '200px',
        },
         button: {
          backgroundColor: '#0f6cbd',
@@ -58,6 +59,11 @@ const useStylesCustomInput = makeStyles({
         titleBox: {
             color: 'white',
             fontSize: '50px',
+        },
+        titleDiv: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
         }
 });
 
@@ -65,14 +71,16 @@ function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { showToast } = useToast();
 
     const handleRegister = async () => {
         try {
           const userData = { name, email, password };
           const data = await register(userData);
         
-          if (data.status === 201) {
-            alert('Usuário registrado com sucesso!');
+          if (data && data.status === 201) {
+
+            showToast('Usuário cadastrado com sucesso!', 'success');
 
             setName('');
             setEmail('');
@@ -81,7 +89,8 @@ function Register() {
 
         } catch (error) {
           if (error instanceof Error) {
-            console.error(error);
+            const axiosError = error as AxiosError;
+            showToast((axiosError.response?.data as { message: string }).message, 'error');
           } else {
             console.error('An unknown error occurred');
           }
@@ -91,10 +100,11 @@ function Register() {
     const style = useStylesCustomInput();
     const navigate = useNavigate();
 	return (
-        <div className={style.row}>
-            <div>
-            <h1 className={style.title}>Bem vindo ao <br /><br /><br /><br /><br /> FlexIT</h1>
+    <>
+    <div className={style.titleDiv}>
+            <h1 className={style.title}>Bem vindo ao FlexIT</h1>
         </div>
+        <div className={style.row}>
         <div className={style.box}>
             <h1 className={style.titleBox}>Registre-se</h1>
             <CustomInput 
@@ -120,7 +130,7 @@ function Register() {
             <Button className={style.button} appearance="secondary" onClick={() => navigate('/login')} icon={<ArrowEnterRegular />}>Ir para o login</Button>
         </div>
         </div>
-        
+    </>        
     );
 }
 

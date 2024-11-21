@@ -6,9 +6,11 @@ import CustomSpinButton from "../../../components/SpinButton/SpinButton";
 import CustomDropdown from "../../../components/CustomDropdown/CustomDropdown";
 import { Button } from "@fluentui/react-components";
 import { SaveFilled } from "@fluentui/react-icons";
+import { useToast } from "../../../context/ToastContext";
+import { AxiosError } from "axios";
 
 
-const DialogExerciseContent: React.FC = () => {
+const DialogExerciseContent: React.FC = ({}) => {
     const style = useStylesExercise();
     const [exercise, setExercise] = useState({
         name: '',
@@ -19,12 +21,13 @@ const DialogExerciseContent: React.FC = () => {
         rest_time: RestTime.ThirdySeconds,
         observation: ''
     });
+    const { showToast } = useToast();
 
     const dropdownOptions2 = [
         "Peito", "Pernas", "Costas", "Ombros", "Bíceps", "Tríceps", "Abdômen", "Glúteos", "Panturrilha", "Trapézio", "Antebraço", "Quadríceps"
     ];
     const dropdownOptionsRest = [
-        "30 s", "1min", "1min 30s", "2min", "2min 30s", "3min", "3min 30s", "4min", "4min 30s", "5min", "5min 30s", "6min"
+        "30s", "1min", "1min 30s", "2min", "2min 30s", "3min", "3min 30s", "4min", "4min 30s", "5min", "5min 30s", "6min"
     ];
 
     const handleInputChange = (field: string, value: any) => {
@@ -38,8 +41,17 @@ const DialogExerciseContent: React.FC = () => {
     const handleSaveExercise = async () => {
         try {
             await createExercise(exercise);
+
+            showToast('Exercício foi salvo com sucesso', 'success');
+
         } catch (error) {
-            console.error("Failed to save exercise", error);
+
+            if (error instanceof Error) {
+                const axiosError = error as AxiosError;
+                showToast((axiosError.response?.data as { message: string }).message, 'error');
+            } else {
+                console.error('An unknown error occurred');
+            }
         }
     };
 
