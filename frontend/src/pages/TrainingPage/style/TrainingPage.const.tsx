@@ -30,30 +30,75 @@ export const useStylesCustomCard = makeStyles({
 
 export const useStylesTraining = makeStyles({
    dialogContentGrid: {
-     display: "flex",
-     flexWrap: "wrap",
-     },
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '20px',
+    flexDirection: 'column'
+    },
    customDropdown: {
      marginLeft: "10px",
+     width: "100%"
    },
    customInput: {
-     marginLeft: "10px",
-     display: "flex",
+     marginLeft: "5px",
      flexDirection: "column",
+     gridTemplateRows: "repeat(1fr)",
+     justifyItems: "start",
      gap: "2px",
-     maxWidth: "200px",
+     width: "100%",
+     maxWidth: "400px",
+     display: "grid",
+   },
+   dateInput: {
+      marginLeft: "5px",
+      width: "100%",
+      maxWidth: "400px",
+   },
+   exerciseList: {
+    borderLeft: "1px solid black",
+    paddingLeft: "20px",
+   },
+   saveExerciseButton: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "2px",
+    width: "150px",
+    maxWidth: "200px",
+    borderRadius: "10px"
+   },
+   addExerciseSaveButton: {
+    marginTop: "12px",
+    width: "150px",
+    maxWidth: "200px",
+    borderRadius: "10px",
    }
 });
 
 export const useStylesExercise = makeStyles({
-    dialogContentGrid: {
-      display: "flex",
-      flexWrap: "wrap",
-      },
-    customDropdown: {
+  dialogContentGrid: {
+    flexDirection: 'column',
+     },
+   customDropdown: {
+     marginLeft: "10px",
+     width: "100%"
+   },
+   customInput: {
+     marginLeft: "5px",
+     flexDirection: "column",
+     gridTemplateRows: "repeat(1fr)",
+     justifyItems: "start",
+     gap: "2px",
+     width: "100%",
+     maxWidth: "400px",
+     display: "grid",
+   },
+   dateInput: {
       marginLeft: "10px",
-    },
-    customInput: {
+      width: "100%",
+      maxWidth: "400px",
+   },
+   customSpinButton: {
       marginLeft: "10px",
-    }
+      width: "100%"
+   }
 });

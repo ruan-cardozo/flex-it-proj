@@ -11,6 +11,6 @@ import { FeatureFlagGuard } from '../feature-flag-guard/feature-flag.guard';
 	imports: [TypeOrmModule.forFeature([User]), SchemaModule],
 	controllers: [UserController],
 	providers: [UserService, ConfigCatService, FeatureFlagGuard],
-	exports: [UserModule]
+	exports: [UserModule, UserService]
 })
 export class UserModule {}

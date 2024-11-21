@@ -63,6 +63,10 @@ export class UserService {
 		return this.userRepository.delete(databaseUser.id);
 	}
 
+	public findUserByEmail(email: string) {
+		return this.userRepository.findOne({ where: { email } });
+	}
+
 	private async validateUser(userEmail: string) {
 
 		const databaseUser = await this.userRepository.findOne({

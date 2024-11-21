@@ -85,6 +85,7 @@ build/config\.gypi
 # sonar
 /backend/.scannerwork
 /frontend/.scannerwork
+.scannerwork
 
 .npmrc
 pnpm-lock.yaml

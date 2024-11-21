@@ -7,11 +7,15 @@ import {
 	Param,
 	Delete,
 	UseGuards,
+	UsePipes,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FeatureFlagGuard } from '../feature-flag-guard/feature-flag.guard';
+import { IsPublic } from 'src/common/decorators/is-public.decorator';
+import { JoiValidationPipe } from 'src/pipes/joi-validation.pipe';
+import { userSchema } from './user.validation';
 
 @Controller('/v1/users')
 export class UserController {
@@ -30,7 +34,9 @@ export class UserController {
 	}
 
 	@Post()
+	@IsPublic()
 	@UseGuards(FeatureFlagGuard)
+	@UsePipes(new JoiValidationPipe(userSchema))
 	public create(@Body() createUserDto: CreateUserDto) {
 
 		return this.userService.create(createUserDto);
