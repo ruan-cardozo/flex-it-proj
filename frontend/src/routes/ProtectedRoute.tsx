@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthContext';
 import UnauthorizedPage from '../pages/UnauthorizedPage/UnauthorizedPage';
 
 const ProtectedRoute = () => {
