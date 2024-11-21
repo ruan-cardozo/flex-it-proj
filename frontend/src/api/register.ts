@@ -9,14 +9,10 @@ interface User {
 }
 
 export const register = async (userData: User) => {
-  try { 
 
     const url = `${API_URL}users`;
 
     const response = await axiosInstance.post(url, userData);
 
     return response;
-  } catch (error) {
-    console.error(error);
-  }
 };
