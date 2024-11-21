@@ -43,17 +43,12 @@ export interface Exercise {
 }
 
 export const createExercise = async (exercise: Exercise) => {
-    console.log(exercise);
+
     const url = `${API_URL}exercises`;
 
-    try {
-        const response = await axiosInstance.post(url, exercise);
+    const response = await axiosInstance.post(url, exercise);
 
-        return response.data;
-    } catch (error) {
-        console.error('Error creating exercise:', error);
-        throw error;
-    }
+    return response.data;
 };
 
 export const getExercises = async () => {
