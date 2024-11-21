@@ -37,8 +37,23 @@ export class ExercisesService {
   }
 
   public async update(id: number, updateExerciseDto: UpdateExerciseDto): Promise<Exercise> {
-    await this.exerciseRepository.update({ id, created_by: this.request['userId'] }, updateExerciseDto);
-    return this.exerciseRepository.findOne({ where: { id, created_by: this.request['userId'] } });
+
+    const existingExercise = await this.exerciseRepository.findOne({ where: { id, created_by: this.request['userId'] } });
+
+    if (!existingExercise) {
+        throw new Error('Exercise not found');
+    }
+
+    const updatedExercise = {
+        ...existingExercise,
+        ...updateExerciseDto,
+    };
+
+    await this.exerciseRepository.save(updatedExercise);
+
+    const exercise = await this.exerciseRepository.findOne({ where: { id, created_by: this.request['userId'] } });
+
+    return exercise;
   }
 
   public async remove(id: number): Promise<void> {

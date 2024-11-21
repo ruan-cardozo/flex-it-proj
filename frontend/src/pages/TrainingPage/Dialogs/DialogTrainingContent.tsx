@@ -6,9 +6,10 @@ import { DateInput } from '../../../components/DateInput/DateInput';
 import CustomSpinButton from '../../../components/SpinButton/SpinButton';
 import { Button } from '@fluentui/react-components';
 import { DeleteFilled } from '@fluentui/react-icons';
-import { createTraining, editTraining, Training } from '../../../api/training';
+import { createTraining, editTraining, getTrainingById, Training } from '../../../api/training';
 import { editExercise, getExercises } from '../../../api/exercise';
 import { TrainingObjective, Frequency } from '../../../api/training';
+import { useToast } from '../../../context/ToastContext';
 
 interface DialogTrainingContentProps {
     training?: Training;
@@ -30,17 +31,37 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     const [startDate, setStartDate] = useState<Date | null>(training?.start_date ? new Date(training.start_date) : null);
     const [endDate, setEndDate] = useState<Date | null>(training?.end_date ? new Date(training.end_date) : null);
     const [equipment, setEquipment] = useState<string>(training?.necessary_equipment || '');
-    const [selectedExercises, setSelectedExercises] = useState<{ id: number, name: string, weight: number, series: number, repetitions: number }[]>(training?.trainingExercises || []);
+    const [selectedExercises, setSelectedExercises] = useState<{ id: number, name: string, exercise_weight: number, series: number, repetitions: number }[]>(training?.trainingExercises || []);
+    console.log('11 -----> ',{selectedExercises});
     const [selectedExercise, setSelectedExercise] = useState<string>('');
     const [weight, setWeight] = useState<number>(0);
     const [series, setSeries] = useState<number>(0);
     const [repetitions, setRepetitions] = useState<number>(0);
     const [exerciseOptions, setExerciseOptions] = useState<{ id: string, name: string }[]>([]);
+    const { showToast } = useToast();
+    const [combinedExercises, setCombinedExercises] = useState<{ id: number, name: string, exercise_weight: number, series: number, repetitions: number }[]>([]);
 
     useEffect(() => {
         fetchExercises();
     }, []);
 
+    useEffect(() => {
+        console.log('foi chamado');
+        console.log('training?.trainingExercises', training?.trainingExercises);
+        const combined = [
+            ...(training?.trainingExercises || []),
+            ...selectedExercises
+        ].reduce((acc, exercise) => {
+            if (!acc.find(e => e.id === exercise.id)) {
+                acc.push(exercise);
+            }
+            return acc;
+        }, []);
+
+        console.log('combined', combined);
+        setCombinedExercises(combined);
+    }, [selectedExercises, training?.trainingExercises]);
+    
     const fetchExercises = async () => {
         try {
             const exercises = await getExercises();  
@@ -51,6 +72,21 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
             setExerciseOptions(formattedExercises);
         } catch (error) {
             console.error('Erro ao buscar exercícios:', error);
+        }
+    };
+
+    const fetchTrainingDetails = async (id: number) => {
+        try {
+            const trainingDetails = await getTrainingById(id);
+            setTrainingName(trainingDetails.name);
+            setTrainingObjective(trainingDetails.training_objective);
+            setTrainingFrequency(trainingDetails.weekly_frequency);
+            setStartDate(new Date(trainingDetails.start_date));
+            setEndDate(new Date(trainingDetails.end_date));
+            setEquipment(trainingDetails.necessary_equipment);
+            setSelectedExercises(trainingDetails.trainingExercises);
+        } catch (error) {
+            console.error('Erro ao buscar detalhes do treino:', error);
         }
     };
 
@@ -71,20 +107,24 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
                     const response = await editTraining(trainingData, trainingId);
                     if (response && response.data) {
                         setTrainingId(response.data.id);
-                        alert('Treino editado com sucesso!');
+                        showToast('Treino editado com sucesso!', 'success');
+                        setSelectedExercises([]);
+                        fetchTrainingDetails(response.data.id);
                     }
                 } else {
                     const response = await createTraining(trainingData);
                     if (response && response.data) {
                         setTrainingId(response.data.id);
-                        alert('Treino criado com sucesso!');
+                        showToast('Treino criado com sucesso!', 'success');
+                        setSelectedExercises([]);
+                        fetchTrainingDetails(response.data.id);
                     }
                 }
             } catch (error) {
                 console.error('Erro ao salvar treino:', error);
             }
         } else {
-            alert('Preencha todos os campos do treino.');
+            showToast('Preencha todos os campos do treino.', 'error');
         }
     };
 
@@ -114,10 +154,11 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
                     const response = await editExercise(Number(selectedExerciseObj.id), exerciseData);
 
                     if (response.ok) {
-                        alert('Exercicio adicionado e atualizado com sucesso');
+                        showToast('Exercicio adicionado e atualizado com sucesso');
+                        fetchTrainingDetails(trainingId);
                     }
                 } else {
-                    alert('Exercício não encontrado');
+                    showToast('Exercício não encontrado');
                 }
             } catch (error) {
                 console.error('Erro ao adicionar exercício:', error);
@@ -128,12 +169,15 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
             setSeries(0);
             setRepetitions(0);
         } else {
-            alert("Preencha todos os campos corretamente.");
+            showToast("Preencha todos os campos corretamente.", 'error');
         }
     };
 
-    const handleRemoveExercise = (index: number) => {
+    const handleRemoveExercise =  (index: number) => {
+        
         setSelectedExercises(prevExercises => prevExercises.filter((_, i) => i !== index));
+        setCombinedExercises(selectedExercises);
+        training?.trainingExercises?.splice(index, 1);
     };
 
     return (
@@ -198,45 +242,44 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
                 </div>
                 <div className={style.exerciseList}>
                     {trainingId && (
-                    <>
-                    <h2>Exercícios Selecionados:</h2>
-                        <ul>
-                            {training && training.trainingExercises ? (
-                                training?.trainingExercises?.map((exercise, index) => (
+                        <>
+                            <h2>Exercícios Selecionados:</h2>
+                            <ul>
+                                {combinedExercises.map((exercise, index) => (
+                                        console.log(exercise),
                                     <li key={index}>
                                         <Button
                                             icon={<DeleteFilled />}
                                             onClick={() => handleRemoveExercise(index)}
                                             style={{ minWidth: '25px', height: '25px', padding: '0', marginRight: '10px' }}
                                         />
-                                        {exercise.exercise.name} - Peso: {exercise.exercise.exercise_weight}kg, Série: {exercise.exercise.series}, Repetições: {exercise.exercise.repetitions}
+                                        {exercise.name 
+                                            ? exercise.name 
+                                            : exercise.exercise.name} 
+                                        - Peso: {exercise.exercise_weight 
+                                            ? exercise.exercise_weight 
+                                            : exercise.exercise.exercise_weight}kg, 
+                                        Série: {exercise.series 
+                                            ? exercise.series 
+                                            : exercise.exercise.series}, 
+                                        Repetições: {exercise.repetitions 
+                                            ? exercise.repetitions 
+                                            : exercise.exercise.repetitions}
                                     </li>
-                                ))
-                            ) : (
-                                selectedExercises.map((exercise, index) => (
-                                    <li key={index}>
-                                        <Button
-                                            icon={<DeleteFilled />}
-                                            onClick={() => handleRemoveExercise(index)}
-                                            style={{ minWidth: '25px', height: '25px', padding: '0', marginRight: '10px' }}
-                                        />
-                                        {exercise.name} - Peso: {exercise.weight}kg, Série: {exercise.series}, Repetições: {exercise.repetitions}
-                                    </li>
-                                ))
-                            )}
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                                <Button
-                                    style={{ width: '100%', height: '30px', padding: '0' }}
-                                    className={style.addExerciseSaveButton}
-                                    onClick={handleSaveTraining}
-                                >
-                                    Adicionar exercícios ao treino
-                                </Button>
-                            </div>
-                        </ul>
-                    </>
+                                ))}
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                                    <Button
+                                        style={{ width: '100%', height: '30px', padding: '0' }}
+                                        className={style.addExerciseSaveButton}
+                                        onClick={handleSaveTraining}
+                                    >
+                                        Adicionar exercícios ao treino
+                                    </Button>
+                                </div>
+                            </ul>
+                        </>
                     )}
-                </div>  
+                </div>
             </div>
         </>
     );

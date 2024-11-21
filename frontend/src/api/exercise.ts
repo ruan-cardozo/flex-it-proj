@@ -68,25 +68,17 @@ export const editExercise = async (id: number, exercise: Exercise) => {
    
     const url = `${API_URL}exercises/${id}`;
 
-    try {
-        const response = await axiosInstance.put(url, exercise);
+    console.log('editExercise', exercise);
+    
+    const response = await axiosInstance.put(url, exercise);
 
-        return response.data;
-    } catch (error) {
-        console.error('Error getting exercise:', error);
-        throw error;
-    }
+    return response.data;
 }
 
 export const deleteExercise = async (id: number) => {
     const url = `${API_URL}exercises/${id}`;
 
-    try {
-        const response = await axiosInstance.delete(url);
+    const response = await axiosInstance.delete(url);
 
-        return response.data;
-    } catch (error) {
-        console.error('Error deleting exercise:', error);
-        throw error;
-    }
+    return response.data;
 }
