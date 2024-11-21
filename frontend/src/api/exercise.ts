@@ -18,7 +18,7 @@ export enum MuscleGroup {
 }
 
 export enum RestTime {
-    ThirdySeconds = "30 s",
+    ThirdySeconds = "30s",
     OneMinute = "1min",
     OneMinuteAndThirdySeconds = "1min 30s",
     TwoMinutes = "2min",

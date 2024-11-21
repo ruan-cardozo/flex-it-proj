@@ -6,6 +6,8 @@ import CustomSpinButton from "../../../components/SpinButton/SpinButton";
 import CustomDropdown from "../../../components/CustomDropdown/CustomDropdown";
 import { Button } from "@fluentui/react-components";
 import { SaveFilled } from "@fluentui/react-icons";
+import { useToast } from "../../../context/ToastContext";
+import { AxiosError } from "axios";
 
 
 const DialogExerciseContent: React.FC = ({}) => {
@@ -19,6 +21,7 @@ const DialogExerciseContent: React.FC = ({}) => {
         rest_time: RestTime.ThirdySeconds,
         observation: ''
     });
+    const { showToast } = useToast();
 
     const dropdownOptions2 = [
         "Peito", "Pernas", "Costas", "Ombros", "Bíceps", "Tríceps", "Abdômen", "Glúteos", "Panturrilha", "Trapézio", "Antebraço", "Quadríceps"
@@ -38,8 +41,17 @@ const DialogExerciseContent: React.FC = ({}) => {
     const handleSaveExercise = async () => {
         try {
             await createExercise(exercise);
+
+            showToast('Exercício foi salvo com sucesso', 'success');
+
         } catch (error) {
-            console.error("Failed to save exercise", error);
+
+            if (error instanceof Error) {
+                const axiosError = error as AxiosError;
+                showToast((axiosError.response?.data as { message: string }).message, 'error');
+            } else {
+                console.error('An unknown error occurred');
+            }
         }
     };
 
