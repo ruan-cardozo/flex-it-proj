@@ -4,6 +4,7 @@ import { UpdateMetricDto } from './dto/update-metric.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Metric } from './entities/metric.entity';
 import { Repository } from 'typeorm';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class MetricsService {
@@ -16,7 +17,7 @@ export class MetricsService {
   create(createMetricDto: CreateMetricDto){
 
     const metric = this.metricRepository.create(createMetricDto);
-
+    metric.imc = this.calculateImc(metric.peso, metric.altura);
     return this.metricRepository.save(metric);
   }
 
@@ -35,5 +36,8 @@ export class MetricsService {
 
   remove(id: number) {
     return `This action removes a #${id} metric`;
+  }
+  private calculateImc(peso: number, altura: number): number {
+    return peso / (altura * altura);
   }
 }

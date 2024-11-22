@@ -17,6 +17,10 @@ export class Metric {
     @Column()
     altura:number;
 
+    
+    @Column('float', { nullable: true })
+    imc?: number;
+
     @CreateDateColumn()
     created_at: Date;
 

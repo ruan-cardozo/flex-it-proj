@@ -5,8 +5,7 @@
 }
 
 .metrics-container {
-
-  flex-grow: 1;
+  /* flex-grow: 1; */
   padding: 20px;
   background-color: #7a818c; /*#0f6cbd*/ /*#2f4f4f*/
   border-radius: 8px;

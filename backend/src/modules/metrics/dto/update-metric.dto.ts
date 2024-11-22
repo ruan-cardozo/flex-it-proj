@@ -1,4 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateMetricDto } from './create-metric.dto';
 
-export class UpdateMetricDto extends PartialType(CreateMetricDto) {}
+export class UpdateMetricDto extends PartialType(CreateMetricDto) {
+  peso?: number;
+  altura?: number;
+}
