@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useStylesExercise } from "../style/TrainingPage.const";
-import { createExercise, MuscleGroup, RestTime } from "../../../api/exercise";
+import { createExercise, editExercise, Exercise, getExercises, MuscleGroup, RestTime } from "../../../api/exercise";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import CustomSpinButton from "../../../components/SpinButton/SpinButton";
 import CustomDropdown from "../../../components/CustomDropdown/CustomDropdown";
@@ -9,20 +9,24 @@ import { SaveFilled } from "@fluentui/react-icons";
 import { useToast } from "../../../context/ToastContext";
 import { AxiosError } from "axios";
 
+interface DialogExerciseContentProps {
+    selectedExercise?: Exercise;
+}
 
-const DialogExerciseContent: React.FC = ({}) => {
+const DialogExerciseContent: React.FC<DialogExerciseContentProps> = ({selectedExercise}) => {
     const style = useStylesExercise();
     const [exercise, setExercise] = useState({
-        name: '',
-        muscle_group: MuscleGroup.Peito,
-        series: 0,
-        repetitions: 0,
-        exercise_weight: 0,
-        rest_time: RestTime.ThirdySeconds,
-        observation: ''
+        id: selectedExercise?.id || undefined,
+        name: selectedExercise?.name || '',
+        muscle_group: selectedExercise?.muscle_group || MuscleGroup.Peito,
+        series: selectedExercise?.series || 0,
+        repetitions: selectedExercise?.repetitions || 0,
+        exercise_weight: selectedExercise?.exercise_weight || 0,
+        rest_time: selectedExercise?.rest_time || RestTime.ThreeMinutes,
+        observation: selectedExercise?.observation || ''
     });
+    const [exerciseId, setExerciseId] = useState<null | number>(selectedExercise?.id || null);
     const { showToast } = useToast();
-
     const dropdownOptions2 = [
         "Peito", "Pernas", "Costas", "Ombros", "Bíceps", "Tríceps", "Abdômen", "Glúteos", "Panturrilha", "Trapézio", "Antebraço", "Quadríceps"
     ];
@@ -31,7 +35,6 @@ const DialogExerciseContent: React.FC = ({}) => {
     ];
 
     const handleInputChange = (field: string, value: any) => {
-
         setExercise(prevState => ({
             ...prevState,
             [field]: value
@@ -40,10 +43,28 @@ const DialogExerciseContent: React.FC = ({}) => {
 
     const handleSaveExercise = async () => {
         try {
-            await createExercise(exercise);
 
-            showToast('Exercício foi salvo com sucesso', 'success');
+            if (exerciseId) {
 
+                const response = await editExercise(exerciseId, exercise);
+
+                if (response && response.data) {
+
+                    fetchExercises(exerciseId);
+                    showToast('Exercício foi atualizado com sucesso', 'success');
+                }
+            } else {
+                
+                const response = await createExercise(exercise);
+
+                showToast('Exercício foi salvo com sucesso', 'success');
+    
+                if (response.data) {
+    
+                    fetchExercises(response.data.id);
+                    setExerciseId(response.data.id);
+                }
+            }
         } catch (error) {
 
             if (error instanceof Error) {
@@ -54,6 +75,16 @@ const DialogExerciseContent: React.FC = ({}) => {
             }
         }
     };
+
+    const fetchExercises = async (id: number) => {
+        try {
+            const exerciseDetails = await getExercises(id);
+
+            setExercise(exerciseDetails);
+        } catch (error) {
+            console.error('Error fetching exercises:', error);
+        }
+    }
 
     return (
         <div className={style.dialogContentGrid}>

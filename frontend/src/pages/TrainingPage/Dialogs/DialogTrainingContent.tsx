@@ -23,7 +23,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     const dropdownOptions2 = [
         "1x por semana", "2x por semana", "3x por semana", "4x por semana", "5x por semana", "6x por semana", "7x por semana"
     ];
-
     const [trainingId, setTrainingId] = useState<number | null>(training?.id || null);
     const [trainingName, setTrainingName] = useState<string>(training?.name || '');
     const [trainingObjective, setTrainingObjective] = useState<string>(training?.training_objective || '');
@@ -46,8 +45,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     }, []);
 
     useEffect(() => {
-        console.log('foi chamado');
-        console.log('training?.trainingExercises', training?.trainingExercises);
         const combined = [
             ...(training?.trainingExercises || []),
             ...selectedExercises
@@ -58,7 +55,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
             return acc;
         }, []);
 
-        console.log('combined', combined);
         setCombinedExercises(combined);
     }, [selectedExercises, training?.trainingExercises]);
     
