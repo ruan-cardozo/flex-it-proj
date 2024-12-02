@@ -17,6 +17,11 @@ export class DailyTrainingController {
     return this.dailyTrainingService.findAll();
   }
 
+  @Get('/training-of-the-day')
+  getTrainingOfTheDay() {
+    return this.dailyTrainingService.getTrainingOfTheDay();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.dailyTrainingService.findOne(id);

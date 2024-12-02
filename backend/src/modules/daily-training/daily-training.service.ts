@@ -5,13 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DailyTraining } from './entities/daily-training.entity';
 import { Repository } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
+import { DailyTrainingRepository } from './daily-training.repository';
 
 @Injectable()
 export class DailyTrainingService {
 
   constructor(
-    @InjectRepository(DailyTraining)
-    private readonly dailyTrainingRepository: Repository<DailyTraining>,
+    @Inject('DailyTrainingRepository')
+    private readonly dailyTrainingRepository: DailyTrainingRepository,
     @Inject(REQUEST) private readonly request: Request
   ) { }
 
@@ -31,6 +32,29 @@ export class DailyTrainingService {
   findOne(id: number) {
     return this.dailyTrainingRepository.findOne({ where: { id }, relations: ['training'] });
   }
+
+  async getTrainingOfTheDay() {
+    const today = new Date().getDay();
+    const userId = this.request['userId'];
+
+    console.log(`Today: ${today}, UserId: ${userId}`);
+
+    if (!userId || isNaN(parseInt(userId, 10))) {
+        throw new BadRequestException('Invalid userId');
+    }
+
+    const userIdInt = parseInt(userId, 10);
+
+    const findDailyTraining = await this.dailyTrainingRepository.getTrainingOfTheDay(today, userId);
+
+    if (!findDailyTraining) {
+        throw new BadRequestException('Daily training not found');
+    }
+
+    console.log(findDailyTraining);
+
+    return findDailyTraining;
+}
 
   async update(id: number, updateDailyTrainingDto: UpdateDailyTrainingDto) {
 
