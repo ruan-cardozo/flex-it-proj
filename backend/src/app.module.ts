@@ -7,6 +7,7 @@ import { ExercisesModule } from './modules/exercises/exercises.module';
 import { TrainingModule } from './modules/training/training.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
+import { DailyTrainingModule } from './modules/daily-training/daily-training.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
     SchemaModule,
     ExercisesModule,
     TrainingModule,
-    AuthModule
+    AuthModule,
+    DailyTrainingModule
   ],
   controllers: [],
   providers: [

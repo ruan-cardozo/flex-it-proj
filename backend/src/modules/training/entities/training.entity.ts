@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { TrainingObjective, WeeklyFrequency } from "../training.enum";
 import { BaseEntity } from "src/common/entities/base.entity";
 import { TrainingExercise } from "src/common/entities/training-exercise.entity";
+import { DailyTraining } from "src/modules/daily-training/entities/daily-training.entity";
 
 @Entity()
 export class Training extends BaseEntity {
@@ -26,4 +27,7 @@ export class Training extends BaseEntity {
 
     @OneToMany(() => TrainingExercise, trainingExercise => trainingExercise.training, { cascade: true })
     trainingExercises: TrainingExercise[];
+
+    @OneToMany(() => DailyTraining, dailyTraining => dailyTraining.training, { cascade: true })
+    dailyTraining: DailyTraining[];
 }
