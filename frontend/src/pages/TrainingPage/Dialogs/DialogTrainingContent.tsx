@@ -132,7 +132,7 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
             
             const exerciseId = exerciseOptions.find(exercise => exercise.name === selectedExercise)?.id;
 
-            const newExercise = { id: exerciseId, name: selectedExercise, weight, series, repetitions };
+            const newExercise = { id: exerciseId, name: selectedExercise, exercise_weight: weight, series, repetitions };
             setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
 
             const exerciseData = {
@@ -242,7 +242,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
                             <h2>Exercícios Selecionados:</h2>
                             <ul>
                                 {combinedExercises.map((exercise, index) => (
-                                        console.log(exercise),
                                     <li key={index}>
                                         <Button
                                             icon={<DeleteFilled />}

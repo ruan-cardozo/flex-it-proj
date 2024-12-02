@@ -26,6 +26,9 @@ async function getUserExercises() {
         id: exercise.id,
         name: exercise.name,
         muscle_group: exercise.muscle_group,
+        series: exercise.series,
+        repetitions: exercise.repetitions,
+        rest_time: exercise.rest_time,
         observation: exercise.observation
     }));
 }

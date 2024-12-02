@@ -33,6 +33,16 @@ export enum RestTime {
 }
 
 export interface Exercise {
+    exercise: {
+        id?: number;
+        name?: string;
+        muscle_group?: MuscleGroup | string;
+        series?: number;
+        repetitions?: number;
+        exercise_weight?: number;
+        rest_time?: RestTime | string;
+        observation?: string;
+    };
     id?: number;
     name?: string;
     muscle_group?: MuscleGroup | string;

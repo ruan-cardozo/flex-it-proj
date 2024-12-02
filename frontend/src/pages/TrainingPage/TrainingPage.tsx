@@ -8,6 +8,7 @@ import { useStylesCustomCard } from "./style/TrainingPage.const";
 import DialogTrainingContent from "./Dialogs/DialogTrainingContent";
 import DialogExerciseContent from "./Dialogs/DialogExerciseContent";
 import { useNavigate } from "react-router-dom";
+import MonthlyCalendar from "../../components/MonthlyCalendar/MonthlyCalendar";
 
 interface CustomGridAreaProps {
     onExerciseCardClick: () => void; 
@@ -40,6 +41,7 @@ export default function TrainingPage() {
             <div className="training-page">
                 <Header style={{ textAlign: 'left' }} title="Bem vindo ao módulo de treinos!" />
                 <PageParagraph />
+                <MonthlyCalendar/>
                 <CustomGridArea 
                     onExerciseCardClick={handleExerciseCardClick} 
                     onTrainingCardClick={handleTrainingCardClick} 

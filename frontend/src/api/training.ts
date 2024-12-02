@@ -69,6 +69,14 @@ export const editTraining = async (trainingData: Training, trainingId: number) =
     }
 }
 
+export const deleteTraining = async (trainingId: number) => {
+    const url = `${API_URL}training/${trainingId}`;
+
+    const response = await axiosInstance.delete(url);
+
+    return response;
+}
+
 export const getTrainingById = async (trainingId: number) => {
     const url = `${API_URL}training/${trainingId}`;
 
