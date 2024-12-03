@@ -50,3 +50,12 @@ export const deleteTrainingDaily = async (id: number) => {
     
     return response;
 }
+
+export const getTrainingOfTheDay = async () => {
+    
+    const url = `${API_URL}daily-training/training-of-the-day`
+
+    const response = await axiosInstance.get(url);
+
+    return response.data;
+}
