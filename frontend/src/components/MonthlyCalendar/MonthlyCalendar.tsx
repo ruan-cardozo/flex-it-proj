@@ -8,7 +8,11 @@ import './MonthlyCalendar.css';
 import { SaveFilled } from "@fluentui/react-icons";
 import { useToast } from '../../context/ToastContext';
 
-const MonthlyCalendar: React.FC = () => {
+interface MonthlyCalendarProps {
+    width?: string;
+}
+
+const MonthlyCalendar: React.FC<MonthlyCalendarProps> = ({width}) => {
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null);
@@ -137,8 +141,12 @@ const MonthlyCalendar: React.FC = () => {
         }
     };
 
+    const calendarContainerStyle = {
+        width: width
+    }
+
     return (
-        <div className="calendar-container">
+        <div className="calendar-container" style={calendarContainerStyle}>
             <h1>Calendário de Treinos - {currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1)} {currentYear}</h1>
             <div className="days-of-week">
                 {daysOfWeek.map((day, index) => (

@@ -23,7 +23,7 @@ function Login() {
 
             setEmail('');
             setPassword('');
-            navigate('/home');
+            navigate('/inicio');
         } catch (error) {
             
             if (error instanceof Error) {
