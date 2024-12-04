@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Treino</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #0f6cbd;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .workout-summary {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .workout-summary h2 {
+            margin-bottom: 5px;
+        }
+
+        .workout-summary p {
+            font-size: 1.2em;
+            color: #777;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0f6cbd;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .observation {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+            background-color: #f4f4f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plano de Treino</h1>
+        </header>
+
+        <section class="workout-summary">
+            <h2>Treino de Hoje</h2>
+            <p><strong>Nome do Treino:</strong> <span id="date">{{trainingName}}</span></p>
+            <p><strong>Data:</strong> <span id="date">{{todayDate}}</span></p>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Exercício</th>
+                    <th>Grupo Muscular</th>
+                    <th>Séries</th>
+                    <th>Repetições</th>
+                    <th>Peso (kg)</th>
+                    <th>Tempo de Descanso (s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{exerciseRows}}
+            </tbody>
+        </table>
+
+        <section class="observation">
+            <h3>Observações</h3>
+            <p>{{observations}}</p>
+        </section>
+
+        <footer>
+            <p>Mantenha-se firme! Cada treino te leva mais perto do seu objetivo.</p>
+        </footer>
+    </div>
+</body>
+</html>

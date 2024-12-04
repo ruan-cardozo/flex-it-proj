@@ -58,8 +58,6 @@ export const editTraining = async (trainingData: Training, trainingId: number) =
 
         const url = `${API_URL}training/${trainingId}`;
 
-        console.log(trainingData);
-
         const response = await axiosInstance.put(url, trainingData);
 
         return response;
@@ -67,6 +65,14 @@ export const editTraining = async (trainingData: Training, trainingId: number) =
     } catch (error) {
         console.error(error);
     }
+}
+
+export const deleteTraining = async (trainingId: number) => {
+    const url = `${API_URL}training/${trainingId}`;
+
+    const response = await axiosInstance.delete(url);
+
+    return response;
 }
 
 export const getTrainingById = async (trainingId: number) => {
@@ -89,4 +95,21 @@ export const getTrainings = async () => {
     } catch (error) {
         console.error(error);
     }
+}
+
+export const printTraining = async (trainingId: number) => {
+    const url = `${API_URL}training/print-training/${trainingId}`;
+
+    const response = await axiosInstance.get(url, {
+        responseType: 'blob'
+    });
+    const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+    const pdfUrl = window.URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+
+    link.href = pdfUrl;
+    link.setAttribute('download', `training-${trainingId}.pdf`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

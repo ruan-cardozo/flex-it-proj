@@ -23,7 +23,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     const dropdownOptions2 = [
         "1x por semana", "2x por semana", "3x por semana", "4x por semana", "5x por semana", "6x por semana", "7x por semana"
     ];
-
     const [trainingId, setTrainingId] = useState<number | null>(training?.id || null);
     const [trainingName, setTrainingName] = useState<string>(training?.name || '');
     const [trainingObjective, setTrainingObjective] = useState<string>(training?.training_objective || '');
@@ -32,7 +31,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     const [endDate, setEndDate] = useState<Date | null>(training?.end_date ? new Date(training.end_date) : null);
     const [equipment, setEquipment] = useState<string>(training?.necessary_equipment || '');
     const [selectedExercises, setSelectedExercises] = useState<{ id: number, name: string, exercise_weight: number, series: number, repetitions: number }[]>(training?.trainingExercises || []);
-    console.log('11 -----> ',{selectedExercises});
     const [selectedExercise, setSelectedExercise] = useState<string>('');
     const [weight, setWeight] = useState<number>(0);
     const [series, setSeries] = useState<number>(0);
@@ -46,8 +44,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     }, []);
 
     useEffect(() => {
-        console.log('foi chamado');
-        console.log('training?.trainingExercises', training?.trainingExercises);
         const combined = [
             ...(training?.trainingExercises || []),
             ...selectedExercises
@@ -58,7 +54,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
             return acc;
         }, []);
 
-        console.log('combined', combined);
         setCombinedExercises(combined);
     }, [selectedExercises, training?.trainingExercises]);
     
@@ -129,14 +124,12 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     };
 
     const handleAddExercise = async () => {
-
-        console.log(trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0);
         
         if (trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0) {
             
             const exerciseId = exerciseOptions.find(exercise => exercise.name === selectedExercise)?.id;
 
-            const newExercise = { id: exerciseId, name: selectedExercise, weight, series, repetitions };
+            const newExercise = { id: exerciseId, name: selectedExercise, exercise_weight: weight, series, repetitions };
             setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
 
             const exerciseData = {
@@ -147,8 +140,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
 
             try {
                 const selectedExerciseObj = exerciseOptions.find(exercise => exercise.name === selectedExercise);
-
-                console.log(selectedExerciseObj);
 
                 if (selectedExerciseObj) {
                     const response = await editExercise(Number(selectedExerciseObj.id), exerciseData);
@@ -246,7 +237,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
                             <h2>Exercícios Selecionados:</h2>
                             <ul>
                                 {combinedExercises.map((exercise, index) => (
-                                        console.log(exercise),
                                     <li key={index}>
                                         <Button
                                             icon={<DeleteFilled />}
