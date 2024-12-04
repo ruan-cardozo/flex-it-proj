@@ -35,8 +35,6 @@ export class DailyTrainingService {
     const today = Number(moment().tz('America/Sao_Paulo').format('DD'));
     const userId = this.request['userId'];
 
-    console.log(`Today: ${today}, UserId: ${userId}`);
-
     if (!userId || isNaN(parseInt(userId, 10))) {
         throw new BadRequestException('Invalid userId');
     }
@@ -46,8 +44,6 @@ export class DailyTrainingService {
     if (!findDailyTraining) {
         throw new BadRequestException('Daily training not found');
     }
-
-    console.log(findDailyTraining);
 
     return findDailyTraining;
 }

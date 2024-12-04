@@ -89,7 +89,6 @@ export default function TraingingPageView() {
             compare: (a, b) => (a.necessary_equipment || "").localeCompare(b.necessary_equipment || ""),
             renderHeaderCell: () => 'Exercícios',
             renderCell: (item) => item.trainingExercises?.map(exercise => {
-                console.log(exercise);
                 return `${exercise.exercise.name } | `;
             }) || 'N/A',
         })

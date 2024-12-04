@@ -68,10 +68,6 @@ export default function Exercise() {
         })
     ];
 
-    const handleOpen = (item: Exercise) => {
-        console.log('Abrir exercício:', item);
-    };
-
     const handleEdit = (item: Exercise) => {
         setTrainingIsModalOpen(true);
         setSelectedExercise(item);
@@ -110,7 +106,6 @@ export default function Exercise() {
                 <CustomDataGrid 
                     items={items}
                     columns={columns}
-                    onOpenItem={handleOpen}
                     onEditItem={handleEdit}
                     onDeleteItem={handleDelete}
                 />

@@ -31,7 +31,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     const [endDate, setEndDate] = useState<Date | null>(training?.end_date ? new Date(training.end_date) : null);
     const [equipment, setEquipment] = useState<string>(training?.necessary_equipment || '');
     const [selectedExercises, setSelectedExercises] = useState<{ id: number, name: string, exercise_weight: number, series: number, repetitions: number }[]>(training?.trainingExercises || []);
-    console.log('11 -----> ',{selectedExercises});
     const [selectedExercise, setSelectedExercise] = useState<string>('');
     const [weight, setWeight] = useState<number>(0);
     const [series, setSeries] = useState<number>(0);
@@ -125,8 +124,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
     };
 
     const handleAddExercise = async () => {
-
-        console.log(trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0);
         
         if (trainingId && selectedExercise && weight > 0 && series > 0 && repetitions > 0) {
             
@@ -143,8 +140,6 @@ const DialogTrainingContent: React.FC<DialogTrainingContentProps> = ({ training 
 
             try {
                 const selectedExerciseObj = exerciseOptions.find(exercise => exercise.name === selectedExercise);
-
-                console.log(selectedExerciseObj);
 
                 if (selectedExerciseObj) {
                     const response = await editExercise(Number(selectedExerciseObj.id), exerciseData);

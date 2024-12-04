@@ -58,8 +58,6 @@ export const editTraining = async (trainingData: Training, trainingId: number) =
 
         const url = `${API_URL}training/${trainingId}`;
 
-        console.log(trainingData);
-
         const response = await axiosInstance.put(url, trainingData);
 
         return response;
