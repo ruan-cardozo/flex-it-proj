@@ -45,7 +45,7 @@ export const getMetricById = async (id: number) => {
 export const updateMetric = async (id: number, metricData: Metric) => {
   try {
     const url = `${API_URL}metrics/${id}`;
-    const response = await axiosInstance.patch(url, metricData);
+    const response = await axiosInstance.put(url, metricData);
     return response.data;
   } catch (error) {
     console.error('Error updating metric:', error);
