@@ -9,11 +9,13 @@ import DialogTrainingContent from "./Dialogs/DialogTrainingContent";
 import DialogExerciseContent from "./Dialogs/DialogExerciseContent";
 import { useNavigate } from "react-router-dom";
 import MonthlyCalendar from "../../components/MonthlyCalendar/MonthlyCalendar";
-import { Card, Text } from "@fluentui/react-components";
+import { Button, Card, Text } from "@fluentui/react-components";
 import { useTrainingOfTheDay } from "../../hooks/getUserTodayTraining";
-import { DefaultButton, IStackStyles, IStackTokens, PrimaryButton, Stack } from "@fluentui/react";
+import { IStackStyles, IStackTokens, Spinner, Stack } from "@fluentui/react";
+import { SaveFilled, AddFilled, ArrowCounterclockwiseFilled } from "@fluentui/react-icons";
 import { Checkbox } from "@fluentui/react-components";
 import { createManyGoals, fetchGoals, Goal, Goals } from "../../api/goals";
+import { useToast } from "../../context/ToastContext";
 
 
 interface CustomGridAreaProps {
@@ -75,54 +77,54 @@ export default function TrainingPage() {
 
 function TrainingDayCard() {
 
-    const { trainingOfTheDay, loading, error, refetch } = useTrainingOfTheDay();
+    const { trainingOfTheDay, loading, refetch } = useTrainingOfTheDay();
     const stackTokens: IStackTokens = { childrenGap: 10 };
     const stackStyles: IStackStyles = { root: { width: '100%' } };
 
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+    if (loading) {
+        return (
+            <Card style={{ marginLeft: '25px', width: '585px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Spinner label="Carregando treino do dia..." />
+            </Card>
+        );
+    }
     
     if (!trainingOfTheDay) {
         return (
             <Card
-                style={{ marginLeft: '50px', width: '585px', height: '300px' }}
+                style={{ marginLeft: '25px', width: '585px', height: '300px' }}
             >
-                <Text size={500} style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    display: 'flex',
-                }} block><strong>Treino do dia</strong></Text>
-                <Text></Text>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text size={500} style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} block><strong>Treino do dia</strong></Text>
+                    <Button icon={<ArrowCounterclockwiseFilled />} onClick={refetch} style={{ marginTop: '10px' }} />
+                </div>
                 <Text>Nenhum treino cadastrado para hoje</Text>
             </Card>
         );
     }
 
-
     return (
         <Card style={{ marginLeft: '25px', width: '585px', height: '300px', overflowY: 'scroll', padding: '20px' }}>
-            {trainingOfTheDay && (
-                <Stack tokens={stackTokens} styles={stackStyles}>
-                    <Text size={500}>Treino do dia: {trainingOfTheDay.training?.name}</Text>
-                    <Text size={500}>Exercícios:</Text>
-                    <Stack tokens={stackTokens}>
-                        {trainingOfTheDay.training?.trainingExercises?.map((te) => (
-                            <Card key={te.id} style={{ padding: '10px', marginBottom: '10px' }}>
-                                <Stack tokens={stackTokens}>
-                                    <Text size={500}>{te.exercise.name}</Text>
-                                    <Text>Grupo Muscular: {te.exercise.muscle_group}</Text>
-                                    <Text>Séries: {te.exercise.series}</Text>
-                                    <Text>Repetições: {te.exercise.repetitions}</Text>
-                                    <Text>Peso: {te.exercise.exercise_weight} kg</Text>
-                                    <Text>Tempo de Descanso: {te.exercise.rest_time}</Text>
-                                    <Text>Observação: {te.exercise.observation}</Text>
-                                </Stack>
-                            </Card>
-                        ))}
-                    </Stack>
-                </Stack>
-            )}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text size={500}>Treino do dia: {trainingOfTheDay.training?.name}</Text>
+                <Button icon={<ArrowCounterclockwiseFilled />} onClick={refetch} style={{ marginTop: '5px', height: '40px' }} />
+            </div>
+            <Text size={500}>Exercícios:</Text>
+            <Stack tokens={stackTokens} styles={stackStyles}>
+                {trainingOfTheDay.training?.trainingExercises?.map((te) => (
+                    <Card key={te.id} style={{ padding: '10px', marginBottom: '10px' }}>
+                        <Stack tokens={stackTokens}>
+                            <Text size={500}>{te.exercise.name}</Text>
+                            <Text>Grupo Muscular: {te.exercise.muscle_group}</Text>
+                            <Text>Séries: {te.exercise.series}</Text>
+                            <Text>Repetições: {te.exercise.repetitions}</Text>
+                            <Text>Peso: {te.exercise.exercise_weight} kg</Text>
+                            <Text>Tempo de Descanso: {te.exercise.rest_time}</Text>
+                            <Text>Observação: {te.exercise.observation}</Text>
+                        </Stack>
+                    </Card>
+                ))}
+            </Stack>
         </Card>
     );
 }
@@ -168,6 +170,7 @@ const stackTokens: IStackTokens = { childrenGap: 10 };
 
 function WeekGoalsCard() {
     const [goals, setGoals] = useState<Goals | []>([]);
+    const { showToast } = useToast();
 
     useEffect(() => {
         fetchGoalsFromAPI();
@@ -187,7 +190,9 @@ function WeekGoalsCard() {
             
             const apiGoalsCreated = await createManyGoals(goals);
             setGoals(apiGoalsCreated.goals.map((goal: { goal: string; done: boolean }) => ({ ...goal, isEditing: false })));
+            showToast('Metas semanais salvas com sucesso!', 'success');
         } catch (error) {
+            showToast('Erro ao salvar metas semanais', 'error');
             console.error('Failed to create goals:', error);
         }
     };
@@ -255,12 +260,14 @@ function WeekGoalsCard() {
                     </div>
                 ))}
             </Stack>
-            <DefaultButton iconProps={{ iconName: 'Add' }} onClick={handleAddGoal} style={{ marginTop: '20px' }}>
+            <Button 
+                appearance="secondary"
+                icon={<AddFilled/>} onClick={handleAddGoal} style={{ marginTop: '5px' }}>
                 Adicionar Meta
-            </DefaultButton>
-            <PrimaryButton iconProps={{ iconName: 'Save' }} onClick={handleCreateGoals} style={{ marginTop: '20px' }}>
+            </Button>
+            <Button appearance="primary" icon={<SaveFilled/>} onClick={handleCreateGoals} style={{ marginTop: '5x' }}>
                 Salvar Metas
-            </PrimaryButton>
+            </Button>
         </Card>
     );
 }

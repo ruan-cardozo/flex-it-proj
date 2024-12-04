@@ -8,6 +8,7 @@ import { Exercise } from "../../../api/exercise";
 import DialogTrainingContent from "../Dialogs/DialogTrainingContent";
 import DialogForm from "../../../components/DialogForm/DialogForm";
 import { useToast } from "../../../context/ToastContext";
+import { printTraining } from "../../../api/training";
 
 type Training = {
     id: number,
@@ -94,8 +95,10 @@ export default function TraingingPageView() {
         })
     ];
 
-    const handlePrint = (item: Training) => {
-        console.log('Abrir exercício:', item);
+    const handlePrint = async (item: Training) => {
+        await printTraining(item.id);
+
+        showToast('Pdf do treino gerado com sucesso!', 'success');
     };
 
     const handleEdit = (item: Training) => {

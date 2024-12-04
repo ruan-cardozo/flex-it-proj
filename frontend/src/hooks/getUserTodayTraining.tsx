@@ -11,19 +11,21 @@ type TrainingDaily = {
     day: number;
 }
 
-
 export const useTrainingOfTheDay = () => {
     const [trainingOfTheDay, setTrainingOfTheDay] = useState<TrainingDaily | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
 
     const fetchTrainingOfTheDay = async () => {
         try {
             setLoading(true);
             const data = await getTrainingOfTheDay();
-            setTrainingOfTheDay(data);
+            if (data) {
+                setTrainingOfTheDay(data);
+            } else {
+                setTrainingOfTheDay(null);
+            }
         } catch (err) {
-            setError('Failed to fetch training of the day');
+            console.log(err);
         } finally {
             setLoading(false);
         }
@@ -33,5 +35,5 @@ export const useTrainingOfTheDay = () => {
         fetchTrainingOfTheDay();
     }, []);
 
-    return { trainingOfTheDay, loading, error, refetch: fetchTrainingOfTheDay };
+    return { trainingOfTheDay, loading, refetch: fetchTrainingOfTheDay };
 };

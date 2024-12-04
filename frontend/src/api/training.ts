@@ -98,3 +98,20 @@ export const getTrainings = async () => {
         console.error(error);
     }
 }
+
+export const printTraining = async (trainingId: number) => {
+    const url = `${API_URL}training/print-training/${trainingId}`;
+
+    const response = await axiosInstance.get(url, {
+        responseType: 'blob'
+    });
+    const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+    const pdfUrl = window.URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+
+    link.href = pdfUrl;
+    link.setAttribute('download', `training-${trainingId}.pdf`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

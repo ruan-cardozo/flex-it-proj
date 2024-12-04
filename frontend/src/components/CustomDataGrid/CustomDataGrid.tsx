@@ -43,6 +43,38 @@ const addActionsColumn = (
   onEditItem?: (item: Item) => void,
   onDeleteItem?: (item: Item) => void
 ): TableColumnDefinition<Item>[] => {
+
+  if (window.location.pathname === '/treinos/exercicios') {
+    return [
+      ...columns,
+      {
+        columnId: 'Ações',
+        compare: () => 0, // Comparação neutra para a coluna de ações
+        renderHeaderCell: () => 'Ações', // Cabeçalho da coluna
+        renderCell: (item: Item) => (
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
+            {onEditItem && (
+              <Button
+                icon={<EditRegular />}
+                onClick={() => onEditItem(item)}
+                size="small"
+                appearance="transparent"
+                title="Editar" />
+            )}
+            {onDeleteItem && (
+              <Button
+                icon={<DeleteRegular />}
+                onClick={() => onDeleteItem(item)}
+                size="small"
+                appearance="transparent"
+                title="Excluir" />
+            )}
+          </div>
+        )
+      },
+    ];
+  }
+
   return [
     ...columns,
     {
@@ -57,7 +89,7 @@ const addActionsColumn = (
               onClick={() => onOpenItem(item)}
               size="small"
               appearance="transparent"
-              title="Imprimir exercício" />
+              title="Imprimir treino" />
           )}
           {onEditItem && (
             <Button
