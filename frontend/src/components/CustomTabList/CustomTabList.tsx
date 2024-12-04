@@ -3,8 +3,6 @@ import { makeStyles, tokens, Tab, TabList } from "@fluentui/react-components";
 import {
   DataHistogramRegular,
   DataHistogramFilled,
-  AirplaneTakeOffRegular,
-  AirplaneTakeOffFilled,
   FormNewFilled,
   FormNewRegular,
   bundleIcon,
@@ -16,51 +14,49 @@ import type {
 } from "@fluentui/react-components";
 
 const DataHistogram = bundleIcon(DataHistogramFilled, DataHistogramRegular);
-const AirplaneTakeOff = bundleIcon(
-  AirplaneTakeOffFilled,
-  AirplaneTakeOffRegular
-);
 const FormNew = bundleIcon(FormNewFilled, FormNewRegular);
 
 const useStyles = makeStyles({
-  root: {
-    marginTop: '-2%',
-    alignItems: "flex-start",
-    display: "flex",
-    justifyContent: "flex-start",
-    padding: "50px 20px",
-    rowGap: "20px"
-  },
-  panels: {
-    padding: "0 10px",
-    "& th": {
-      textAlign: "left",
-      padding: "0 30px 0 0",
+    root: {
+      marginTop: '-2%',
+      display: "flex",
+      flexDirection: "column", // Colocar em coluna para que o TabList fique acima
+      alignItems: "center", // Centralizar horizontalmente
+      justifyContent: "center", // Adiciona alinhamento geral
+      rowGap: "20px", // Espaçamento entre os elementos
+      padding: "20px",
     },
-  },
-  propsTable: {
-    "& td:first-child": {
-      fontWeight: tokens.fontWeightSemibold,
+    panels: {
+      padding: "0 10px",
+      "& th": {
+        textAlign: "left",
+        padding: "0 30px 0 0",
+      },
     },
-    "& td": {
-      padding: "0 30px 0 0",
+    propsTable: {
+      "& td:first-child": {
+        fontWeight: tokens.fontWeightSemibold,
+      },
+      "& td": {
+        padding: "0 30px 0 0",
+      },
     },
-  },
-});
+  });
+  
 
 interface CustomTabListProps {
   firstTabComponent: JSX.Element;
   secondTabComponent: JSX.Element;
-  ThirdTabComponent: JSX.Element;
+  thirdTabComponent: JSX.Element;
 }
 
-export const CustomTabList = ({firstTabComponent,secondTabComponent,ThirdTabComponent}: CustomTabListProps) => {
+export const CustomTabList = ({firstTabComponent,secondTabComponent,thirdTabComponent}: CustomTabListProps) => {
   const styles = useStyles();
 
   const [selectedValue, setSelectedValue] =
     React.useState<TabValue>("conditions");
 
-  const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
+  const onTabSelect = (_: SelectTabEvent, data: SelectTabData) => {
     setSelectedValue(data.value);
   };
 
@@ -74,13 +70,13 @@ export const CustomTabList = ({firstTabComponent,secondTabComponent,ThirdTabComp
           Cadastro
         </Tab>
         <Tab id="Conditions" icon={<FormNew />} value="conditions">
-          Merda
+          Editar/Excluir
         </Tab>
       </TabList>
       <div className={styles.panels}>
         {selectedValue === "arrivals" && firstTabComponent}
         {selectedValue === "departures" && secondTabComponent}
-        {selectedValue === "conditions" && ThirdTabComponent}
+        {selectedValue === "conditions" && thirdTabComponent}
       </div>
     </div>
   );

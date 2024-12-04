@@ -1,0 +1,55 @@
+.edit-delete-container {
+    padding: 20px;
+    background-color: #7a818c;
+    border-radius: 8px;
+    color: #ffffff;
+    width: 100%; /* Ajuste a largura conforme necessário */
+    max-width: 800px; /* Defina um valor máximo para a largura */
+    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
+  }
+  
+  .edit-delete-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .edit-delete-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+  }
+  
+  .form-input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-button {
+    padding: 10px;
+    background-color: #0078d4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete-button {
+    background-color: #d9534f;
+  }

@@ -1,3 +1,4 @@
+import { BaseEntity } from "../../../common/entities/base.entity";
 import {
     Column,
     PrimaryGeneratedColumn,
@@ -7,9 +8,9 @@ import {
 } from "typeorm";
 
 @Entity()
-export class Metric {
-    @PrimaryGeneratedColumn()
-    id:number;
+export class Metric extends BaseEntity {
+    @Column()
+    data:Date;
 
     @Column()
     peso:number;
@@ -21,9 +22,4 @@ export class Metric {
     @Column('float', { nullable: true })
     imc?: number;
 
-    @CreateDateColumn()
-    created_at: Date;
-
-    @UpdateDateColumn()
-    updated_at: Date;
 }

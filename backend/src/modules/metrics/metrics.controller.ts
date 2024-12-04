@@ -7,7 +7,7 @@ import { UpdateMetricDto } from './dto/update-metric.dto';
 export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
-  @Post("create")
+  @Post("/create")
   create(@Body() createMetricDto: CreateMetricDto) {
     return this.metricsService.create(createMetricDto);
   }
