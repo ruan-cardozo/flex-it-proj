@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './DietPage.css';
 import LeftSideColumn from '../../components/LeftSideColumn/LeftSideColumn';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 interface Refeicoes {
   [key: string]: string[];
@@ -27,11 +29,9 @@ const DietPage: React.FC = () => {
 
   const [calorias, setCalorias] = useState(0);
   const [hidratacao, setHidratacao] = useState(0);
-  const [passos, setPassos] = useState(0);
 
   const [caloriasMeta, setCaloriasMeta] = useState(2000);
   const [hidratacaoMeta, setHidratacaoMeta] = useState(3000);
-  const [passosMeta, setPassosMeta] = useState(10000);
 
   const handleAdicionarItem = (refeicao: string) => {
     if (novosItens[refeicao].trim() !== "") {
@@ -59,10 +59,6 @@ const DietPage: React.FC = () => {
 
   const handleHidratacaoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHidratacao(Math.min(Number(e.target.value), hidratacaoMeta));
-  };
-
-  const handlePassosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassos(Math.min(Number(e.target.value), passosMeta));
   };
 
   return (
@@ -155,33 +151,11 @@ const DietPage: React.FC = () => {
               max={hidratacaoMeta}
             />
             <span>{hidratacao} / {hidratacaoMeta} ml</span>
+          </div>
 
-            <h3>Passos</h3>
-            <div className="goal-meta-container">
-              <span className="goal-meta-label">Meta:</span>
-              <input
-                type="number"
-                value={passosMeta}
-                onChange={(e) => setPassosMeta(Number(e.target.value))}
-                className="goal-meta-input"
-                placeholder="Definir meta de passos"
-              />
-            </div>
-            <div className="goal-bar">
-              <div
-                className="goal-bar-progress"
-                style={{ width: `${(passos / passosMeta) * 100}%` }}
-              />
-            </div>
-            <input
-              type="number"
-              value={passos}
-              onChange={handlePassosChange}
-              className="goal-input"
-              min="0"
-              max={passosMeta}
-            />
-            <span>{passos} / {passosMeta} passos</span>
+          {/* Calendário ao lado direito */}
+          <div className="calendar-section">
+            <Calendar />
           </div>
         </div>
       </div>
