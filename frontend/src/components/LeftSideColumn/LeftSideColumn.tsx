@@ -24,7 +24,7 @@ function LeftSideColumn() {
             <Header style={{marginLeft: '10px'}} title='FlexIT'/>
             </div>
             <CustomButton onClick={() => {
-                navigate(window.location.pathname = '/home');
+                navigate(window.location.pathname = '/inicio');
             }} icon={<HomeRegular />} about='Início'/>
             <br />
             <CustomButton onClick={() => {
