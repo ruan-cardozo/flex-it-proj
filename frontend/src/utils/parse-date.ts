@@ -1,4 +1,8 @@
-export function parseDate(data: string) {
+import { format, toZonedTime } from 'date-fns-tz';
 
-    return new Intl.DateTimeFormat('pt-BR').format(new Date(data)) 
+export function parseDate(data: string) {
+    // Cria uma data a partir da string e força para UTC
+    const utcDate = new Date(data);
+    const zonedDate = toZonedTime(utcDate, 'UTC');
+    return format(zonedDate, 'dd/MM/yyyy', { timeZone: 'UTC' });
 }

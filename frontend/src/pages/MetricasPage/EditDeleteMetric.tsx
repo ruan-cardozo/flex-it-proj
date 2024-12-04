@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getMetrics, updateMetric, deleteMetric } from '../../api/metrics';
 import './EditDeleteMetric.css';
+import { parseDate } from '../../utils/parse-date';
 
 const EditDeleteMetric: React.FC = () => {
   const [metrics, setMetrics] = useState<{ id: number; data: string; peso: number; altura: number; imc: number }[]>([]);
@@ -86,13 +87,13 @@ const EditDeleteMetric: React.FC = () => {
         <option value="" disabled>Selecione uma métrica</option>
         {metrics.map(metric => (
           <option key={metric.id} value={metric.id}>
-            {metric.data} - {metric.peso} kg - {metric.altura} cm
+            {parseDate(metric.data)} - {metric.peso} kg - {metric.altura} cm
           </option>
         ))}
       </select>
       {selectedMetric !== null && (
         <form onSubmit={handleUpdate} className="form-container">
-          <label className="form-label">
+          <label style={{color: 'black'}} className="form-label">
             Data:
             <input
               type="date"
@@ -103,7 +104,7 @@ const EditDeleteMetric: React.FC = () => {
               required
             />
           </label>
-          <label className="form-label">
+          <label style={{color: 'black'}} className="form-label">
             Peso (kg):
             <input
               type="number"
@@ -114,7 +115,7 @@ const EditDeleteMetric: React.FC = () => {
               required
             />
           </label>
-          <label className="form-label">
+          <label style={{color: 'black'}} className="form-label">
             Altura (cm):
             <input
               type="number"

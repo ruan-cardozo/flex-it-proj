@@ -9,7 +9,6 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { getMetrics } from '../../api/metrics';
-import { addDays } from 'date-fns';
 import './Metrics.css';
 import { parseDate } from '../../utils/parse-date';
 
@@ -22,7 +21,7 @@ const Graphic: React.FC = () => {
         const metrics = await getMetrics();
         const calculatedData = metrics.map((metric: { data: string; peso: number; altura: number }) => ({
           ...metric,
-          data: addDays(new Date(metric.data), 1), // Adiciona um dia à data
+          data: metric.data,
           imc: metric.peso / ((metric.altura / 100) ** 2),
         }));
         setData(calculatedData);
@@ -56,7 +55,7 @@ const Graphic: React.FC = () => {
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
             <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="data" />
+            <XAxis dataKey="peso" />
             <YAxis />
             <Tooltip />
             <Line type="monotone" dataKey="peso" stroke="#8884d8" strokeWidth={2} />
