@@ -1,11 +1,9 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateDailyTrainingDto } from './dto/create-daily-training.dto';
 import { UpdateDailyTrainingDto } from './dto/update-daily-training.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DailyTraining } from './entities/daily-training.entity';
-import { Repository } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
 import { DailyTrainingRepository } from './daily-training.repository';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class DailyTrainingService {
@@ -34,7 +32,7 @@ export class DailyTrainingService {
   }
 
   async getTrainingOfTheDay() {
-    const today = new Date().getDay();
+    const today = Number(moment().tz('America/Sao_Paulo').format('DD'));
     const userId = this.request['userId'];
 
     console.log(`Today: ${today}, UserId: ${userId}`);
@@ -42,8 +40,6 @@ export class DailyTrainingService {
     if (!userId || isNaN(parseInt(userId, 10))) {
         throw new BadRequestException('Invalid userId');
     }
-
-    const userIdInt = parseInt(userId, 10);
 
     const findDailyTraining = await this.dailyTrainingRepository.getTrainingOfTheDay(today, userId);
 

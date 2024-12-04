@@ -7,6 +7,10 @@ import { UpdateTrainingDto } from './dto/update-training.dto';
 import { Exercise } from 'src/modules/exercises/entities/exercise.entity';
 import { TrainingExercise } from 'src/common/entities/training-exercise.entity';
 import { REQUEST } from '@nestjs/core';
+import * as puppeteer from 'puppeteer';
+import * as path from 'path';
+import * as fs from 'fs';
+import { formatToBrazilianDate } from 'src/common/helpers/date-helper';
 
 @Injectable({scope: Scope.REQUEST})
 export class TrainingService {
@@ -84,6 +88,55 @@ export class TrainingService {
       where: { id },
       relations: ['trainingExercises', 'trainingExercises.exercise'],
     });
+  }
+
+  public async printTraining(id: number) {
+
+    const databaseTraining = await this.findOne(id);
+
+    if (!databaseTraining) {
+      throw new Error('Training not found');
+    }
+
+    const templatePath = path.join(__dirname, './templates', 'training-template.html');
+    let html = fs.readFileSync(templatePath, 'utf8');
+
+    html = html.replace('{{trainingName}}', databaseTraining.name);
+    html = html.replace('{{observations}}', databaseTraining.necessary_equipment);
+    const today = new Date();
+    const formattedDate = formatToBrazilianDate(today);
+    html = html.replace('{{todayDate}}', formattedDate);
+
+    const exercises = databaseTraining.trainingExercises.map((te) => {
+      return `<tr>
+        <td>${te.exercise.name}</td>
+        <td>${te.exercise.muscle_group}</td>
+        <td>${te.exercise.series}</td>
+        <td>${te.exercise.repetitions}</td>
+        <td>${te.exercise.exercise_weight}</td>
+        <td>${te.exercise.rest_time}</td>
+      </tr>
+    `}).join('');
+
+    html = html.replace('{{exerciseRows}}', exercises);
+
+    const browser = await puppeteer.launch({ 
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+
+    const pdf = await page.pdf({ 
+        format: 'A4',
+        printBackground: true,
+      }
+    );
+
+    await browser.close();
+
+    return Buffer.from(pdf);
   }
 
   public async remove(id: number): Promise<void> {
