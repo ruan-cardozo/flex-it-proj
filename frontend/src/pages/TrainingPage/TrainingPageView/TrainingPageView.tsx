@@ -88,9 +88,9 @@ export default function TraingingPageView() {
             columnId: 'exercises',
             compare: (a, b) => (a.necessary_equipment || "").localeCompare(b.necessary_equipment || ""),
             renderHeaderCell: () => 'Exercícios',
-            renderCell: (item) => item.trainingExercises?.map(exercise => {
-                return `${exercise.exercise.name } | `;
-            }) || 'N/A',
+            renderCell: (item) => item.trainingExercises?.map((exercise, index) => {
+                return `${index > 0 ? ' | ' : ''}${exercise.exercise.name}`;
+            }).join('') || 'N/A',
         })
     ];
 
