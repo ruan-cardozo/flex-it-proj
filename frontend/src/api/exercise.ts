@@ -33,6 +33,17 @@ export enum RestTime {
 }
 
 export interface Exercise {
+    exercise: {
+        id?: number;
+        name?: string;
+        muscle_group?: MuscleGroup | string;
+        series?: number;
+        repetitions?: number;
+        exercise_weight?: number;
+        rest_time?: RestTime | string;
+        observation?: string;
+    };
+    id?: number;
     name?: string;
     muscle_group?: MuscleGroup | string;
     series?: number;
@@ -51,8 +62,9 @@ export const createExercise = async (exercise: Exercise) => {
     return response.data;
 };
 
-export const getExercises = async () => {
-    const url = `${API_URL}exercises`;
+export const getExercises = async (id?: number) => {
+
+    const url = `${API_URL}exercises${id ? `/${id}` : ''}`;
 
     try {
         const response = await axiosInstance.get(url);

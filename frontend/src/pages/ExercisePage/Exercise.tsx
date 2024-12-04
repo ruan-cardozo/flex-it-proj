@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getExercises, MuscleGroup, RestTime } from "../../api/exercise";
+import { deleteExercise, getExercises, MuscleGroup, RestTime } from "../../api/exercise";
 import CustomDataGrid from "../../components/CustomDataGrid/CustomDataGrid";
 import Header from "../../components/Header/Header";
 import LeftSideColumn from "../../components/LeftSideColumn/LeftSideColumn";
-import { createTableColumn, selectClassNames, TableColumnDefinition } from "@fluentui/react-components";
+import { createTableColumn, TableColumnDefinition } from "@fluentui/react-components";
 import DialogForm from '../../components/DialogForm/DialogForm';
 import DialogExerciseContent from '../TrainingPage/Dialogs/DialogExerciseContent';
+import { useToast } from '../../context/ToastContext';
+import { AxiosError } from 'axios';
 
-// Definição do tipo "Exercise"
 type Exercise = {
+    id?: number;
     name?: string;
     muscle_group?: MuscleGroup | string;
     series?: number;
@@ -18,12 +20,15 @@ type Exercise = {
     observation?: string;
 };
 
-// Função para buscar exercícios do usuário
 async function getUserExercises() {
     const exercises = await getExercises();
     return exercises.map((exercise: Exercise) => ({
+        id: exercise.id,
         name: exercise.name,
         muscle_group: exercise.muscle_group,
+        series: exercise.series,
+        repetitions: exercise.repetitions,
+        rest_time: exercise.rest_time,
         observation: exercise.observation
     }));
 }
@@ -32,6 +37,7 @@ export default function Exercise() {
     const [items, setItems] = useState<Exercise[]>([]);
     const [selectedExercise, setSelectedExercise] = useState<Exercise | undefined>(undefined);
     const [isTrainingModalOpen, setTrainingIsModalOpen] = useState(false);
+    const { showToast } = useToast();
 
     useEffect(() => {
         async function fetchExercises() {
@@ -41,7 +47,6 @@ export default function Exercise() {
         fetchExercises();
     }, []);
 
-    // Definir colunas com as ações na última coluna
     const columns: TableColumnDefinition<Exercise>[] = [
         createTableColumn<Exercise>({
             columnId: 'name',
@@ -63,17 +68,33 @@ export default function Exercise() {
         })
     ];
 
-    // Handlers para ações
     const handleOpen = (item: Exercise) => {
         console.log('Abrir exercício:', item);
     };
 
     const handleEdit = (item: Exercise) => {
         setTrainingIsModalOpen(true);
+        setSelectedExercise(item);
     };
 
-    const handleDelete = (item: Exercise) => {
-        console.log('Deletar exercício:', item);
+    const handleDelete = async (item: Exercise) => {
+        try {
+            if (item.id) {
+                const response = await deleteExercise(item.id);
+                if (response) {
+                    showToast(`Exercício ${item.name} deletado com sucesso!`, 'success');
+                    const updatedExercises = await getUserExercises();
+                    setItems(updatedExercises);
+                }
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                const axiosError = error as AxiosError;
+                showToast((axiosError.response?.data as { message: string }).message, 'error');
+            } else {
+                console.error('An unknown error occurred');
+            }
+        }
     };
 
     const handleCloseTrainingCardClick = () => {
@@ -94,7 +115,7 @@ export default function Exercise() {
                     onDeleteItem={handleDelete}
                 />
                 <DialogForm
-                    dialogContent={<DialogExerciseContent exercise={selectedExercise} />}
+                    dialogContent={<DialogExerciseContent selectedExercise={selectedExercise} />}
                     formTitle="Editar exercício"
                     isOpen={isTrainingModalOpen}
                     onClose={handleCloseTrainingCardClick}
@@ -104,7 +125,6 @@ export default function Exercise() {
     );
 }
 
-// Função de parágrafo de introdução
 function PageParagraph() {
     return (
         <p style={{ textAlign: 'center', color: 'black', fontSize: '20px' }}>

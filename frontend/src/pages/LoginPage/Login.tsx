@@ -27,6 +27,7 @@ function Login() {
         } catch (error) {
             
             if (error instanceof Error) {
+                showToast((error as Error).message, 'error');
             } else {
                 alert('An unknown error occurred');
             }

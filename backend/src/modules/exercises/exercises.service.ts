@@ -56,7 +56,15 @@ export class ExercisesService {
     return exercise;
   }
 
-  public async remove(id: number): Promise<void> {
-    await this.exerciseRepository.delete({ id, created_by: this.request['userId'] });
+  public async remove(id: number): Promise<{ message: string }> {
+    const exercise = await this.exerciseRepository.findOne({ where: { id, created_by: this.request['userId'] } });
+
+    if (!exercise) {
+      throw new Error('Exercise not found');
+    }
+
+    await this.exerciseRepository.remove(exercise);
+
+    return { message: 'Exercise successfully deleted' };
   }
 }

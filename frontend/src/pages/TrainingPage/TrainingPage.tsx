@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomCard } from "../../components/CustomCard/CustomCard";
 import Header from "../../components/Header/Header";
 import LeftSideColumn from "../../components/LeftSideColumn/LeftSideColumn";
@@ -8,6 +8,15 @@ import { useStylesCustomCard } from "./style/TrainingPage.const";
 import DialogTrainingContent from "./Dialogs/DialogTrainingContent";
 import DialogExerciseContent from "./Dialogs/DialogExerciseContent";
 import { useNavigate } from "react-router-dom";
+import MonthlyCalendar from "../../components/MonthlyCalendar/MonthlyCalendar";
+import { Button, Card, Text } from "@fluentui/react-components";
+import { useTrainingOfTheDay } from "../../hooks/getUserTodayTraining";
+import { IStackStyles, IStackTokens, Spinner, Stack } from "@fluentui/react";
+import { SaveFilled, AddFilled, ArrowCounterclockwiseFilled } from "@fluentui/react-icons";
+import { Checkbox } from "@fluentui/react-components";
+import { createManyGoals, fetchGoals, Goal, Goals } from "../../api/goals";
+import { useToast } from "../../context/ToastContext";
+
 
 interface CustomGridAreaProps {
     onExerciseCardClick: () => void; 
@@ -40,6 +49,11 @@ export default function TrainingPage() {
             <div className="training-page">
                 <Header style={{ textAlign: 'left' }} title="Bem vindo ao módulo de treinos!" />
                 <PageParagraph />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+                    <MonthlyCalendar />
+                    <TrainingDayCard />
+                    <WeekGoalsCard />
+                </div>
                 <CustomGridArea 
                     onExerciseCardClick={handleExerciseCardClick} 
                     onTrainingCardClick={handleTrainingCardClick} 
@@ -58,6 +72,60 @@ export default function TrainingPage() {
                 />
             </div>
         </>
+    );
+}
+
+function TrainingDayCard() {
+
+    const { trainingOfTheDay, loading, refetch } = useTrainingOfTheDay();
+    const stackTokens: IStackTokens = { childrenGap: 10 };
+    const stackStyles: IStackStyles = { root: { width: '100%' } };
+
+    if (loading) {
+        return (
+            <Card style={{ marginLeft: '25px', width: '585px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Spinner label="Carregando treino do dia..." />
+            </Card>
+        );
+    }
+    
+    if (!trainingOfTheDay) {
+        return (
+            <Card
+                style={{ marginLeft: '25px', width: '585px', height: '300px' }}
+            >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text size={500} style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} block><strong>Treino do dia</strong></Text>
+                    <Button icon={<ArrowCounterclockwiseFilled />} onClick={refetch} style={{ marginTop: '10px' }} />
+                </div>
+                <Text>Nenhum treino cadastrado para hoje</Text>
+            </Card>
+        );
+    }
+
+    return (
+        <Card style={{ marginLeft: '25px', width: '585px', height: '300px', overflowY: 'scroll', padding: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text size={500}>Treino do dia: {trainingOfTheDay.training?.name}</Text>
+                <Button icon={<ArrowCounterclockwiseFilled />} onClick={refetch} style={{ marginTop: '5px', height: '40px' }} />
+            </div>
+            <Text size={500}>Exercícios:</Text>
+            <Stack tokens={stackTokens} styles={stackStyles}>
+                {trainingOfTheDay.training?.trainingExercises?.map((te) => (
+                    <Card key={te.id} style={{ padding: '10px', marginBottom: '10px' }}>
+                        <Stack tokens={stackTokens}>
+                            <Text size={500}>{te.exercise.name}</Text>
+                            <Text>Grupo Muscular: {te.exercise.muscle_group}</Text>
+                            <Text>Séries: {te.exercise.series}</Text>
+                            <Text>Repetições: {te.exercise.repetitions}</Text>
+                            <Text>Peso: {te.exercise.exercise_weight} kg</Text>
+                            <Text>Tempo de Descanso: {te.exercise.rest_time}</Text>
+                            <Text>Observação: {te.exercise.observation}</Text>
+                        </Stack>
+                    </Card>
+                ))}
+            </Stack>
+        </Card>
     );
 }
 
@@ -92,6 +160,115 @@ function CustomGridArea({ onExerciseCardClick, onTrainingCardClick }: CustomGrid
                 cardParagraph="Clique aqui para visualizar seus treinos, fazer edições rápidas e imprimir suas rotinas personalizadas!"
             />
         </div>
+    );
+}
+
+
+
+
+const stackTokens: IStackTokens = { childrenGap: 10 };
+
+function WeekGoalsCard() {
+    const [goals, setGoals] = useState<Goals | []>([]);
+    const { showToast } = useToast();
+
+    useEffect(() => {
+        fetchGoalsFromAPI();
+    }, []);
+
+    const fetchGoalsFromAPI = async () => {
+        try {
+            const apiGoals = await fetchGoals();
+            setGoals(apiGoals.map((goal: { goal: string; done: boolean }) => ({ ...goal, isEditing: false })));
+        } catch (error) {
+            console.error('Failed to fetch goals:', error);
+        }
+    };
+
+    const handleCreateGoals = async () => {
+        try {
+            
+            const apiGoalsCreated = await createManyGoals(goals);
+            setGoals(apiGoalsCreated.goals.map((goal: { goal: string; done: boolean }) => ({ ...goal, isEditing: false })));
+            showToast('Metas semanais salvas com sucesso!', 'success');
+        } catch (error) {
+            showToast('Erro ao salvar metas semanais', 'error');
+            console.error('Failed to create goals:', error);
+        }
+    };
+
+    const handleCheckboxChange = (index: number) => {
+        setGoals(goals.map((goal, i) => i === index ? { ...goal, done: !goal.done as true } : goal));
+    };
+
+    const handleAddGoal = () => {
+        const newGoal: Goal = { goal: '', done: false as true, isEditing: true };
+        setGoals([...goals, newGoal]);
+    };
+
+    const handleGoalLabelChange = (index: number, newLabel: string) => {
+        setGoals(goals.map((goal, i) => i === index ? { ...goal, goal: newLabel } : goal));
+    };
+
+    const toggleEditing = (index: number) => {
+        setGoals(goals.map((goal, i) => i === index ? { ...goal, isEditing: !goal.isEditing } : goal));
+    };
+
+    const handleBlur = (index: number) => {
+        const goal = goals[index];
+        if (goal && goal.goal.trim() === '') {
+            setGoals(goals.filter((_, i) => i !== index));
+        } else {
+            toggleEditing(index);
+        }
+    };
+
+    return (
+        <Card style={{ marginLeft: '25px', width: '400px', padding: '20px' }}>
+            <Text style={{ textAlign: 'center', marginBottom: '20px', fontSize: 'large' }}><strong>Metas da semana</strong></Text>
+            <Stack tokens={stackTokens}>
+                {goals.map((goal, index) => (
+                    <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                        <Checkbox
+                            checked={goal.done}
+                            onChange={() => handleCheckboxChange(index)}
+                        />
+                        {goal.isEditing ? (
+                            <input
+                                type="text"
+                                value={goal.goal}
+                                onChange={(e) => handleGoalLabelChange(index, e.target.value)}
+                                onBlur={() => handleBlur(index)}
+                                autoFocus
+                                style={{
+                                    marginLeft: '10px',
+                                    flex: 1,
+                                    border: 'none',
+                                    borderBottom: '1px solid #ccc',
+                                    outline: 'none',
+                                    backgroundColor: 'transparent',
+                                }}
+                            />
+                        ) : (
+                            <Text
+                                onClick={() => toggleEditing(index)}
+                                style={{ marginLeft: '10px', flex: 1, cursor: 'pointer' }}
+                            >
+                                {goal.goal}
+                            </Text>
+                        )}
+                    </div>
+                ))}
+            </Stack>
+            <Button 
+                appearance="secondary"
+                icon={<AddFilled/>} onClick={handleAddGoal} style={{ marginTop: '5px' }}>
+                Adicionar Meta
+            </Button>
+            <Button appearance="primary" icon={<SaveFilled/>} onClick={handleCreateGoals} style={{ marginTop: '5x' }}>
+                Salvar Metas
+            </Button>
+        </Card>
     );
 }
 

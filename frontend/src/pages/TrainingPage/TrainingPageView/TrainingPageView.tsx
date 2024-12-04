@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Frequency, getTrainings, TrainingObjective } from "../../../api/training";
+import { deleteTraining, Frequency, getTrainings, TrainingObjective } from "../../../api/training";
 import { createTableColumn, TableColumnDefinition } from "@fluentui/react-components";
 import LeftSideColumn from "../../../components/LeftSideColumn/LeftSideColumn";
 import Header from "../../../components/Header/Header";
@@ -7,6 +7,8 @@ import CustomDataGrid from "../../../components/CustomDataGrid/CustomDataGrid";
 import { Exercise } from "../../../api/exercise";
 import DialogTrainingContent from "../Dialogs/DialogTrainingContent";
 import DialogForm from "../../../components/DialogForm/DialogForm";
+import { useToast } from "../../../context/ToastContext";
+import { printTraining } from "../../../api/training";
 
 type Training = {
     id: number,
@@ -37,6 +39,7 @@ export default function TraingingPageView() {
     const [items, setItems] = useState<Training[]>([]);
     const [selectedTraining, setSelectedTraining] = useState<Training | undefined>(undefined);
     const [isTrainingModalOpen, setTrainingIsModalOpen] = useState(false);
+    const { showToast } = useToast();
 
     useEffect(() => {
         async function fetchTraining() {
@@ -46,7 +49,6 @@ export default function TraingingPageView() {
         fetchTraining();
     }, []);
 
-    // Definir colunas com as ações na última coluna
     const formatDate = (date: Date) => {
         return new Intl.DateTimeFormat('pt-BR').format(new Date(date));
     };
@@ -82,12 +84,6 @@ export default function TraingingPageView() {
             renderHeaderCell: () => 'Frequência semanal',
             renderCell: (item) => item.weekly_frequency || 'N/A',
         }),
-        // createTableColumn<Training>({
-        //     columnId: 'necessary_equipment',
-        //     compare: (a, b) => (a.necessary_equipment || "").localeCompare(b.necessary_equipment || ""),
-        //     renderHeaderCell: () => 'Equipamentos',
-        //     renderCell: (item) => item.necessary_equipment || 'N/A',
-        // }),
         createTableColumn<Training>({
             columnId: 'exercises',
             compare: (a, b) => (a.necessary_equipment || "").localeCompare(b.necessary_equipment || ""),
@@ -99,9 +95,10 @@ export default function TraingingPageView() {
         })
     ];
 
-    // Handlers para ações
-    const handlePrint = (item: Training) => {
-        console.log('Abrir exercício:', item);
+    const handlePrint = async (item: Training) => {
+        await printTraining(item.id);
+
+        showToast('Pdf do treino gerado com sucesso!', 'success');
     };
 
     const handleEdit = (item: Training) => {
@@ -109,8 +106,21 @@ export default function TraingingPageView() {
         setSelectedTraining(item);
     };
 
-    const handleDelete = (item: Training) => {
-        console.log('Deletar exercício:', item);
+    const handleDelete = async (item: Training) => {
+        try {
+            if (item.id) {
+                const response = await deleteTraining(item.id);
+
+                if (response) {
+                    showToast(`Treino ${item.name} deletado com sucesso!`);
+                    const updatedTrainings = await getUserTraining();
+                    setItems(updatedTrainings);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            showToast('Ocorreu um erro ao deletar o treino.', 'error');
+        }
     };
 
     function handleCloseTrainingCardClick(): void {
