@@ -3,7 +3,7 @@ import axiosInstance from "../api/axiosConfig"; // Corrigido o caminho de import
 
 export interface Metric {
   id?: number;
-  data: string;
+  data: string | Date;
   peso: number;
   altura: number;
   imc?: number;

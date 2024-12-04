@@ -13,6 +13,9 @@ export class MetricsService {
   ) {}
 
   create(createMetricDto: CreateMetricDto) {
+
+    const parseDate = new Date(createMetricDto.data);
+
     const metric = this.metricRepository.create(createMetricDto);
     metric.imc = this.calculateImc(metric.peso, metric.altura);
     return this.metricRepository.save(metric);

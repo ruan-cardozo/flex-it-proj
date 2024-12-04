@@ -9,11 +9,12 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { getMetrics } from '../../api/metrics';
-import { format, addDays } from 'date-fns';
+import { addDays } from 'date-fns';
 import './Metrics.css';
+import { parseDate } from '../../utils/parse-date';
 
 const Graphic: React.FC = () => {
-  const [data, setData] = useState<{ data: Date; peso: number; altura: number; imc: number }[]>([]);
+  const [data, setData] = useState<{ data: string; peso: number; altura: number; imc: number }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +68,7 @@ const Graphic: React.FC = () => {
         <ul>
           {data.map((entry) => (
             <li key={entry.data.toString()}>
-              {format(new Date(entry.data), 'dd/MM/yyyy')}: {entry.peso} kg
+              {parseDate(entry.data)}: {entry.peso} kg
             </li>
           ))}
         </ul>

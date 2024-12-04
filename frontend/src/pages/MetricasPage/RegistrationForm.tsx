@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createMetric } from '../../api/metrics';
-import { format } from 'date-fns';
 import './RegistrationForm.css';
+import { useToast } from '../../context/ToastContext';
 
 const RegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ const RegistrationForm: React.FC = () => {
     peso: "",
     altura: "",
   });
+  const { showToast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,21 +19,26 @@ const RegistrationForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const formattedDate = format(new Date(formData.data), 'yyyy-MM-dd');
-      await createMetric({
+  
+      const formattedDate = new Date(formData.data);
+      const response = await createMetric({
         data: formattedDate,
         peso: parseFloat(formData.peso),
         altura: parseFloat(formData.altura),
       });
+      if(response) {
+        showToast("Métrica cadastrado com sucesso!", "success");
+      }
       console.log("Dados cadastrados:", formData);
     } catch (error) {
+      showToast("Houve um erro ao cadastrar a métrica!", "success");
       console.error("Erro ao cadastrar dados:", error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="form-container">
-      <h1>Form</h1>
+      <h1>Cadastre seus dados</h1>
       <label className="form-label">
         Data:
         <input
