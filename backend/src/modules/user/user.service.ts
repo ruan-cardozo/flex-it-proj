@@ -67,6 +67,7 @@ export class UserService {
 		return this.userRepository.findOne({ where: { email } });
 	}
 
+
 	private async validateUser(userEmail: string) {
 
 		const databaseUser = await this.userRepository.findOne({
@@ -75,7 +76,10 @@ export class UserService {
 
 		if (databaseUser) {
 
-			throw new BadRequestException('Já existe um usuário com este e-mail');
+			return {
+				status: 400,
+				message: 'E-mail já cadastrado'
+			}
 		}
 	}
 

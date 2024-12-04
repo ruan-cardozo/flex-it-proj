@@ -1,10 +1,23 @@
 /* src/components/Metricas/Metrics.css */
+.metrics-content {
+  flex: 1; /* Ocupa o restante do espaço */
+  margin-left: 300px; /* Espaço entre a coluna lateral e o conteúdo */
+}
+
 .metrics-container {
-    padding: 20px;
-    background-color: #2f4f4f; /* Cor de fundo semelhante ao exemplo fornecido */
-    border-radius: 8px;
-    color: #ffffff; /* Cor de texto branco para contraste */
-  }
+  /* flex-grow: 1; */
+  padding: 20px;
+ 
+  background-color: #7a818c; /*#0f6cbd*/ /*#2f4f4f*/
+  border-radius: 8px;
+  color: #ffffff;
+  width: 100%;
+  max-width: 96%;
+  min-width: none;
+  margin-left: 20px; /* Reduz a largura para não encostar na coluna lateral */
+  /*margin: auto; /* Centraliza dentro do espaço disponível */
+}
+
   
   h1 {
     font-size: 24px;
@@ -20,7 +33,7 @@
   }
   
   .metric-card {
-    background-color: #3b6066;
+    background-color: #0f6cbd;
     padding: 15px;
     border-radius: 8px;
     text-align: center;
@@ -42,7 +55,7 @@
   }
   
   .metrics-history {
-    background-color: #3b6066;
+    background-color: #0f6cbd;
     padding: 15px;
     border-radius: 8px;
   }
@@ -61,4 +74,3 @@
     font-size: 16px;
     margin: 5px 0;
   }
-  

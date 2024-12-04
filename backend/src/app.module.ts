@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { DailyTrainingModule } from './modules/daily-training/daily-training.module';
 import { TrainingGoalsModule } from './modules/training-goals/training-goals.module';
+import { MetricsModule } from './modules/metrics/metrics.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { TrainingGoalsModule } from './modules/training-goals/training-goals.mod
     TrainingModule,
     AuthModule,
     DailyTrainingModule,
-    TrainingGoalsModule
+    TrainingGoalsModule,
+    MetricsModule
   ],
   controllers: [],
   providers: [
